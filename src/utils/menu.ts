@@ -225,16 +225,3 @@ function mealOrderFromLabel(label: string): number {
   const entry = Object.entries(MEAL_LABELS).find(([, value]) => value === label)
   return entry ? MEAL_ORDER[entry[0] as keyof typeof MEAL_ORDER] : 99
 }
-
-export function countSafeMeals(days: MenuDay[]): number {
-  return days.reduce((total, day) => total + day.meals.filter((meal) => !meal.hasRisk).length, 0)
-}
-
-export function filterWeekMenu(
-  recipes: RecipeEntry[],
-  week: string,
-  allergens: Allergen[],
-  substitutes: SubstitutesMap,
-): MenuDay[] {
-  return buildMenuDays(getWeekEntries(recipes, week), allergens, substitutes)
-}

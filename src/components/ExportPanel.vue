@@ -22,6 +22,7 @@ const props = defineProps<{
   recipes: RecipeEntry[]
   allergens: Allergen[]
   substitutes: SubstitutesMap
+  supplements: string[]
 }>()
 
 type RangeMode = 'week' | 'custom'
@@ -145,6 +146,7 @@ async function handleDocx(): Promise<void> {
       days: menuDays.value,
       rangeStart: effectiveStart.value,
       rangeEnd: effectiveEnd.value,
+      supplements: props.supplements,
       title: title.value,
       rangeLabel: rangeLabel.value,
       fileBase: fileBase.value,
@@ -172,7 +174,7 @@ function handleCsv(): void {
 </script>
 
 <template>
-  <aside class="card p-5 sm:p-6 lg:sticky lg:top-5" aria-labelledby="export-title">
+  <aside class="card p-5 sm:p-6" aria-labelledby="export-title">
     <div class="flex items-start gap-3">
       <span
         class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-leaf-600 text-white"
@@ -338,7 +340,7 @@ function handleCsv(): void {
     </p>
 
     <p class="mt-4 border-t border-ink/[0.06] pt-3 text-[0.7rem] leading-5 text-ink-faint">
-      DOCX 为 A4 横向周表，含每日补剂勾选栏；CSV 带 UTF-8 BOM，便于用 Excel 查看。
+      DOCX 为 A4 横向周表，含周一至周日补剂勾选栏；CSV 带 UTF-8 BOM，便于用 Excel 查看。
     </p>
   </aside>
 </template>

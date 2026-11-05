@@ -1,7 +1,11 @@
 import {
   MEAL_PERIODS,
   type Allergen,
+  type AppSettings,
   type DataBundle,
+  type DishCatalog,
+  type DishKnowledge,
+  type DishOccurrence,
   type MealPeriod,
   type RecipeEntry,
   type SubstitutesMap,
@@ -12,6 +16,7 @@ import { isIsoWeek, isoWeekForDate, parseIsoDate } from './date'
 const RECIPES_ERROR = '食谱数据加载失败，请稍后重试或确认仓库资源。'
 const ALLERGENS_ERROR = '过敏原配置加载失败，请稍后重试或确认仓库资源。'
 const SUBSTITUTES_ERROR = '替餐配置加载失败，请稍后重试或确认仓库资源。'
+const DEFAULT_SUPPLEMENTS = ['AD', 'VD', '五维口服液', '益生菌']
 
 type DataSection = 'recipes' | 'allergens' | 'substitutes'
 
@@ -42,6 +47,22 @@ function parseStringArray(value: unknown): string[] | null {
 
 function warn(message: string): void {
   console.warn(`[leleat] ${message}`)
+}
+
+async function fetchOptionalJson(fileName: string): Promise<unknown | null> {
+  const url = withBase(`assets/data/${fileName}`)
+
+  try {
+    const response = await fetch(url, { cache: 'no-cache' })
+    if (!response.ok) {
+      warn(`${fileName} 返回 HTTP ${response.status}，使用内置默认值。`)
+      return null
+    }
+    return (await response.json()) as unknown
+  } catch (error) {
+    console.warn(`[leleat] ${fileName} 加载失败，使用内置默认值。`, error)
+    return null
+  }
 }
 
 async function fetchJson(
@@ -303,6 +324,119 @@ function parseSubstitutes(value: unknown): SubstitutesMap {
   return substitutes
 }
 
+function parseSettings(value: unknown): AppSettings {
+  if (!isRecord(value)) {
+    if (value !== null) warn('settings.json 格式无效，使用内置补剂配置。')
+    return { supplements: [...DEFAULT_SUPPLEMENTS] }
+  }
+
+  const parsedSupplements = parseStringArray(value.supplements)
+  const supplements =
+    parsedSupplements && parsedSupplements.length > 0
+      ? [...new Set(parsedSupplements)]
+      : [...DEFAULT_SUPPLEMENTS]
+
+  const updatedAt =
+    typeof value.updatedAt === 'string' && !Number.isNaN(new Date(value.updatedAt).getTime())
+      ? value.updatedAt
+      : undefined
+
+  return {
+    supplements,
+    ...(updatedAt ? { updatedAt } : {}),
+    ...(typeof value.schoolName === 'string' && value.schoolName.trim()
+      ? { schoolName: value.schoolName.trim() }
+      : {}),
+  }
+}
+
+function parseDishOccurrences(value: unknown): DishOccurrence[] {
+  if (!Array.isArray(value)) return []
+
+  return value.flatMap((item) => {
+    if (!isRecord(item)) return []
+    if (typeof item.date !== 'string' || !parseIsoDate(item.date)) return []
+    if (typeof item.week !== 'string' || !isIsoWeek(item.week)) return []
+    if (
+      typeof item.mealPeriod !== 'string' ||
+      !MEAL_PERIODS.includes(item.mealPeriod as MealPeriod)
+    ) {
+      return []
+    }
+
+    return [
+      {
+        date: item.date,
+        week: item.week,
+        mealPeriod: item.mealPeriod as MealPeriod,
+        mealLabel:
+          typeof item.mealLabel === 'string' && item.mealLabel.trim()
+            ? item.mealLabel.trim()
+            : item.mealPeriod,
+      },
+    ]
+  })
+}
+
+function parseDishCatalog(value: unknown): DishCatalog {
+  if (!isRecord(value) || !isRecord(value.dishes)) {
+    if (value !== null) warn('dish-catalog.json 格式无效，知识库按空目录处理。')
+    return { dishes: {} }
+  }
+
+  const dishes: Record<string, DishKnowledge> = {}
+
+  for (const [rawKey, rawDish] of Object.entries(value.dishes)) {
+    if (!isRecord(rawDish)) {
+      warn(`dish-catalog.json 中 "${rawKey}" 不是对象，已跳过。`)
+      continue
+    }
+
+    const name =
+      typeof rawDish.name === 'string' && rawDish.name.trim()
+        ? rawDish.name.trim()
+        : rawKey.trim()
+    const ingredients = parseStringArray(rawDish.ingredients)
+    if (!name || !ingredients) {
+      warn(`dish-catalog.json 中 "${rawKey}" 缺少有效名称或食材，已跳过。`)
+      continue
+    }
+
+    const riskAllergens = parseStringArray(rawDish.riskAllergens) ?? []
+    const aliases = parseStringArray(rawDish.aliases) ?? []
+    const sourceImages = parseStringArray(rawDish.sourceImages) ?? []
+    const occurrences = parseDishOccurrences(rawDish.occurrences)
+    const firstSeen =
+      typeof rawDish.firstSeen === 'string' && parseIsoDate(rawDish.firstSeen)
+        ? rawDish.firstSeen
+        : occurrences[0]?.date ?? ''
+    const lastSeen =
+      typeof rawDish.lastSeen === 'string' && parseIsoDate(rawDish.lastSeen)
+        ? rawDish.lastSeen
+        : occurrences[occurrences.length - 1]?.date ?? firstSeen
+
+    dishes[name] = {
+      name,
+      aliases,
+      ingredients,
+      riskAllergens,
+      substitute: typeof rawDish.substitute === 'string' ? rawDish.substitute.trim() || null : null,
+      firstSeen,
+      lastSeen,
+      occurrences,
+      sourceImages,
+      ...(typeof rawDish.verified === 'boolean' ? { verified: rawDish.verified } : {}),
+    }
+  }
+
+  const updatedAt =
+    typeof value.updatedAt === 'string' && !Number.isNaN(new Date(value.updatedAt).getTime())
+      ? value.updatedAt
+      : undefined
+
+  return { dishes, ...(updatedAt ? { updatedAt } : {}) }
+}
+
 function warnUnknownAllergens(recipes: RecipeEntry[], allergens: Allergen[]): void {
   const knownIds = new Set(allergens.map((allergen) => allergen.id))
   const warnedIds = new Set<string>()
@@ -320,17 +454,29 @@ function warnUnknownAllergens(recipes: RecipeEntry[], allergens: Allergen[]): vo
 }
 
 export async function loadStaticData(): Promise<DataBundle> {
-  const [rawRecipes, rawAllergens, rawSubstitutes] = await Promise.all([
-    fetchJson('recipes.json', 'recipes', RECIPES_ERROR),
-    fetchJson('allergens.json', 'allergens', ALLERGENS_ERROR),
-    fetchJson('substitutes.json', 'substitutes', SUBSTITUTES_ERROR),
-  ])
+  const [rawRecipes, rawAllergens, rawSubstitutes, rawSettings, rawDishCatalog] =
+    await Promise.all([
+      fetchJson('recipes.json', 'recipes', RECIPES_ERROR),
+      fetchJson('allergens.json', 'allergens', ALLERGENS_ERROR),
+      fetchJson('substitutes.json', 'substitutes', SUBSTITUTES_ERROR),
+      fetchOptionalJson('settings.json'),
+      fetchOptionalJson('dish-catalog.json'),
+    ])
 
   const { recipes, updatedAt } = parseRecipesDocument(rawRecipes)
   const allergens = parseAllergens(rawAllergens)
   const substitutes = parseSubstitutes(rawSubstitutes)
+  const settings = parseSettings(rawSettings)
+  const dishCatalog = parseDishCatalog(rawDishCatalog)
 
   warnUnknownAllergens(recipes, allergens)
 
-  return { recipes, allergens, substitutes, updatedAt }
+  return {
+    recipes,
+    allergens,
+    substitutes,
+    settings,
+    dishCatalog,
+    updatedAt,
+  }
 }

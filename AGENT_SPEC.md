@@ -1,10 +1,10 @@
 # Leleat 本地 Agent 识别规范
 
-**版本**：1.0  
-**适用输入**：幼儿园「一周带量食谱及营养分析表」图片（周一至周五、早餐/早点/中餐/午点、每格含食谱/食物/重量）  
-**适用仓库**：`leleat`  
-**运行位置**：仓库外的本地 Agent / 本地脚本  
-**前端边界**：前端仍然只读 `public/assets/data/*.json`，不做 OCR、不调用视觉模型、不写仓库。
+- **版本**：1.1
+- **适用输入**：幼儿园「一周带量食谱及营养分析表」图片（周一至周五、早餐/早点/中餐/午点、每格含食谱/食物/重量）
+- **适用仓库**：`leleat`
+- **运行位置**：仓库外的本地 Agent / 本地脚本
+- **前端边界**：前端仍然只读 `public/assets/data/*.json`，不做 OCR、不调用视觉模型、不写仓库。
 
 > 本次先交付规范、机器可读 Schema 和 Prompt，不提供可执行的视觉模型调用代码。Agent 可按下面的 CLI 契约实现。
 
@@ -17,7 +17,7 @@
 1. 从一张周表图片中提取 5 个工作日、每天 4 个餐次、每个餐次的菜品和食材克重。
 2. 生成可校验的中间结果，保留原始文字、置信度和低置信警告。
 3. 根据 `allergens.json` 做确定性过敏原标记；根据 `substitutes.json` 或已确认的菜品专属替餐给出建议。
-4. 安全地合并进 `public/assets/data/recipes.json`，保护人工确认过的字段。
+4. 安全地合并进 `public/assets/data/recipes.json`，并增量维护 `dish-catalog.json`，保护人工确认过的字段。
 5. 产出可追溯的 Git 提交，可选推送。
 
 ### 非目标
@@ -317,6 +317,80 @@ milk: 牛奶, 鲜奶, 纯牛奶, 酸牛奶, 酸奶, 奶粉, 奶油, 芝士, 奶�
 
 前端同时兼容裸数组格式，但 Agent 新写入时统一使用对象格式。
 
+### 7.5 菜品知识库（增量）
+
+知识库的运行时文件是 `public/assets/data/dish-catalog.json`，前端只读。Agent 每次识别完成后同时合并周食谱和菜品库。
+
+不用 Markdown 或 SQLite 作为仓库内主存储的原因：
+
+| 方案 | 结论 | 原因 |
+| --- | --- | --- |
+| Markdown | 不采用 | 适合说明文档，不适合稳定 key、数组、去重和机器匹配 |
+| SQLite | 不作运行时数据库 | GitHub Pages 是纯静态托管；浏览器不能安全写回 Git。SQLite 可作为 Agent 本地索引/缓存，但最终导出 JSON |
+| JSON | **采用** | 可直接 fetch，Git diff 清晰，可人工审查，可版本追溯，无需后端 |
+
+结构：
+
+```json
+{
+  "updatedAt": "2026-11-05T09:20:00+08:00",
+  "dishes": {
+    "番茄炖牛腩": {
+      "name": "番茄炖牛腩",
+      "aliases": [],
+      "ingredients": ["番茄", "牛腩"],
+      "riskAllergens": [],
+      "substitute": null,
+      "firstSeen": "2026-11-02",
+      "lastSeen": "2026-11-02",
+      "occurrences": [
+        {
+          "date": "2026-11-02",
+          "week": "2026-W45",
+          "mealPeriod": "lunch",
+          "mealLabel": "午餐"
+        }
+      ],
+      "sourceImages": ["assets/images/20261102-menu.svg"]
+    }
+  }
+}
+```
+
+合并规则：
+
+1. 以规范化菜名为 key（去首尾空格、统一全半角、合并连续空白）。
+2. 同名菜已存在：
+   - 食材取并集，不删除历史食材；
+   - `riskAllergens` 取并集；
+   - `occurrences` 追加未出现过的 `date + mealPeriod`；
+   - `firstSeen` 取更早日期，`lastSeen` 取更晚日期；
+   - `sourceImages` 追加去重；
+   - 保留人工维护的 `aliases`、`substitute`、`verified`。
+3. 新菜：创建完整记录，`occurrences` 至少一条。
+4. 同一菜名但食材明显冲突时，不覆盖，写入冲突报告，交人工确认。
+5. 合并必须幂等：同一份输入运行两次，catalog 零差异。
+6. `verified: true` 的菜品只允许追加 occurrence，不允许自动改食材/过敏原/替餐。
+
+前端用知识库显示“已收录、第 N 次出现、首次/最近日期”。Schema：[`agent/schemas/dish-catalog.schema.json`](agent/schemas/dish-catalog.schema.json)。样例生成脚本：`npm run catalog`。
+
+### 7.6 补剂配置
+
+补剂不写入食谱条目。它是独立的 `public/assets/data/settings.json`：
+
+```json
+{
+  "updatedAt": "2026-11-05T09:20:00+08:00",
+  "schoolName": "乐乐幼儿园",
+  "supplements": ["AD", "VD", "五维口服液", "益生菌"]
+}
+```
+
+- 打印和 DOCX 固定输出周一至周日 7 天。
+- 每个补剂一项一行，每格一个勾选框。
+- 食谱仍只输出周一到周五 5 天。
+- 修改补剂项只需改此配置，不改前端逻辑。
+
 ---
 
 ## 8. 合并策略
@@ -365,6 +439,8 @@ milk: 牛奶, 鲜奶, 纯牛奶, 酸牛奶, 酸奶, 奶粉, 奶油, 芝士, 奶�
 - 所有 `riskAllergens` id 存在于 `allergens.json`。
 - `sourceImage` 指向的本地文件存在。
 - 没有重复的 `date + mealPeriod`。
+- `dish-catalog.json` 通过 [`agent/schemas/dish-catalog.schema.json`](agent/schemas/dish-catalog.schema.json)，菜品名唯一，occurrence 与食谱对应。
+- `settings.json` 中 `supplements` 为非空字符串数组，打印固定 7 天。
 - 前端 `npm run build` 通过（数据 JSON 不参与 TS 类型检查，但可做回归）。
 
 ### 9.2 软校验（警告 + 复核）
@@ -435,6 +511,8 @@ public/assets/images/
 - 校验和构建通过。
 - 只 stage：
   - `public/assets/data/recipes.json`
+  - `public/assets/data/dish-catalog.json`
+  - `public/assets/data/settings.json`（仅补剂或学校信息变化时）
   - `public/assets/images/*`
   - 可选的 `updatedAt` 变更
 - 不提交 `.agent-out/`、缓存、API Key、原始未脱敏日志。
@@ -487,7 +565,12 @@ python agent/merge_recipes.py \
   --patch .agent-out/2026-W43/recipes.patch.json \
   --reviewed --commit
 
-# 5. 可选推送
+# 5. 增量合并菜品知识库（或直接运行 npm run catalog）
+python agent/merge_catalog.py \
+  --recipes public/assets/data/recipes.json \
+  --catalog public/assets/data/dish-catalog.json
+
+# 6. 可选推送
 python agent/publish.py --push
 ```
 
@@ -550,9 +633,10 @@ python agent/publish.py --push
 - 菜品格不包含括号替餐（替餐需单独进入复核/字段）。
 - 重量缺失为 `null`，不是 0，也不是猜测值。
 - 不出现热量、营养分析、过敏原等图片中没有的字段。
-- 同一输入二次运行，recipes 零差异。
+- 同一输入二次运行，recipes 和 dish-catalog 均零差异。
 - 合并后 `npm run build` 通过。
 - 最终 DOCX 为 A4 横向周表，红色显示风险菜品，括号内为首选替餐。
+- 菜单只有周一到周五 5 列；补剂表为周一至周日 7 列，每个补剂一行、每格一个勾选框。
 
 ---
 
@@ -572,3 +656,4 @@ python agent/publish.py --push
 | 版本 | 日期 | 变更 |
 | --- | --- | --- |
 | 1.0 | 2026-11-05 | 初版：适配一周带量食谱表格、早点餐次、克重、红字替餐、合并与 Git 流程 |
+| 1.1 | 2026-11-05 | 增加菜品知识库增量合并、JSON 存储决策、settings.json 补剂配置、7 天补剂表验收 |

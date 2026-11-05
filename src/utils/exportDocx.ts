@@ -61,6 +61,7 @@ export interface DocxExportOptions {
   days: MenuDay[]
   rangeStart: string
   rangeEnd: string
+  supplements: string[]
   title: string
   rangeLabel: string
   fileBase: string
@@ -306,45 +307,80 @@ function buildMenuTable(block: WeekBlock): Table {
   })
 }
 
-function buildSupplementTable(block: WeekBlock): Table {
-  const labelWidth = 1400
-  const dayWidth = Math.floor((TABLE_WIDTH - labelWidth) / block.columns.length)
+function buildSupplementTable(block: WeekBlock, supplements: string[]): Table {
+  const labelWidth = 1600
+  const monday = isoWeekStart(block.week)
+  const supplementDates =
+    monday === null
+      ? []
+      : Array.from({ length: 7 }, (_, index) => addDays(toIsoDate(monday), index)).filter(
+          (date): date is string => date !== null,
+        )
+  const dayWidth = Math.floor((TABLE_WIDTH - labelWidth) / supplementDates.length)
 
-  const cells: TableCell[] = [
-    new TableCell({
-      width: { size: labelWidth, type: WidthType.DXA },
-      verticalAlign: VerticalAlign.CENTER,
-      margins: cellMargins(),
-      children: [paragraph('每日补剂', { bold: true, size: 18 })],
-    }),
-  ]
-
-  for (const column of block.columns) {
-    cells.push(
+  const header = new TableRow({
+    tableHeader: true,
+    cantSplit: true,
+    children: [
       new TableCell({
-        width: { size: dayWidth, type: WidthType.DXA },
+        width: { size: labelWidth, type: WidthType.DXA },
         verticalAlign: VerticalAlign.CENTER,
         margins: cellMargins(),
+        children: [paragraph('补剂', { bold: true, size: 18 })],
+      }),
+      ...supplementDates.map(
+        (date) =>
+          new TableCell({
+            width: { size: dayWidth, type: WidthType.DXA },
+            verticalAlign: VerticalAlign.CENTER,
+            margins: cellMargins(),
+            children: [
+              paragraph(longWeekday(date), { bold: true, size: 16 }),
+              paragraph(shortDate(date), { size: 13, color: '555555' }),
+            ],
+          }),
+      ),
+    ],
+  })
+
+  const itemRows = supplements.map(
+    (supplement) =>
+      new TableRow({
+        cantSplit: true,
         children: [
-          paragraph(`${column.weekday} ${column.shortDate}`, { size: 14, color: '555555', after: 20 }),
-          paragraph('□ AD   □ VD', { size: 15, after: 10 }),
-          paragraph('□ 五维口服液', { size: 15, after: 10 }),
-          paragraph('□ 益生菌', { size: 15 }),
+          new TableCell({
+            width: { size: labelWidth, type: WidthType.DXA },
+            verticalAlign: VerticalAlign.CENTER,
+            margins: cellMargins(),
+            children: [paragraph(supplement, { size: 18, bold: true })],
+          }),
+          ...supplementDates.map(
+            () =>
+              new TableCell({
+                width: { size: dayWidth, type: WidthType.DXA },
+                verticalAlign: VerticalAlign.CENTER,
+                margins: cellMargins(),
+                children: [paragraph('□', { size: 22 })],
+              }),
+          ),
         ],
       }),
-    )
-  }
+  )
 
   return new Table({
     width: { size: TABLE_WIDTH, type: WidthType.DXA },
-    columnWidths: [labelWidth, ...block.columns.map(() => dayWidth)],
+    columnWidths: [labelWidth, ...supplementDates.map(() => dayWidth)],
     layout: TableLayoutType.FIXED,
     borders: borderSet(),
-    rows: [new TableRow({ cantSplit: true, children: cells })],
+    rows: [header, ...itemRows],
   })
 }
 
-function buildWeekContent(block: WeekBlock, title: string): (Paragraph | Table)[] {
+function buildWeekContent(
+  block: WeekBlock,
+  title: string,
+  supplements: string[],
+): (Paragraph | Table)[] {
   return [
     new Paragraph({
       alignment: AlignmentType.CENTER,
@@ -360,8 +396,11 @@ function buildWeekContent(block: WeekBlock, title: string): (Paragraph | Table)[
       ],
     }),
     buildMenuTable(block),
-    new Paragraph({ spacing: { after: 120 } }),
-    buildSupplementTable(block),
+    new Paragraph({
+      spacing: { before: 150, after: 60, line: 240 },
+      children: [textRun('每日补剂（周一至周日，逐日勾选）', { size: 18, bold: true })],
+    }),
+    buildSupplementTable(block, supplements),
     new Paragraph({
       spacing: { before: 80, line: 240 },
       children: [
@@ -400,7 +439,7 @@ export function buildWeeklyMenuDocument(options: DocxExportOptions): Document {
       if (index > 0) {
         children.push(new Paragraph({ children: [new PageBreak()] }))
       }
-      children.push(...buildWeekContent(block, options.title))
+      children.push(...buildWeekContent(block, options.title, options.supplements))
     })
   }
 

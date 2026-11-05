@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://leleat.local/schemas/dish-catalog.schema.json",
+  "title": "Leleat 菜品知识库",
+  "description": "按菜名归一化后的增量菜品知识库。前端只读，不写入；Agent 负责合并并保持幂等。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["dishes"],
+  "properties": {
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "dishes": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/dish"
+      }
+    }
+  },
+  "$defs": {
+    "dish": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "aliases",
+        "ingredients",
+        "riskAllergens",
+        "substitute",
+        "firstSeen",
+        "lastSeen",
+        "occurrences",
+        "sourceImages"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "ingredients": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "riskAllergens": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "substitute": {
+          "type": ["string", "null"]
+        },
+        "firstSeen": {
+          "$ref": "#/$defs/date"
+        },
+        "lastSeen": {
+          "$ref": "#/$defs/date"
+        },
+        "occurrences": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/occurrence"
+          }
+        },
+        "sourceImages": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "verified": {
+          "type": "boolean"
+        }
+      }
+    },
+    "occurrence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["date", "week", "mealPeriod", "mealLabel"],
+      "properties": {
+        "date": {
+          "$ref": "#/$defs/date"
+        },
+        "week": {
+          "type": "string",
+          "pattern": "^\\d{4}-W(0[1-9]|[1-4][0-9]|5[0-3])$"
+        },
+        "mealPeriod": {
+          "enum": ["breakfast", "morningSnack", "lunch", "afternoonTea", "dinner"]
+        },
+        "mealLabel": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "date": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    }
+  }
+}

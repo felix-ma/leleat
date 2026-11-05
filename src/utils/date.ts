@@ -138,12 +138,6 @@ export function formatUpdatedAt(value?: string): string {
   }).format(date)
 }
 
-export function formatDocxDate(isoDate: string): string {
-  const date = parseIsoDate(isoDate)
-  if (!date) return isoDate
-  return `${date.getUTCMonth() + 1}月${date.getUTCDate()}日 ${WEEKDAYS[date.getUTCDay()]}`
-}
-
 export function formatWeekNumber(week: string): string {
   const match = ISO_WEEK_RE.exec(week)
   if (!match) return week
@@ -152,4 +146,42 @@ export function formatWeekNumber(week: string): string {
 
 export function compareIsoDates(left: string, right: string): number {
   return left.localeCompare(right)
+}
+
+export function weekdayLong(isoDate: string): string {
+  const date = parseIsoDate(isoDate)
+  if (!date) return ''
+  return ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'][date.getUTCDay()]
+}
+
+export function todayIsoDate(now = new Date()): string {
+  return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`
+}
+
+export function startOfWeek(isoDate: string): string | null {
+  const week = isoWeekForDate(isoDate)
+  if (!week) return null
+  const monday = isoWeekStart(week)
+  return monday ? toIsoDate(monday) : null
+}
+
+export function weekDates(isoDate: string): string[] {
+  const monday = startOfWeek(isoDate)
+  if (!monday) return []
+
+  return Array.from({ length: 7 }, (_, index) => addDays(monday, index)).filter(
+    (date): date is string => date !== null,
+  )
+}
+
+export function formatDayLong(isoDate: string): string {
+  const date = parseIsoDate(isoDate)
+  if (!date) return isoDate
+  return `${date.getUTCFullYear()}年${date.getUTCMonth() + 1}月${date.getUTCDate()}日 ${weekdayLong(isoDate)}`
+}
+
+export function formatMonthDay(isoDate: string): string {
+  const date = parseIsoDate(isoDate)
+  if (!date) return isoDate
+  return `${date.getUTCMonth() + 1}月${date.getUTCDate()}日`
 }

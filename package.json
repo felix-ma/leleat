@@ -9,6 +9,7 @@
     "typecheck": "vue-tsc --noEmit",
     "build": "npm run typecheck && vite build",
     "preview": "vite preview",
+    "catalog": "node scripts/build-dish-catalog.mjs",
     "deploy": "npm run build && gh-pages -d dist --dotfiles"
   },
   "dependencies": {

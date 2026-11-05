@@ -18,6 +18,14 @@ export const MEAL_ORDER: Record<MealPeriod, number> = {
   dinner: 4,
 }
 
+export const MEAL_TIMES: Record<MealPeriod, string> = {
+  breakfast: '08:30',
+  morningSnack: '10:00',
+  lunch: '11:30',
+  afternoonTea: '15:00',
+  dinner: '17:30',
+}
+
 export interface Allergen {
   id: string
   name: string
@@ -57,10 +65,43 @@ export interface RecipesDocument {
   recipes: RecipeEntry[]
 }
 
+export interface DishOccurrence {
+  date: string
+  week: string
+  mealPeriod: MealPeriod
+  mealLabel: string
+}
+
+export interface DishKnowledge {
+  name: string
+  aliases: string[]
+  ingredients: string[]
+  riskAllergens: string[]
+  substitute: string | null
+  firstSeen: string
+  lastSeen: string
+  occurrences: DishOccurrence[]
+  sourceImages: string[]
+  verified?: boolean
+}
+
+export interface DishCatalog {
+  updatedAt?: string
+  dishes: Record<string, DishKnowledge>
+}
+
+export interface AppSettings {
+  updatedAt?: string
+  schoolName?: string
+  supplements: string[]
+}
+
 export interface DataBundle {
   recipes: RecipeEntry[]
   allergens: Allergen[]
   substitutes: SubstitutesMap
+  settings: AppSettings
+  dishCatalog: DishCatalog
   updatedAt?: string
 }
 
@@ -119,4 +160,26 @@ export interface ExportRow {
 export interface ImagePreview {
   src: string
   alt: string
+}
+
+export interface CalendarDayCell {
+  date: string
+  weekday: string
+  monthDay: string
+  dayNumber: string
+  hasMenu: boolean
+  riskDishCount: number
+  isToday: boolean
+  isSelected: boolean
+  isWeekend: boolean
+}
+
+export interface DishTraceTarget {
+  date: string
+  mealLabel: string
+  mealTime: string
+  dish: MenuDish
+  images: MenuImage[]
+  note?: string
+  knowledge?: DishKnowledge
 }
