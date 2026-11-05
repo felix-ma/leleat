@@ -1,0 +1,293 @@
+{
+  "updatedAt": "2026-11-05T14:00:00+08:00",
+  "recipes": [
+    {
+      "id": "sub-egg-steamed-tofu-pork",
+      "name": "肉末蒸豆腐",
+      "replaces": [
+        "egg"
+      ],
+      "ingredients": [
+        "嫩豆腐",
+        "瘦肉末",
+        "小葱"
+      ],
+      "usedFor": [
+        "肉沫蒸滑蛋",
+        "蒸蛋羹",
+        "肉沫蒸水蛋",
+        "鲜肉鸟巢蒸蛋"
+      ],
+      "tags": [
+        "蛋白质",
+        "钙",
+        "软食"
+      ],
+      "verified": true,
+      "priority": 100
+    },
+    {
+      "id": "sub-egg-steamed-sweet-potato",
+      "name": "蒸红薯",
+      "replaces": [
+        "egg"
+      ],
+      "ingredients": [
+        "红薯"
+      ],
+      "usedFor": [
+        "水煮鹌鹑蛋",
+        "鹌鹑蛋",
+        "水煮蛋"
+      ],
+      "tags": [
+        "主食",
+        "膳食纤维"
+      ],
+      "verified": true,
+      "priority": 90
+    },
+    {
+      "id": "sub-egg-mixed-fried-rice",
+      "name": "什锦炒饭",
+      "replaces": [
+        "egg"
+      ],
+      "ingredients": [
+        "大米",
+        "玉米粒",
+        "瘦肉",
+        "青菜",
+        "火腿"
+      ],
+      "usedFor": [
+        "扬州炒饭",
+        "煲仔饭"
+      ],
+      "tags": [
+        "主食",
+        "蛋白质",
+        "蔬菜"
+      ],
+      "verified": true,
+      "priority": 85
+    },
+    {
+      "id": "sub-egg-pork-vegetable-noodles",
+      "name": "瘦肉青菜炒面",
+      "replaces": [
+        "egg"
+      ],
+      "ingredients": [
+        "大碗面",
+        "瘦肉",
+        "青菜"
+      ],
+      "usedFor": [
+        "瘦肉青菜鸡蛋炒面"
+      ],
+      "tags": [
+        "主食",
+        "蛋白质",
+        "蔬菜"
+      ],
+      "verified": true,
+      "priority": 85
+    },
+    {
+      "id": "sub-milk-rice-milk",
+      "name": "米奶",
+      "replaces": [
+        "milk"
+      ],
+      "ingredients": [
+        "大米",
+        "水"
+      ],
+      "usedFor": [
+        "纯牛奶",
+        "牛奶",
+        "酸牛奶"
+      ],
+      "tags": [
+        "植物饮品",
+        "主食"
+      ],
+      "verified": true,
+      "priority": 100
+    },
+    {
+      "id": "sub-egg-tofu",
+      "name": "嫩豆腐",
+      "replaces": [
+        "egg"
+      ],
+      "ingredients": [
+        "嫩豆腐"
+      ],
+      "tags": [
+        "蛋白质",
+        "钙",
+        "软食"
+      ],
+      "verified": false,
+      "priority": 50
+    },
+    {
+      "id": "sub-egg-dried-tofu",
+      "name": "五香豆干",
+      "replaces": [
+        "egg"
+      ],
+      "ingredients": [
+        "豆干",
+        "八角",
+        "生抽"
+      ],
+      "tags": [
+        "蛋白质",
+        "钙"
+      ],
+      "verified": false,
+      "priority": 45
+    },
+    {
+      "id": "sub-egg-seaweed-tofu-soup",
+      "name": "紫菜豆腐汤",
+      "replaces": [
+        "egg"
+      ],
+      "ingredients": [
+        "紫菜",
+        "嫩豆腐",
+        "小葱"
+      ],
+      "usedFor": [
+        "紫菜鸡蛋汤"
+      ],
+      "tags": [
+        "汤",
+        "蛋白质",
+        "钙"
+      ],
+      "verified": false,
+      "priority": 40
+    },
+    {
+      "id": "sub-milk-oat-milk",
+      "name": "燕麦奶",
+      "replaces": [
+        "milk"
+      ],
+      "ingredients": [
+        "燕麦",
+        "水"
+      ],
+      "tags": [
+        "植物饮品",
+        "谷物"
+      ],
+      "verified": false,
+      "priority": 50
+    },
+    {
+      "id": "sub-milk-soy-milk",
+      "name": "无糖豆浆",
+      "replaces": [
+        "milk"
+      ],
+      "ingredients": [
+        "黄豆",
+        "水"
+      ],
+      "tags": [
+        "植物饮品",
+        "蛋白质"
+      ],
+      "verified": false,
+      "priority": 45
+    },
+    {
+      "id": "sub-milk-coconut-milk",
+      "name": "椰奶",
+      "replaces": [
+        "milk"
+      ],
+      "ingredients": [
+        "椰肉",
+        "水"
+      ],
+      "tags": [
+        "植物饮品"
+      ],
+      "verified": false,
+      "priority": 40
+    },
+    {
+      "id": "sub-egg-pork-vegetable-noodle-soup",
+      "name": "瘦肉青菜汤面",
+      "replaces": [
+        "egg"
+      ],
+      "ingredients": [
+        "面条",
+        "瘦肉",
+        "青菜"
+      ],
+      "usedFor": [
+        "紫菜瘦肉云吞面"
+      ],
+      "tags": [
+        "主食",
+        "蛋白质",
+        "蔬菜"
+      ],
+      "verified": false,
+      "priority": 70
+    },
+    {
+      "id": "sub-egg-pork-vegetable-congee",
+      "name": "瘦肉青菜粥",
+      "replaces": [
+        "egg"
+      ],
+      "ingredients": [
+        "大米",
+        "瘦肉",
+        "青菜"
+      ],
+      "usedFor": [
+        "皮蛋瘦肉粥"
+      ],
+      "tags": [
+        "主食",
+        "蛋白质",
+        "蔬菜"
+      ],
+      "verified": false,
+      "priority": 70
+    },
+    {
+      "id": "sub-egg-tofu-meatball",
+      "name": "豆腐蒸肉丸",
+      "replaces": [
+        "egg"
+      ],
+      "ingredients": [
+        "嫩豆腐",
+        "瘦肉末",
+        "小葱"
+      ],
+      "usedFor": [
+        "豆腐蒸肉卷"
+      ],
+      "tags": [
+        "蛋白质",
+        "钙",
+        "软食"
+      ],
+      "verified": false,
+      "priority": 70
+    }
+  ]
+}

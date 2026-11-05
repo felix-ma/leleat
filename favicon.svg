@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Leleat">
+  <rect width="64" height="64" rx="18" fill="#3f684d"/>
+  <path d="M45.5 16.5C31 17.4 20 23.2 19.2 37.1c-.4 7 4.6 11.4 11.2 10.8 12.7-1.2 16-13.9 15.1-31.4Z" fill="#dfecdf"/>
+  <path d="M20.5 49.5c4.7-9.8 10.6-16 18.2-20.7" fill="none" stroke="#3f684d" stroke-width="3.4" stroke-linecap="round"/>
+</svg>
