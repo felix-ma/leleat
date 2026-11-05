@@ -68,7 +68,12 @@ const weekEntries = computed(() => {
 
 const weekDays = computed<MenuDay[]>(() => {
   if (!data.value) return []
-  return buildMenuDays(weekEntries.value, data.value.allergens, data.value.substitutes)
+  return buildMenuDays(
+    weekEntries.value,
+    data.value.allergens,
+    data.value.substitutes,
+    data.value.substituteLibrary,
+  )
 })
 
 const weekDaysByDate = computed(
@@ -113,6 +118,7 @@ const latestDate = computed(() => availableDates.value[availableDates.value.leng
 const knowledgeCount = computed(() =>
   data.value ? Object.keys(data.value.dishCatalog.dishes).length : 0,
 )
+const substituteCount = computed(() => data.value?.substituteLibrary.recipes.length ?? 0)
 const knowledgeByName = computed(() => {
   const map = new Map<string, DishKnowledge>()
   for (const dish of Object.values(data.value?.dishCatalog.dishes ?? {})) {
@@ -321,7 +327,7 @@ onBeforeUnmount(() => {
           <div class="hidden text-right sm:block">
             <p class="eyebrow">菜品知识库</p>
             <p class="mt-1 text-xs font-medium text-ink-muted">
-              {{ knowledgeCount }} 道菜 · {{ data?.recipes.length ?? 0 }} 餐记录
+              {{ knowledgeCount }} 道菜 · {{ substituteCount }} 个替餐
             </p>
           </div>
           <div class="text-right">
@@ -543,6 +549,7 @@ onBeforeUnmount(() => {
     :recipes="data.recipes"
     :allergens="data.allergens"
     :substitutes="data.substitutes"
+    :substitute-library="data.substituteLibrary"
     :supplements="data.settings.supplements"
     @close="exportOpen = false"
   />

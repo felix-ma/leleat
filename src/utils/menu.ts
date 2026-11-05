@@ -7,6 +7,8 @@ import {
   type MenuDish,
   type MenuMeal,
   type RecipeEntry,
+  type SubstituteLibrary,
+  type SubstituteRecipe,
   type SubstituteSource,
   type SubstitutesMap,
   type WeekOption,
@@ -73,14 +75,45 @@ function getRecommendation(
   dish: RecipeEntry['dishes'][number],
   allergens: Allergen[],
   substitutes: SubstitutesMap,
-): { recommendation: string[]; source: SubstituteSource } {
+  library: SubstituteRecipe[],
+  usedCandidateIds: Set<string>,
+): {
+  recommendation: string[]
+  source: SubstituteSource
+  substituteId?: string
+  tags: string[]
+} {
   const custom = typeof dish.substitute === 'string' ? dish.substitute.trim() : ''
   if (custom) {
-    return { recommendation: [custom], source: 'dish' }
+    return { recommendation: [custom], source: 'dish', tags: [] }
   }
 
   if (dish.riskAllergens.length === 0) {
-    return { recommendation: [], source: 'none' }
+    return { recommendation: [], source: 'none', tags: [] }
+  }
+
+  const allSatisfied = (recipe: SubstituteRecipe): boolean =>
+    dish.riskAllergens.every((id) => recipe.replaces.includes(id))
+
+  const candidates = library
+    .filter(allSatisfied)
+    .filter((recipe) => !usedCandidateIds.has(recipe.id))
+    .map((recipe) => {
+      const exactMatch = recipe.usedFor?.includes(dish.name) ? 1000 : 0
+      const verified = recipe.verified ? 100 : 0
+      return { recipe, score: exactMatch + verified + (recipe.priority ?? 0) }
+    })
+    .sort((left, right) => right.score - left.score)
+
+  if (candidates.length > 0) {
+    const chosen = candidates[0].recipe
+    usedCandidateIds.add(chosen.id)
+    return {
+      recommendation: [chosen.name],
+      source: 'library',
+      substituteId: chosen.id,
+      tags: chosen.tags,
+    }
   }
 
   const allergenMap = new Map(allergens.map((allergen) => [allergen.id, allergen]))
@@ -88,7 +121,7 @@ function getRecommendation(
 
   for (const id of dish.riskAllergens) {
     const name = allergenNameFor(id, allergenMap)
-    // 优先按中文名匹配，同时兼容 Agent 以 id 作为 key 的情况。
+    // 旧版替餐表作为回退，兼容尚未迁移到替餐库的数据。
     const options = substitutes[name] ?? substitutes[id] ?? []
     recommendation.push(...options)
   }
@@ -97,6 +130,7 @@ function getRecommendation(
   return {
     recommendation: deduped,
     source: deduped.length > 0 ? 'library' : 'none',
+    tags: [],
   }
 }
 
@@ -104,14 +138,24 @@ function enrichDish(
   dish: RecipeEntry['dishes'][number],
   allergens: Allergen[],
   substitutes: SubstitutesMap,
+  library: SubstituteRecipe[],
+  usedCandidateIds: Set<string>,
 ): MenuDish {
-  const { recommendation, source } = getRecommendation(dish, allergens, substitutes)
+  const { recommendation, source, substituteId, tags } = getRecommendation(
+    dish,
+    allergens,
+    substitutes,
+    library,
+    usedCandidateIds,
+  )
 
   return {
     ...dish,
     allergenNames: getAllergenNames(dish.riskAllergens, allergens),
     recommendation,
     substituteSource: source,
+    substituteTags: tags,
+    ...(substituteId ? { substituteId } : {}),
   }
 }
 
@@ -119,6 +163,7 @@ export function buildMenuDays(
   entries: RecipeEntry[],
   allergens: Allergen[],
   substitutes: SubstitutesMap,
+  substituteLibrary: SubstituteLibrary = { recipes: [] },
 ): MenuDay[] {
   const mealBuckets = new Map<string, RecipeEntry[]>()
 
@@ -134,8 +179,17 @@ export function buildMenuDays(
 
   const meals: MenuMeal[] = [...mealBuckets.entries()].map(([key, bucket]) => {
     const first = bucket[0]
+    const usedCandidateIds = new Set<string>()
     const dishes = bucket.flatMap((entry) =>
-      entry.dishes.map((dish) => enrichDish(dish, allergens, substitutes)),
+      entry.dishes.map((dish) =>
+        enrichDish(
+          dish,
+          allergens,
+          substitutes,
+          substituteLibrary.recipes,
+          usedCandidateIds,
+        ),
+      ),
     )
     const riskDishCount = dishes.filter((dish) => dish.riskAllergens.length > 0).length
     const images = uniqueStrings(
@@ -195,14 +249,26 @@ export function buildExportRows(
   entries: RecipeEntry[],
   allergens: Allergen[],
   substitutes: SubstitutesMap,
+  substituteLibrary: SubstituteLibrary = { recipes: [] },
 ): ExportRow[] {
+  const usedByMeal = new Map<string, Set<string>>()
+
   return entries
     .flatMap((entry) =>
       entry.dishes
         .map((dish) => {
           if (dish.riskAllergens.length === 0) return null
 
-          const { recommendation } = getRecommendation(dish, allergens, substitutes)
+          const mealKey = `${entry.date}__${entry.mealPeriod}`
+          const usedCandidateIds = usedByMeal.get(mealKey) ?? new Set<string>()
+          usedByMeal.set(mealKey, usedCandidateIds)
+          const { recommendation } = getRecommendation(
+            dish,
+            allergens,
+            substitutes,
+            substituteLibrary.recipes,
+            usedCandidateIds,
+          )
 
           return {
             date: entry.date,

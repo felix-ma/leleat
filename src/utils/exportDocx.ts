@@ -227,10 +227,9 @@ function buildDishParagraph(dish: MenuMeal['dishes'][number]): Paragraph {
     }),
   ]
 
-  if (hasRisk) {
-    const replacement = dish.recommendation[0] ?? '待确认'
+  if (hasRisk && dish.substituteSource === 'dish' && dish.recommendation[0]) {
     runs.push(
-      textRun(`（${replacement}）`, {
+      textRun(`（${dish.recommendation[0]}）`, {
         size: 17,
         bold: true,
         color: RED,
@@ -392,7 +391,7 @@ function buildWeekContent(
       spacing: { after: 120, line: 240 },
       children: [
         textRun(`${block.rangeLabel} · ${block.week}`, { size: 17, color: '444444' }),
-        textRun('  ·  红色为含过敏原菜品，括号内为首选替餐', { size: 17, color: '8A3A34' }),
+        textRun('  ·  红色为含过敏原菜品，括号内为已确认替餐', { size: 17, color: '8A3A34' }),
       ],
     }),
     buildMenuTable(block),
@@ -405,7 +404,7 @@ function buildWeekContent(
       spacing: { before: 80, line: 240 },
       children: [
         textRun(
-          '说明：红色菜品含登记过敏原；括号内为首选替餐，请与幼儿园确认后使用。',
+          '说明：红色菜品含登记过敏原；括号内为已确认替餐，未标注的请与幼儿园确认。',
           { size: 15, color: '666666' },
         ),
       ],

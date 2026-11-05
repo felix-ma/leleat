@@ -34,6 +34,22 @@ export interface Allergen {
 
 export type SubstitutesMap = Record<string, string[]>
 
+export interface SubstituteRecipe {
+  id: string
+  name: string
+  replaces: string[]
+  ingredients: string[]
+  usedFor?: string[]
+  tags: string[]
+  verified?: boolean
+  priority?: number
+}
+
+export interface SubstituteLibrary {
+  updatedAt?: string
+  recipes: SubstituteRecipe[]
+}
+
 export interface Dish {
   name: string
   ingredients: string[]
@@ -100,6 +116,7 @@ export interface DataBundle {
   recipes: RecipeEntry[]
   allergens: Allergen[]
   substitutes: SubstitutesMap
+  substituteLibrary: SubstituteLibrary
   settings: AppSettings
   dishCatalog: DishCatalog
   updatedAt?: string
@@ -121,6 +138,8 @@ export interface MenuDish extends Dish {
   allergenNames: string[]
   recommendation: string[]
   substituteSource: SubstituteSource
+  substituteId?: string
+  substituteTags: string[]
 }
 
 export interface MenuImage {

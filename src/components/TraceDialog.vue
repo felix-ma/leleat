@@ -102,7 +102,14 @@ watch(
               {{ target.dish.recommendation.join('、') || '暂无推荐替餐，请与幼儿园确认。' }}
             </p>
             <p class="mt-1 text-xs text-ink-faint">
-              {{ target.dish.substituteSource === 'dish' ? '来自菜品专属替餐' : '来自全局过敏原替餐表' }}
+              {{
+                target.dish.substituteSource === 'dish'
+                  ? '来自菜品专属替餐'
+                  : '来自动态替餐库'
+              }}
+            </p>
+            <p v-if="target.dish.substituteTags.length > 0" class="mt-1 text-xs text-honey-700">
+              {{ target.dish.substituteTags.join(' · ') }}
             </p>
           </section>
 

@@ -1,6 +1,6 @@
 # Leleat 本地 Agent 识别规范
 
-- **版本**：1.1
+- **版本**：1.2
 - **适用输入**：幼儿园「一周带量食谱及营养分析表」图片（周一至周五、早餐/早点/中餐/午点、每格含食谱/食物/重量）
 - **适用仓库**：`leleat`
 - **运行位置**：仓库外的本地 Agent / 本地脚本
@@ -16,7 +16,7 @@
 
 1. 从一张周表图片中提取 5 个工作日、每天 4 个餐次、每个餐次的菜品和食材克重。
 2. 生成可校验的中间结果，保留原始文字、置信度和低置信警告。
-3. 根据 `allergens.json` 做确定性过敏原标记；根据 `substitutes.json` 或已确认的菜品专属替餐给出建议。
+3. 根据 `allergens.json` 做确定性过敏原标记；通过动态替餐库和已确认的菜品专属替餐生成建议。
 4. 安全地合并进 `public/assets/data/recipes.json`，并增量维护 `dish-catalog.json`，保护人工确认过的字段。
 5. 产出可追溯的 Git 提交，可选推送。
 
@@ -82,27 +82,47 @@
   → git commit / 可选 push
 ```
 
-### 3.1 预处理
+### 3.1 预处理（可选）
 
-- 自动旋转/纠偏，保证表格横平竖直。
-- 放大到至少 1600px 宽；对比度增强；可选灰度化。
-- 表格线检测优先使用 OpenCV（水平/垂直形态学），不要只依赖视觉模型猜列。
-- 如果线检测失败，再退回整页视觉模型，并把结果标记为 `LOW_CONFIDENCE`。
-- 保存每个单元格的裁剪图，供人工复核。
+- 管理端不安装 OCR 引擎，不使用 Tesseract。
+- 可做自动旋转/纠偏、裁边、适度放大和对比度增强，帮助多模态模型看清小字。
+- 表格列宽/行边界由模型结合图片直接理解；预处理只是辅助，不替代结构化校验。
+- 保存整周原图；如需人工复核，再裁出日期列图片。
 
-### 3.2 两次识别
+### 3.2 DeepSeek 多模态识别
 
-1. **整页元信息**：标题、单位、日期范围、印刷周次、重量单位、5 个日期列。
-2. **逐格识别**：对 5×4=20 个单元格分别识别，避免同一次调用里遗漏跨行菜名。
+1. 将整周图片发送给 DeepSeek 多模态模型，要求按 `week-menu.schema.json` 输出 JSON。
+2. 整页先识别元信息：单位、日期范围、印刷周次、重量单位。
+3. 对 5×4 个单元格逐格识别，避免一次调用跨行漏菜。
+4. 如果整页结果列数、餐次数或日期不一致，退回逐格重识别，不靠猜。
+5. 日期、ISO 周、过敏原和替餐由确定性代码后处理，模型不负责这些规则。
 
-逐格识别更慢，但对低分辨率表格更稳。允许将同一餐次行的 5 个单元格合并成一次调用，前提是输出仍是按日期分开的结构。
+### 3.3 DeepSeek 调用要求
 
-### 3.3 视觉模型要求
+- 使用 DeepSeek 的 OpenAI-compatible chat completions 接口，模型名从 `DEEPSEEK_VISION_MODEL` 环境变量读取。
+- API Key 从 `DEEPSEEK_API_KEY` 读取；不写仓库、不写日志。
+- 图片以 base64 data URL 或服务支持的图片 URL 传入。
+- 优先要求 JSON output；服务不支持 strict schema 时，在本地用 `jsonschema` 校验并对失败结果重试一次。
+- 不使用 OCR 文本作为主输入，不再维护 Tesseract / PaddleOCR 依赖。
+- 同一图片 sha256 + prompt 版本 + 模型名做缓存，避免重复计费。
+- 视觉模型只输出图片中可见内容；无法辨认的字段进入 `warnings`，不得自动补全。
 
-- 使用支持中文表格和 JSON structured output 的视觉模型。
-- 必须提供 `agent/schemas/week-menu.schema.json` 约束输出。
-- 推荐两步：先输出结构化 JSON，再用确定性代码校验日期、列数、餐次数；不要让模型自己“修正”无法辨认的字符。
-- 同一图片 + 同一 prompt 版本的结果应缓存，避免重复计费。
+```python
+# 伪代码：具体 SDK 可替换，保持 OpenAI-compatible 调用形态
+payload = {
+    "model": os.environ["DEEPSEEK_VISION_MODEL"],
+    "messages": [
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "user", "content": [
+            {"type": "text", "text": USER_PROMPT},
+            {"type": "image_url", "image_url": {
+                "url": f"data:image/jpeg;base64,{image_b64}"
+            }},
+        ]},
+    ],
+    "response_format": {"type": "json_object"},
+}
+```
 
 Prompt：[`agent/prompts/extract-week-menu.md`](agent/prompts/extract-week-menu.md)  
 中间结果 Schema：[`agent/schemas/week-menu.schema.json`](agent/schemas/week-menu.schema.json)
@@ -126,7 +146,7 @@ Prompt：[`agent/prompts/extract-week-menu.md`](agent/prompts/extract-week-menu.
     "printedWeekNumber": 7,
     "dateRange": { "start": "2026-10-12", "end": "2026-10-16" },
     "unit": "克",
-    "ocrEngine": "…",
+    "visionModel": "<DEEPSEEK_VISION_MODEL>",
     "promptVersion": "week-menu-v1",
     "confidence": 0.96
   },
@@ -235,17 +255,50 @@ milk: 牛奶, 鲜奶, 纯牛奶, 酸牛奶, 酸奶, 奶粉, 奶油, 芝士, 奶�
 ### 6.1 优先级
 
 1. 人工确认过的菜品专属替餐 → `dish.substitute`
-2. 全局 `substitutes.json` 按过敏原中文名查表
-3. 没有推荐 → `null`，前端显示“暂无推荐替餐”
+2. 动态替餐库 `substitute-library.json`
+3. 旧版 `substitutes.json` 全局映射，仅作回退
+4. 都没有 → `null`，前端显示“暂无推荐替餐”
 
-前端展示时会把多个全局推荐去重后全部列出；DOCX 打印时使用第一个推荐作为“首选替餐”。
+动态替餐库结构：
 
-### 6.2 规则
+```json
+{
+  "recipes": [
+    {
+      "id": "sub-egg-steamed-tofu-pork",
+      "name": "肉末蒸豆腐",
+      "replaces": ["egg"],
+      "ingredients": ["嫩豆腐", "瘦肉末", "小葱"],
+      "usedFor": ["肉沫蒸滑蛋", "蒸蛋羹", "肉沫蒸水蛋"],
+      "tags": ["蛋白质", "钙", "软食"],
+      "verified": true,
+      "priority": 100
+    }
+  ]
+}
+```
 
-- 不要用模型临时编造一个“听起来合理”的替代菜。
-- 如果识别到红字括号替餐（如 `纯牛奶（米奶）`），先放入复核项；人工确认后再写 `substitute`。
-- 如果同一菜品含两种过敏原，`substitute` 应是同时满足两者的明确菜品；无法确定时保持 `null`，让前端显示多个全局建议并提示确认。
-- `verified: true` 的条目不允许自动修改。
+选择逻辑：
+
+- 候选必须覆盖该菜品命中的**全部**过敏原；
+- 优先 `usedFor` 精确命中菜名；
+- 再看 `verified`、`priority`；
+- 同一餐内不重复使用同一个替餐候选；
+- 无候选才回退旧版全局表。
+
+### 6.2 打印与营养
+
+- 前端页面会展示动态替餐库候选及标签。
+- DOCX 和浏览器打印只显示已确认的菜品专属替餐，不会把未确认推荐打印成确定方案。
+- `tags` 用于看护人判断营养结构（蛋白质/钙/主食/蔬菜等），不伪造热量或营养素数值。
+- 若要实现数值化营养均衡，必须接入有来源的营养成分表，再给候选补充 `nutrition` 字段；当前版本不写假数据。
+
+### 6.3 规则
+
+- 不要用视觉模型临时编造替餐。
+- 如果原文档有确认过的括号替餐（如 `纯牛奶（米奶）`），先放入复核项；人工确认后再写 `dish.substitute` 或加入替餐库。
+- 同一菜品含两种过敏原时，替餐库候选必须 `replaces` 同时包含两个 id；否则保持未确认。
+- `verified: true` 的替餐条目不允许自动修改。
 
 ---
 
@@ -351,7 +404,7 @@ milk: 牛奶, 鲜奶, 纯牛奶, 酸牛奶, 酸奶, 奶粉, 奶油, 芝士, 奶�
           "mealLabel": "午餐"
         }
       ],
-      "sourceImages": ["assets/images/20261102-menu.svg"]
+      "sourceImages": ["assets/images/20261102-menu.jpg"]
     }
   }
 }
@@ -374,6 +427,20 @@ milk: 牛奶, 鲜奶, 纯牛奶, 酸牛奶, 酸奶, 奶粉, 奶油, 芝士, 奶�
 
 前端用知识库显示“已收录、第 N 次出现、首次/最近日期”。Schema：[`agent/schemas/dish-catalog.schema.json`](agent/schemas/dish-catalog.schema.json)。样例生成脚本：`npm run catalog`。
 
+#### 7.5.1 识别结果与知识库对比
+
+DeepSeek 提取出菜品后，先查 `dish-catalog.json`，再决定如何入库：
+
+| 情况 | 处理 |
+| --- | --- |
+| 菜名/别名不存在 | `NEW`：新菜，记录食材、发生日期、图片 |
+| 菜名存在，食材一致 | `REUSED`：直接复用标准食材，只追加 occurrence |
+| 菜名存在，食材有新增/缺失 | `CHANGED`：保留标准记录，写入差异报告；新食材追加到食材集合 |
+| 菜名存在，但食材冲突明显 | `CONFLICT`：不覆盖，阻断自动合并，交人工确认 |
+| 已 `verified` | 只允许追加 occurrence，不改食材/过敏原/替餐 |
+
+食材比较前做归一化：去首尾空格、统一全半角、合并连续空白；有明确别名时使用别名表（如 `番茄/西红柿`）只做匹配，不改原图文字。
+
 ### 7.6 补剂配置
 
 补剂不写入食谱条目。它是独立的 `public/assets/data/settings.json`：
@@ -390,6 +457,25 @@ milk: 牛奶, 鲜奶, 纯牛奶, 酸牛奶, 酸奶, 奶粉, 奶油, 芝士, 奶�
 - 每个补剂一项一行，每格一个勾选框。
 - 食谱仍只输出周一到周五 5 天。
 - 修改补剂项只需改此配置，不改前端逻辑。
+
+### 7.7 Word 文档在哪里生成
+
+采用**浏览器实时生成**，不是管理端预生成，也不是把一份 `.docx` 模板替换占位符。
+
+```text
+DeepSeek 识别 → Agent 合并 JSON / 图片 → git push
+→ GitHub Pages 加载最新 JSON
+→ 用户点击“下载 DOCX / 打印”时，浏览器用当前数据生成文档
+```
+
+原因：
+
+- 周表结构是动态的，菜品数量、跨周页数会变化；实时生成比占位符替换可靠。
+- 不需要服务器、不需要把二进制 DOCX 提交进仓库，也不会出现文档与 JSON 不同步。
+- `docx` 生成代码就是版式模板；修改样式改代码，修改内容只改 JSON。
+- 如需管理端本地预览，Agent 可以生成临时 DOCX，但不把预览文件作为正式数据提交。
+
+因此：**管理端只提交 JSON 和图片；Word 文档永远由前端按当前数据实时生成。**
 
 ---
 
@@ -440,6 +526,7 @@ milk: 牛奶, 鲜奶, 纯牛奶, 酸牛奶, 酸奶, 奶粉, 奶油, 芝士, 奶�
 - `sourceImage` 指向的本地文件存在。
 - 没有重复的 `date + mealPeriod`。
 - `dish-catalog.json` 通过 [`agent/schemas/dish-catalog.schema.json`](agent/schemas/dish-catalog.schema.json)，菜品名唯一，occurrence 与食谱对应。
+- `substitute-library.json` 通过 [`agent/schemas/substitute-library.schema.json`](agent/schemas/substitute-library.schema.json)，`replaces` 使用存在的过敏原 id，候选不得漏掉双重过敏原。
 - `settings.json` 中 `supplements` 为非空字符串数组，打印固定 7 天。
 - 前端 `npm run build` 通过（数据 JSON 不参与 TS 类型检查，但可做回归）。
 
@@ -512,6 +599,7 @@ public/assets/images/
 - 只 stage：
   - `public/assets/data/recipes.json`
   - `public/assets/data/dish-catalog.json`
+  - `public/assets/data/substitute-library.json`（替餐库变化时）
   - `public/assets/data/settings.json`（仅补剂或学校信息变化时）
   - `public/assets/images/*`
   - 可选的 `updatedAt` 变更
@@ -635,7 +723,7 @@ python agent/publish.py --push
 - 不出现热量、营养分析、过敏原等图片中没有的字段。
 - 同一输入二次运行，recipes 和 dish-catalog 均零差异。
 - 合并后 `npm run build` 通过。
-- 最终 DOCX 为 A4 横向周表，红色显示风险菜品，括号内为首选替餐。
+- 最终 DOCX 为 A4 横向周表，红色显示风险菜品，括号内只显示已确认的菜品专属替餐。
 - 菜单只有周一到周五 5 列；补剂表为周一至周日 7 列，每个补剂一行、每格一个勾选框。
 
 ---
@@ -657,3 +745,4 @@ python agent/publish.py --push
 | --- | --- | --- |
 | 1.0 | 2026-11-05 | 初版：适配一周带量食谱表格、早点餐次、克重、红字替餐、合并与 Git 流程 |
 | 1.1 | 2026-11-05 | 增加菜品知识库增量合并、JSON 存储决策、settings.json 补剂配置、7 天补剂表验收 |
+| 1.2 | 2026-11-05 | 改为 DeepSeek 多模态识别、知识库对比、动态替餐库、实时 DOCX 生成说明 |

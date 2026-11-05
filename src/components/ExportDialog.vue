@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import type { Allergen, RecipeEntry, SubstitutesMap, WeekOption } from '../types'
+import type {
+  Allergen,
+  RecipeEntry,
+  SubstituteLibrary,
+  SubstitutesMap,
+  WeekOption,
+} from '../types'
 import ExportPanel from './ExportPanel.vue'
 
 defineProps<{
@@ -9,6 +15,7 @@ defineProps<{
   recipes: RecipeEntry[]
   allergens: Allergen[]
   substitutes: SubstitutesMap
+  substituteLibrary: SubstituteLibrary
   supplements: string[]
 }>()
 
@@ -68,6 +75,7 @@ function printCurrentWeek(): void {
             :recipes="recipes"
             :allergens="allergens"
             :substitutes="substitutes"
+            :substitute-library="substituteLibrary"
             :supplements="supplements"
           />
         </div>

@@ -4,6 +4,7 @@ import type {
   Allergen,
   ExportRow,
   RecipeEntry,
+  SubstituteLibrary,
   SubstitutesMap,
   WeekOption,
 } from '../types'
@@ -22,6 +23,7 @@ const props = defineProps<{
   recipes: RecipeEntry[]
   allergens: Allergen[]
   substitutes: SubstitutesMap
+  substituteLibrary: SubstituteLibrary
   supplements: string[]
 }>()
 
@@ -68,11 +70,21 @@ const rangeEntries = computed<RecipeEntry[]>(() => {
 })
 
 const rows = computed<ExportRow[]>(() =>
-  buildExportRows(rangeEntries.value, props.allergens, props.substitutes),
+  buildExportRows(
+    rangeEntries.value,
+    props.allergens,
+    props.substitutes,
+    props.substituteLibrary,
+  ),
 )
 
 const menuDays = computed(() =>
-  buildMenuDays(rangeEntries.value, props.allergens, props.substitutes),
+  buildMenuDays(
+    rangeEntries.value,
+    props.allergens,
+    props.substitutes,
+    props.substituteLibrary,
+  ),
 )
 
 const effectiveStart = computed(() =>

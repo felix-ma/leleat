@@ -72,7 +72,7 @@ const emit = defineEmits<{
             <p class="text-[0.68rem] font-bold tracking-wide text-honey-700">
               替餐建议
               <span class="ml-1 font-medium text-ink-faint">
-                {{ dish.substituteSource === 'dish' ? '菜品专属' : '按过敏原推荐' }}
+                {{ dish.substituteSource === 'dish' ? '菜品专属' : '动态替餐库' }}
               </span>
             </p>
             <p
@@ -83,6 +83,9 @@ const emit = defineEmits<{
             </p>
             <p v-else class="mt-1 text-sm font-medium leading-5 text-berry-700">
               暂无推荐替餐，请与幼儿园确认。
+            </p>
+            <p v-if="dish.substituteTags.length > 0" class="mt-1 text-[0.68rem] leading-4 text-ink-faint">
+              {{ dish.substituteTags.join(' · ') }}
             </p>
           </div>
         </div>

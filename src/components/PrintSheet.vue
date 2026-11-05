@@ -86,7 +86,7 @@ function shortDate(date: string): string {
                   class="print-dish"
                   :class="{ 'print-risk': dish.riskAllergens.length > 0 }"
                 >
-                  {{ dish.name }}<template v-if="dish.riskAllergens.length > 0">（{{ dish.recommendation[0] || '待确认' }}）</template>
+                  {{ dish.name }}<template v-if="dish.substituteSource === 'dish' && dish.recommendation[0]">（{{ dish.recommendation[0] }}）</template>
                 </p>
               </template>
               <span v-else class="print-empty-cell">—</span>
@@ -126,7 +126,7 @@ function shortDate(date: string): string {
     </section>
 
     <p class="print-footnote">
-      说明：红色为含登记过敏原的菜品，括号内为首选替餐。补剂请在对应日期勾选，并与幼儿园确认。
+      说明：红色为含登记过敏原的菜品，括号内为已确认替餐；未标注替餐的请与幼儿园确认。补剂请在对应日期勾选。
     </p>
   </section>
 </template>

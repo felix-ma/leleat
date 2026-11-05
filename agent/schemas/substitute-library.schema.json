@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://leleat.local/schemas/substitute-library.schema.json",
+  "title": "Leleat 动态替餐库",
+  "description": "按过敏原和适用菜品组织的替餐方案库。前端读取后动态选择，不把某一道菜的替餐写死在代码里。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["recipes"],
+  "properties": {
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "recipes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/recipe"
+      }
+    }
+  },
+  "$defs": {
+    "recipe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "replaces", "ingredients", "tags"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]+$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "replaces": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "ingredients": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "usedFor": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "verified": {
+          "type": "boolean"
+        },
+        "priority": {
+          "type": "number"
+        }
+      }
+    }
+  }
+}

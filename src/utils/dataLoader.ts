@@ -8,6 +8,8 @@ import {
   type DishOccurrence,
   type MealPeriod,
   type RecipeEntry,
+  type SubstituteLibrary,
+  type SubstituteRecipe,
   type SubstitutesMap,
 } from '../types'
 import { withBase } from './assets'
@@ -437,6 +439,60 @@ function parseDishCatalog(value: unknown): DishCatalog {
   return { dishes, ...(updatedAt ? { updatedAt } : {}) }
 }
 
+function parseSubstituteLibrary(value: unknown): SubstituteLibrary {
+  if (!isRecord(value) || !Array.isArray(value.recipes)) {
+    if (value !== null) warn('substitute-library.json 格式无效，使用旧版替餐映射。')
+    return { recipes: [] }
+  }
+
+  const recipes: SubstituteRecipe[] = []
+  const ids = new Set<string>()
+
+  for (const [index, raw] of value.recipes.entries()) {
+    if (!isRecord(raw)) {
+      warn(`substitute-library.json recipes[${index}] 不是对象，已跳过。`)
+      continue
+    }
+
+    const id = typeof raw.id === 'string' ? raw.id.trim() : ''
+    const name = typeof raw.name === 'string' ? raw.name.trim() : ''
+    const replaces = parseStringArray(raw.replaces)
+    const ingredients = parseStringArray(raw.ingredients) ?? []
+    const usedFor = parseStringArray(raw.usedFor) ?? []
+    const tags = parseStringArray(raw.tags) ?? []
+
+    if (!id || !name || !replaces || replaces.length === 0) {
+      warn(`substitute-library.json recipes[${index}] 缺少 id/name/replaces，已跳过。`)
+      continue
+    }
+    if (ids.has(id)) {
+      warn(`substitute-library.json 中 id "${id}" 重复，已跳过。`)
+      continue
+    }
+
+    ids.add(id)
+    recipes.push({
+      id,
+      name,
+      replaces,
+      ingredients,
+      usedFor,
+      tags,
+      ...(typeof raw.verified === 'boolean' ? { verified: raw.verified } : {}),
+      ...(typeof raw.priority === 'number' && Number.isFinite(raw.priority)
+        ? { priority: raw.priority }
+        : {}),
+    })
+  }
+
+  const updatedAt =
+    typeof value.updatedAt === 'string' && !Number.isNaN(new Date(value.updatedAt).getTime())
+      ? value.updatedAt
+      : undefined
+
+  return { recipes, ...(updatedAt ? { updatedAt } : {}) }
+}
+
 function warnUnknownAllergens(recipes: RecipeEntry[], allergens: Allergen[]): void {
   const knownIds = new Set(allergens.map((allergen) => allergen.id))
   const warnedIds = new Set<string>()
@@ -454,18 +510,26 @@ function warnUnknownAllergens(recipes: RecipeEntry[], allergens: Allergen[]): vo
 }
 
 export async function loadStaticData(): Promise<DataBundle> {
-  const [rawRecipes, rawAllergens, rawSubstitutes, rawSettings, rawDishCatalog] =
-    await Promise.all([
-      fetchJson('recipes.json', 'recipes', RECIPES_ERROR),
-      fetchJson('allergens.json', 'allergens', ALLERGENS_ERROR),
-      fetchJson('substitutes.json', 'substitutes', SUBSTITUTES_ERROR),
-      fetchOptionalJson('settings.json'),
-      fetchOptionalJson('dish-catalog.json'),
-    ])
+  const [
+    rawRecipes,
+    rawAllergens,
+    rawSubstitutes,
+    rawSubstituteLibrary,
+    rawSettings,
+    rawDishCatalog,
+  ] = await Promise.all([
+    fetchJson('recipes.json', 'recipes', RECIPES_ERROR),
+    fetchJson('allergens.json', 'allergens', ALLERGENS_ERROR),
+    fetchJson('substitutes.json', 'substitutes', SUBSTITUTES_ERROR),
+    fetchOptionalJson('substitute-library.json'),
+    fetchOptionalJson('settings.json'),
+    fetchOptionalJson('dish-catalog.json'),
+  ])
 
   const { recipes, updatedAt } = parseRecipesDocument(rawRecipes)
   const allergens = parseAllergens(rawAllergens)
   const substitutes = parseSubstitutes(rawSubstitutes)
+  const substituteLibrary = parseSubstituteLibrary(rawSubstituteLibrary)
   const settings = parseSettings(rawSettings)
   const dishCatalog = parseDishCatalog(rawDishCatalog)
 
@@ -475,6 +539,7 @@ export async function loadStaticData(): Promise<DataBundle> {
     recipes,
     allergens,
     substitutes,
+    substituteLibrary,
     settings,
     dishCatalog,
     updatedAt,

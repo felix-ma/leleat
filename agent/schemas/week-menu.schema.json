@@ -59,7 +59,7 @@
         "unit": {
           "const": "克"
         },
-        "ocrEngine": {
+        "visionModel": {
           "type": "string"
         },
         "promptVersion": {
