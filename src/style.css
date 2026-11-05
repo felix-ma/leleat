@@ -1,0 +1,206 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply min-h-screen bg-cream font-sans text-ink antialiased;
+    background-image:
+      radial-gradient(circle at 12% -4%, rgba(82, 123, 92, 0.13), transparent 34rem),
+      radial-gradient(circle at 94% 8%, rgba(180, 70, 63, 0.06), transparent 26rem);
+    background-attachment: fixed;
+  }
+
+  button,
+  input,
+  select {
+    font: inherit;
+  }
+
+  :focus-visible {
+    outline: 3px solid rgba(82, 123, 92, 0.45);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: #dfecdf;
+    color: #292621;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold tracking-wide transition duration-200 disabled:cursor-not-allowed disabled:opacity-45;
+  }
+
+  .btn-primary {
+    @apply bg-leaf-600 text-white shadow-lift hover:bg-leaf-700 hover:-translate-y-0.5 active:translate-y-0;
+  }
+
+  .btn-secondary {
+    @apply border border-ink/10 bg-white/80 text-ink hover:border-leaf-500/40 hover:bg-leaf-50;
+  }
+
+  .btn-ghost {
+    @apply text-ink-muted hover:bg-ink/[0.05] hover:text-ink;
+  }
+
+  .icon-btn {
+    @apply inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-ink/10 bg-white/80 text-ink-muted transition hover:border-leaf-500/40 hover:bg-leaf-50 hover:text-leaf-700 disabled:cursor-not-allowed disabled:opacity-35;
+  }
+
+  .card {
+    @apply rounded-3xl border border-ink/[0.07] bg-card shadow-card;
+  }
+
+  .eyebrow {
+    @apply text-[0.68rem] font-bold uppercase tracking-[0.2em] text-ink-faint;
+  }
+
+  .select-control {
+    @apply min-h-11 w-full appearance-none rounded-2xl border border-ink/10 bg-white/80 py-2.5 pl-3.5 pr-10 text-sm font-medium text-ink transition hover:border-leaf-500/40 focus:border-leaf-500;
+  }
+
+  .tag {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold;
+  }
+}
+
+.print-only {
+  display: none;
+}
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 12mm 11mm;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    min-height: auto;
+    color: #111 !important;
+  }
+
+  body {
+    font-size: 10pt;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .screen-only {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .print-sheet {
+    width: 100%;
+    max-width: none;
+    color: #111;
+    font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+
+  .print-sheet h1 {
+    margin: 0;
+    font-size: 18pt;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .print-sheet .print-subtitle {
+    margin: 2mm 0 0;
+    font-size: 10pt;
+    color: #333;
+  }
+
+  .print-sheet .print-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 6mm;
+    margin: 3mm 0 0;
+    padding-bottom: 3mm;
+    border-bottom: 1px solid #999;
+    font-size: 9pt;
+    color: #444;
+  }
+
+  .print-table {
+    width: 100%;
+    margin-top: 6mm;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  .print-table th,
+  .print-table td {
+    border: 1px solid #777;
+    padding: 2mm 1.8mm;
+    text-align: left;
+    vertical-align: top;
+    font-size: 9pt;
+    line-height: 1.5;
+    word-break: break-word;
+  }
+
+  .print-table th {
+    background: #efefef !important;
+    font-weight: 700;
+  }
+
+  .print-table thead {
+    display: table-header-group;
+  }
+
+  .print-table tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .print-risk {
+    color: #8e2f29;
+    font-weight: 700;
+  }
+
+  .print-safe {
+    color: #2f5b3c;
+  }
+
+  .print-empty {
+    padding: 8mm;
+    border: 1px solid #999;
+    text-align: center;
+    color: #333;
+  }
+
+  .print-footnote {
+    margin-top: 5mm;
+    font-size: 8.5pt;
+    color: #555;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
