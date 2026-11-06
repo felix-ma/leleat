@@ -112,13 +112,13 @@ function paragraph(
 
 function cellMargins(): { top: number; bottom: number; left: number; right: number } {
   // 与打印版 padding: 2.6mm 1.5mm 对齐（147 / 85 twips）
-  return { top: 118, bottom: 118, left: 85, right: 85 }
+  return { top: 112, bottom: 112, left: 85, right: 85 }
 }
 
 /** 补剂表只用于勾选，边距压到最小。 */
 function compactCellMargins(): { top: number; bottom: number; left: number; right: number } {
   // 与打印版 padding: 0.7mm 1mm 对齐（40 / 57 twips）
-  return { top: 32, bottom: 32, left: 57, right: 57 }
+  return { top: 22, bottom: 22, left: 57, right: 57 }
 }
 
 /** 固定行距：Word 与 LibreOffice 对「单倍行距」的解释随字体不同，固定行高才能保证两边排版一致。 */
@@ -449,7 +449,7 @@ function buildSupplementTable(block: WeekBlock, supplements: string[]): Table {
                 width: { size: dayWidth, type: WidthType.DXA },
                 verticalAlign: VerticalAlign.CENTER,
                 margins: compactCellMargins(),
-                children: [paragraph('□', { size: 20 })],
+                children: [paragraph('□', { size: 18 })],
               }),
           ),
         ],
@@ -532,6 +532,10 @@ export function buildWeeklyMenuDocument(options: DocxExportOptions): Document {
               right: PAGE_MARGIN_X,
               bottom: PAGE_MARGIN_Y,
               left: PAGE_MARGIN_X,
+              // 页眉/页脚距离必须小于页边距，否则 Word 会把正文整体下压、
+              // 可用高度变少，同一份文件在 LO 里一页、在手机 Word 里两页。
+              header: PAGE_MARGIN_Y - 120,
+              footer: PAGE_MARGIN_Y - 120,
             },
           },
         },
