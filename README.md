@@ -129,12 +129,19 @@ leleat/
 │   ├── main.ts
 │   └── style.css
 ├── agent/
+│   ├── README.md
+│   ├── images.md
+│   ├── recognition.md
+│   ├── allergen-substitute.md
+│   ├── data-merge.md
+│   ├── publish.md
+│   ├── acceptance.md
 │   ├── schemas/week-menu.schema.json
 │   ├── schemas/dish-catalog.schema.json
 │   ├── schemas/substitute-library.schema.json
 │   └── prompts/extract-week-menu.md
 ├── docs/samples/leleat-2026-W45-sample.docx
-├── AGENT_SPEC.md
+├── AGENTS.md
 ├── index.html
 ├── vite.config.ts
 ├── tailwind.config.js
@@ -149,7 +156,7 @@ leleat/
 ```json
 {
   "updatedAt": "2026-11-05T09:20:00+08:00",
-  "schoolName": "乐乐幼儿园",
+  "schoolName": "XX幼儿园",
   "supplements": ["AD", "VD", "五维口服液", "益生菌"]
 }
 ```
@@ -274,7 +281,7 @@ npm run catalog
 
 ## Agent 识别与知识库规范
 
-前端不做识别。仓库外 Agent 直接调用 DeepSeek 多模态模型识别周表，不使用 OCR，并按 [AGENT_SPEC.md](AGENT_SPEC.md) 增量维护 `recipes.json`、`dish-catalog.json` 与 `substitute-library.json`。
+前端不做识别。仓库外 Agent 直接调用 DeepSeek 多模态模型识别周表，不使用 OCR，并按 [AGENTS.md](AGENTS.md) 与其 [agent/](agent/README.md) 明细规范增量维护 `recipes.json`、`dish-catalog.json` 与 `substitute-library.json`。
 
 - 周表识别 Schema：[week-menu.schema.json](agent/schemas/week-menu.schema.json)
 - 菜品库 Schema：[dish-catalog.schema.json](agent/schemas/dish-catalog.schema.json)
