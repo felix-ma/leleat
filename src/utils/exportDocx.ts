@@ -126,10 +126,10 @@ function rowHeight(mm: number): { value: number; rule: (typeof HeightRule)['ATLE
 
 /** 各餐次的最小行高（mm），让整页高度分布接近打印版。 */
 const MEAL_ROW_HEIGHT_MM: Record<MealPeriod, number> = {
-  breakfast: 21,
+  breakfast: 22,
   morningSnack: 14,
-  lunch: 50,
-  afternoonTea: 21,
+  lunch: 52,
+  afternoonTea: 22,
   dinner: 18,
 }
 
@@ -443,7 +443,7 @@ function buildSupplementTable(block: WeekBlock, supplements: string[]): Table {
     (supplement) =>
       new TableRow({
         cantSplit: true,
-        height: rowHeight(5.2),
+        height: rowHeight(5.4),
         children: [
           new TableCell({
             width: { size: labelWidth, type: WidthType.DXA },

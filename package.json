@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "catalog": "node scripts/build-dish-catalog.mjs",
     "deploy": "npm run build && gh-pages -d dist --dotfiles",
-    "measure-docx": "node scripts/measure-docx-height.mjs"
+    "measure-docx": "node scripts/measure-docx-height.mjs",
+    "check-docx": "node scripts/check-docx.mjs"
   },
   "dependencies": {
     "docx": "^9.5.1",
