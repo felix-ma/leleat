@@ -119,11 +119,11 @@ function rowHeight(mm: number): { value: number; rule: (typeof HeightRule)['ATLE
 
 /** 各餐次的最小行高（mm），让整页高度分布接近打印版。 */
 const MEAL_ROW_HEIGHT_MM: Record<MealPeriod, number> = {
-  breakfast: 21,
-  morningSnack: 14,
-  lunch: 50,
-  afternoonTea: 21,
-  dinner: 19,
+  breakfast: 19,
+  morningSnack: 13,
+  lunch: 45,
+  afternoonTea: 19,
+  dinner: 18,
 }
 
 function borderSet(): {
@@ -380,7 +380,7 @@ function buildSupplementTable(block: WeekBlock, supplements: string[]): Table {
     (supplement) =>
       new TableRow({
         cantSplit: true,
-        height: rowHeight(5.4),
+        height: rowHeight(5.2),
         children: [
           new TableCell({
             width: { size: labelWidth, type: WidthType.DXA },
@@ -436,7 +436,7 @@ function buildWeekContent(
     }),
     buildSupplementTable(block, supplements),
     new Paragraph({
-      spacing: { before: 80, line: 240 },
+      spacing: { before: 60, line: 240 },
       children: [
         textRun(
           '说明：红色菜品含登记过敏原；括号内为已确认替餐，未标注的请与幼儿园确认。',
