@@ -265,11 +265,19 @@ function getRecommendation(
   source: SubstituteSource
   substituteId?: string
   tags: string[]
+  method?: string
 } {
   const custom = typeof dish.substitute === 'string' ? dish.substitute.trim() : ''
   if (custom) {
     context.recentByPeriod.set(context.mealPeriod, { date: context.date, name: custom })
-    return { recommendation: [custom], source: 'dish', tags: [] }
+    // 菜品专属替餐也能复用替餐库里的做法与标签（例如「米奶」）。
+    const known = library.find((recipe) => recipe.name === custom)
+    return {
+      recommendation: [custom],
+      source: 'dish',
+      tags: known?.tags ?? [],
+      ...(known?.method ? { method: known.method } : {}),
+    }
   }
 
   if (dish.riskAllergens.length === 0) {
@@ -309,6 +317,7 @@ function getRecommendation(
       source: 'library',
       substituteId: chosen.id,
       tags: chosen.tags,
+      ...(chosen.method ? { method: chosen.method } : {}),
     }
   }
 
@@ -337,7 +346,7 @@ function enrichDish(
   library: SubstituteRecipe[],
   context: RecommendationContext,
 ): MenuDish {
-  const { recommendation, source, substituteId, tags } = getRecommendation(
+  const { recommendation, source, substituteId, tags, method } = getRecommendation(
     dish,
     allergens,
     substitutes,
@@ -352,6 +361,7 @@ function enrichDish(
     substituteSource: source,
     substituteTags: tags,
     ...(substituteId ? { substituteId } : {}),
+    ...(method ? { substituteMethod: method } : {}),
   }
 }
 

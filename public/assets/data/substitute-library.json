@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-06T23:20:00+08:00",
+  "updatedAt": "2026-11-06T23:26:00+08:00",
   "recipes": [
     {
       "id": "sub-egg-steamed-tofu-pork",
@@ -30,7 +30,8 @@
       ],
       "mealPeriods": [
         "lunch"
-      ]
+      ],
+      "method": "嫩豆腐切块焯水去豆腥，肉末用少许生抽炒散，铺在豆腐上蒸 8 分钟，出锅淋香油。"
     },
     {
       "id": "sub-egg-steamed-sweet-potato",
@@ -60,7 +61,8 @@
       "mealPeriods": [
         "breakfast",
         "afternoonTea"
-      ]
+      ],
+      "method": "红薯去皮切滚刀块，上锅蒸 15–20 分钟至筷子能轻松扎透。"
     },
     {
       "id": "sub-egg-mixed-fried-rice",
@@ -91,7 +93,8 @@
       ],
       "mealPeriods": [
         "lunch"
-      ]
+      ],
+      "method": "米饭提前煮好放凉，玉米粒、青菜碎、瘦肉丁、火腿丁炒香后下饭翻匀，少油少盐。"
     },
     {
       "id": "sub-egg-pork-vegetable-noodles",
@@ -119,7 +122,8 @@
       ],
       "mealPeriods": [
         "lunch"
-      ]
+      ],
+      "method": "面条煮到八分熟过凉水，瘦肉丝滑炒后加青菜段大火快炒，最后拌入面条。"
     },
     {
       "id": "sub-milk-rice-milk",
@@ -144,7 +148,8 @@
       "priority": 100,
       "categories": [
         "饮品"
-      ]
+      ],
+      "method": "大米浸泡 2 小时后加水按 1:8 打成米浆，小火边煮边搅 5 分钟至微稠，可放一点点冰糖。"
     },
     {
       "id": "sub-egg-tofu",
@@ -167,7 +172,8 @@
       ],
       "mealPeriods": [
         "lunch"
-      ]
+      ],
+      "method": "内酯豆腐整块蒸 5 分钟，倒掉水，淋少许生抽和香油。"
     },
     {
       "id": "sub-egg-dried-tofu",
@@ -191,7 +197,8 @@
       ],
       "mealPeriods": [
         "lunch"
-      ]
+      ],
+      "method": "豆干切条，用生抽、五香粉、少许糖和清水小火卤 10 分钟，收汁后凉透。"
     },
     {
       "id": "sub-egg-seaweed-tofu-soup",
@@ -220,7 +227,8 @@
       "mealPeriods": [
         "breakfast",
         "lunch"
-      ]
+      ],
+      "method": "水开下豆腐块煮 3 分钟，再下紫菜煮 1 分钟，加盐和香油即可。"
     },
     {
       "id": "sub-milk-oat-milk",
@@ -240,7 +248,8 @@
       "priority": 50,
       "categories": [
         "饮品"
-      ]
+      ],
+      "method": "燕麦片加水按 1:6 泡 30 分钟后打成浆，过滤后小火煮开 5 分钟。"
     },
     {
       "id": "sub-milk-soy-milk",
@@ -260,7 +269,8 @@
       "priority": 45,
       "categories": [
         "饮品"
-      ]
+      ],
+      "method": "黄豆泡发 8 小时，打浆过滤后煮开再滚 10 分钟，不加糖。"
     },
     {
       "id": "sub-milk-coconut-milk",
@@ -279,7 +289,8 @@
       "priority": 40,
       "categories": [
         "饮品"
-      ]
+      ],
+      "method": "选无添加椰浆，按 1:1 兑水煮开即可（便利店纯椰奶需确认无牛奶成分）。"
     },
     {
       "id": "sub-egg-pork-vegetable-noodle-soup",
@@ -308,7 +319,8 @@
       "mealPeriods": [
         "breakfast",
         "lunch"
-      ]
+      ],
+      "method": "清水或高汤煮开，下面条煮到八分熟，加瘦肉片和青菜再煮 2 分钟，调少许盐。"
     },
     {
       "id": "sub-egg-pork-vegetable-congee",
@@ -336,7 +348,8 @@
       ],
       "mealPeriods": [
         "breakfast"
-      ]
+      ],
+      "method": "大米熬成粥底，瘦肉末和青菜碎在最后 5 分钟下锅，煮到断生即可。"
     },
     {
       "id": "sub-egg-tofu-meatball",
@@ -364,7 +377,8 @@
       ],
       "mealPeriods": [
         "lunch"
-      ]
+      ],
+      "method": "豆腐压碎与肉末、少许淀粉拌匀，搓成小丸子蒸 12 分钟。"
     },
     {
       "id": "sub-breakfast-meat-bun",
@@ -397,7 +411,8 @@
         "点心"
       ],
       "verified": true,
-      "priority": 95
+      "priority": 95,
+      "method": "提前发面，猪肉大白菜馅包好蒸 15 分钟；可一次多做冷冻，早上复蒸 8 分钟。"
     },
     {
       "id": "sub-breakfast-scallion-noodle",
@@ -425,7 +440,8 @@
         "主食"
       ],
       "verified": false,
-      "priority": 92
+      "priority": 92,
+      "method": "面条煮熟过凉水，小葱切段用温油煸香，加生抽拌面。"
     },
     {
       "id": "sub-breakfast-fagao",
@@ -458,7 +474,8 @@
         "蛋白"
       ],
       "verified": false,
-      "priority": 88
+      "priority": 88,
+      "method": "面粉加酵母和温水调成稠糊，发酵至两倍大后上锅蒸 20 分钟。"
     },
     {
       "id": "sub-breakfast-corn",
@@ -482,7 +499,8 @@
         "主食"
       ],
       "verified": false,
-      "priority": 60
+      "priority": 60,
+      "method": "玉米切段，冷水上锅蒸 15 分钟。"
     },
     {
       "id": "sub-egg-steamed-dumpling",
@@ -508,7 +526,90 @@
         "breakfast"
       ],
       "verified": false,
-      "priority": 65
+      "priority": 65,
+      "method": "猪肉大白菜馅包好饺子，可提前冷冻；早上水开上锅蒸 10 分钟。"
+    },
+    {
+      "id": "sub-egg-shrimp-dumpling",
+      "name": "虾仁蒸饺",
+      "replaces": [
+        "egg"
+      ],
+      "ingredients": [
+        "面粉",
+        "虾仁",
+        "大白菜"
+      ],
+      "usedFor": [],
+      "tags": [
+        "主食",
+        "蛋白质",
+        "蔬菜"
+      ],
+      "categories": [
+        "主食"
+      ],
+      "mealPeriods": [
+        "breakfast"
+      ],
+      "verified": false,
+      "priority": 62,
+      "method": "虾仁去虾线剁碎，与白菜碎、少许淀粉拌成馅，包好后冷冻；早上蒸 10 分钟。"
+    },
+    {
+      "id": "sub-egg-chicken-vegetable-congee",
+      "name": "鸡丝青菜粥",
+      "replaces": [
+        "egg"
+      ],
+      "ingredients": [
+        "大米",
+        "鸡肉",
+        "青菜"
+      ],
+      "usedFor": [],
+      "tags": [
+        "主食",
+        "蛋白质",
+        "蔬菜"
+      ],
+      "categories": [
+        "主食"
+      ],
+      "mealPeriods": [
+        "breakfast"
+      ],
+      "verified": false,
+      "priority": 66,
+      "method": "大米熬成粥底，鸡胸肉煮熟撕丝，出锅前 5 分钟与青菜碎一起下锅。"
+    },
+    {
+      "id": "sub-egg-shrimp-vegetable-fried-noodle",
+      "name": "鲜虾青菜炒面",
+      "replaces": [
+        "egg"
+      ],
+      "ingredients": [
+        "面条",
+        "虾仁",
+        "青菜"
+      ],
+      "usedFor": [],
+      "tags": [
+        "主食",
+        "蛋白质",
+        "蔬菜"
+      ],
+      "categories": [
+        "主食"
+      ],
+      "mealPeriods": [
+        "breakfast",
+        "lunch"
+      ],
+      "verified": false,
+      "priority": 64,
+      "method": "虾仁去虾线滑炒，加青菜段炒软后下面条（煮八分熟过凉）翻炒，少油少盐。"
     }
   ]
 }

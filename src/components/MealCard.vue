@@ -87,6 +87,13 @@ const emit = defineEmits<{
             <p v-if="dish.substituteTags.length > 0" class="mt-1 text-[0.68rem] leading-4 text-ink-faint">
               {{ dish.substituteTags.join(' · ') }}
             </p>
+            <p
+              v-if="dish.substituteMethod"
+              class="mt-1.5 border-t border-honey-100 pt-1.5 text-[0.7rem] leading-5 text-ink-muted"
+            >
+              <span class="font-semibold text-honey-700">在家做法</span>
+              {{ dish.substituteMethod }}
+            </p>
           </div>
         </div>
 

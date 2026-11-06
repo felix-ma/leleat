@@ -5,7 +5,9 @@
   "description": "按过敏原和适用菜品组织的替餐方案库。前端读取后动态选择，不把某一道菜的替餐写死在代码里。",
   "type": "object",
   "additionalProperties": false,
-  "required": ["recipes"],
+  "required": [
+    "recipes"
+  ],
   "properties": {
     "updatedAt": {
       "type": "string",
@@ -22,7 +24,13 @@
     "recipe": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "name", "replaces", "ingredients", "tags"],
+      "required": [
+        "id",
+        "name",
+        "replaces",
+        "ingredients",
+        "tags"
+      ],
       "properties": {
         "id": {
           "type": "string",
@@ -66,6 +74,37 @@
         },
         "priority": {
           "type": "number"
+        },
+        "mealPeriods": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "breakfast",
+              "morningSnack",
+              "lunch",
+              "afternoonTea",
+              "dinner"
+            ]
+          }
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "主食",
+              "蛋白",
+              "菜",
+              "汤",
+              "饮品",
+              "水果",
+              "点心"
+            ]
+          }
+        },
+        "method": {
+          "type": "string",
+          "minLength": 4,
+          "description": "家长在家自制的做法说明，写成可直接照做的短句。"
         }
       }
     }

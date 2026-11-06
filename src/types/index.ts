@@ -51,6 +51,8 @@ export interface SubstituteRecipe {
   categories?: DishCategory[]
   verified?: boolean
   priority?: number
+  /** 做法：家长自己在家做好带到幼儿园，写成能直接照做的短句。 */
+  method?: string
 }
 
 export interface SubstituteLibrary {
@@ -148,6 +150,8 @@ export interface MenuDish extends Dish {
   substituteSource: SubstituteSource
   substituteId?: string
   substituteTags: string[]
+  /** 替餐做法，只有动态替餐库命中时才有。 */
+  substituteMethod?: string
 }
 
 export interface MenuImage {

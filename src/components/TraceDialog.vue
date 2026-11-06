@@ -111,6 +111,9 @@ watch(
             <p v-if="target.dish.substituteTags.length > 0" class="mt-1 text-xs text-honey-700">
               {{ target.dish.substituteTags.join(' · ') }}
             </p>
+            <p v-if="target.dish.substituteMethod" class="mt-2 text-xs leading-5 text-ink-muted">
+              <span class="font-semibold text-ink">在家做法：</span>{{ target.dish.substituteMethod }}
+            </p>
           </section>
 
           <section class="mt-4">
