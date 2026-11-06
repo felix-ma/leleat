@@ -18,6 +18,8 @@ npm run deploy                # 图片/数据改动后重建 gh-pages
 
 结束前自检：`git status --short` 干净、`git log origin/main..HEAD` 为空。
 
+**不要在线复核**：用户要求提交 + `npm run deploy` 之后不要打开线上页面/抓 CDN 校验（Pages 缓存刷新慢，轮询很耗时间和 token）。交付时只在回复里给**最新提交 ID** 和本次改动总结，线上状态由用户自己看。
+
 - 不能提交的东西（API Key、原始未脱敏图、`.agent-out/`、缓存）不要写进工作区，避免手滑提交。
 - 只提交本次任务相关的文件，不顺手 `git add -A` 带上无关改动。
 
