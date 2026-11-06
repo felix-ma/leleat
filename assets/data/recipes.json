@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-05T14:00:00+08:00",
+  "updatedAt": "2026-11-06T17:10:00+08:00",
   "recipes": [
     {
       "date": "2026-10-12",
@@ -2020,6 +2020,678 @@
           "name": "牛奶",
           "ingredients": [
             "牛奶"
+          ],
+          "riskAllergens": [
+            "milk"
+          ],
+          "substitute": "米奶"
+        }
+      ]
+    },
+    {
+      "date": "2026-11-09",
+      "week": "2026-W46",
+      "mealPeriod": "breakfast",
+      "mealLabel": "早餐",
+      "dishes": [
+        {
+          "name": "彩蔬肉粥",
+          "ingredients": [
+            "红萝卜",
+            "瘦肉",
+            "大米",
+            "青菜"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        },
+        {
+          "name": "鸡蛋",
+          "ingredients": [
+            "鸡蛋"
+          ],
+          "riskAllergens": [
+            "egg"
+          ],
+          "substitute": null
+        }
+      ]
+    },
+    {
+      "date": "2026-11-09",
+      "week": "2026-W46",
+      "mealPeriod": "morningSnack",
+      "mealLabel": "早点",
+      "dishes": [
+        {
+          "name": "香梨",
+          "ingredients": [
+            "香梨"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        },
+        {
+          "name": "香蕉",
+          "ingredients": [
+            "香蕉"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        }
+      ]
+    },
+    {
+      "date": "2026-11-09",
+      "week": "2026-W46",
+      "mealPeriod": "lunch",
+      "mealLabel": "午餐",
+      "dishes": [
+        {
+          "name": "虫草花红枣冬菇蒸鸡",
+          "ingredients": [
+            "冬菇",
+            "鲜鸡",
+            "红枣",
+            "虫草花"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        },
+        {
+          "name": "红烧肉酱豆腐",
+          "ingredients": [
+            "瘦肉",
+            "豆腐",
+            "小葱",
+            "红萝卜"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        },
+        {
+          "name": "肉沫时菜",
+          "ingredients": [
+            "时菜",
+            "瘦肉"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        },
+        {
+          "name": "木瓜花生瘦肉汤",
+          "ingredients": [
+            "木瓜",
+            "花生",
+            "瘦肉",
+            "红枣"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        },
+        {
+          "name": "水晶米饭",
+          "ingredients": [
+            "大米"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        }
+      ],
+      "sourceImage": "assets/images/20261109-menu.jpg"
+    },
+    {
+      "date": "2026-11-09",
+      "week": "2026-W46",
+      "mealPeriod": "afternoonTea",
+      "mealLabel": "午点",
+      "dishes": [
+        {
+          "name": "烧麦",
+          "ingredients": [
+            "面粉",
+            "瘦肉",
+            "玉米粒",
+            "红萝卜",
+            "火腿"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        },
+        {
+          "name": "牛奶",
+          "ingredients": [
+            "牛奶"
+          ],
+          "riskAllergens": [
+            "milk"
+          ],
+          "substitute": "米奶"
+        }
+      ]
+    },
+    {
+      "date": "2026-11-10",
+      "week": "2026-W46",
+      "mealPeriod": "breakfast",
+      "mealLabel": "早餐",
+      "dishes": [
+        {
+          "name": "三鲜通心粉",
+          "ingredients": [
+            "通心粉",
+            "瘦肉",
+            "青菜",
+            "鸡蛋"
+          ],
+          "riskAllergens": [
+            "egg"
+          ],
+          "substitute": null
+        },
+        {
+          "name": "蒸贝贝南瓜",
+          "ingredients": [
+            "贝贝南瓜"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        }
+      ]
+    },
+    {
+      "date": "2026-11-10",
+      "week": "2026-W46",
+      "mealPeriod": "morningSnack",
+      "mealLabel": "早点",
+      "dishes": [
+        {
+          "name": "哈密瓜",
+          "ingredients": [
+            "哈密瓜"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        },
+        {
+          "name": "蜜橘",
+          "ingredients": [
+            "蜜橘"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        }
+      ]
+    },
+    {
+      "date": "2026-11-10",
+      "week": "2026-W46",
+      "mealPeriod": "lunch",
+      "mealLabel": "午餐",
+      "dishes": [
+        {
+          "name": "黄豆焖排骨",
+          "ingredients": [
+            "黄豆",
+            "排骨",
+            "小葱"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        },
+        {
+          "name": "肉沫焖萝卜",
+          "ingredients": [
+            "瘦肉",
+            "白萝卜",
+            "小葱"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        },
+        {
+          "name": "肉沫时菜",
+          "ingredients": [
+            "时菜",
+            "瘦肉"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        },
+        {
+          "name": "竹蔗雪梨红枣瘦肉汤",
+          "ingredients": [
+            "甘蔗",
+            "瘦肉",
+            "红枣",
+            "雪梨"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        },
+        {
+          "name": "紫薯饭",
+          "ingredients": [
+            "大米",
+            "紫薯"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        }
+      ],
+      "sourceImage": "assets/images/20261110-menu.jpg"
+    },
+    {
+      "date": "2026-11-10",
+      "week": "2026-W46",
+      "mealPeriod": "afternoonTea",
+      "mealLabel": "午点",
+      "dishes": [
+        {
+          "name": "红枣糕",
+          "ingredients": [
+            "红枣",
+            "面粉",
+            "白糖"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        },
+        {
+          "name": "纯牛奶",
+          "ingredients": [
+            "纯牛奶"
+          ],
+          "riskAllergens": [
+            "milk"
+          ],
+          "substitute": "米奶"
+        }
+      ]
+    },
+    {
+      "date": "2026-11-11",
+      "week": "2026-W46",
+      "mealPeriod": "breakfast",
+      "mealLabel": "早餐",
+      "dishes": [
+        {
+          "name": "奶香小馒头",
+          "ingredients": [
+            "面粉",
+            "白糖",
+            "奶粉"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        },
+        {
+          "name": "豆奶",
+          "ingredients": [
+            "豆奶"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        }
+      ]
+    },
+    {
+      "date": "2026-11-11",
+      "week": "2026-W46",
+      "mealPeriod": "morningSnack",
+      "mealLabel": "早点",
+      "dishes": [
+        {
+          "name": "圣女果",
+          "ingredients": [
+            "圣女果"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        },
+        {
+          "name": "香梨",
+          "ingredients": [
+            "香梨"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        }
+      ]
+    },
+    {
+      "date": "2026-11-11",
+      "week": "2026-W46",
+      "mealPeriod": "lunch",
+      "mealLabel": "午餐",
+      "dishes": [
+        {
+          "name": "腰果玉米炒肉丁",
+          "ingredients": [
+            "腰果",
+            "玉米粒",
+            "鸡胸肉",
+            "红萝卜"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        },
+        {
+          "name": "红烧肉炖土豆",
+          "ingredients": [
+            "五花肉",
+            "土豆"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        },
+        {
+          "name": "肉沫时菜",
+          "ingredients": [
+            "时菜",
+            "瘦肉"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        },
+        {
+          "name": "冬瓜薏米老鸭汤",
+          "ingredients": [
+            "冬瓜",
+            "老鸭",
+            "薏苡仁",
+            "红枣"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        },
+        {
+          "name": "水晶米饭",
+          "ingredients": [
+            "大米"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        }
+      ],
+      "sourceImage": "assets/images/20261111-menu.jpg"
+    },
+    {
+      "date": "2026-11-11",
+      "week": "2026-W46",
+      "mealPeriod": "afternoonTea",
+      "mealLabel": "午点",
+      "dishes": [
+        {
+          "name": "香菇瘦肉虾粥",
+          "ingredients": [
+            "鲜虾",
+            "香菇",
+            "瘦肉",
+            "青菜",
+            "大米"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        }
+      ]
+    },
+    {
+      "date": "2026-11-12",
+      "week": "2026-W46",
+      "mealPeriod": "breakfast",
+      "mealLabel": "早餐",
+      "dishes": [
+        {
+          "name": "三丝炒米粉",
+          "ingredients": [
+            "米粉",
+            "红萝卜",
+            "瘦肉",
+            "包菜",
+            "鸡蛋"
+          ],
+          "riskAllergens": [
+            "egg"
+          ],
+          "substitute": null
+        },
+        {
+          "name": "菠菜猪肝瘦肉汤",
+          "ingredients": [
+            "瘦肉",
+            "猪肝",
+            "菠菜"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        }
+      ]
+    },
+    {
+      "date": "2026-11-12",
+      "week": "2026-W46",
+      "mealPeriod": "morningSnack",
+      "mealLabel": "早点",
+      "dishes": [
+        {
+          "name": "酸牛奶",
+          "ingredients": [
+            "酸牛奶"
+          ],
+          "riskAllergens": [
+            "milk"
+          ],
+          "substitute": "米奶"
+        },
+        {
+          "name": "山楂片",
+          "ingredients": [
+            "山楂片"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        }
+      ]
+    },
+    {
+      "date": "2026-11-12",
+      "week": "2026-W46",
+      "mealPeriod": "lunch",
+      "mealLabel": "午餐",
+      "dishes": [
+        {
+          "name": "自制肉丸",
+          "ingredients": [
+            "莲藕",
+            "瘦肉",
+            "小葱",
+            "红萝卜"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        },
+        {
+          "name": "火腿炒豆角粒",
+          "ingredients": [
+            "火腿",
+            "豆角"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        },
+        {
+          "name": "肉沫时菜",
+          "ingredients": [
+            "时菜",
+            "瘦肉"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        },
+        {
+          "name": "海底椰苹果肉汤",
+          "ingredients": [
+            "海底椰",
+            "苹果",
+            "红枣",
+            "瘦肉"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        },
+        {
+          "name": "黄金米饭",
+          "ingredients": [
+            "大米",
+            "小米"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        }
+      ],
+      "sourceImage": "assets/images/20261112-menu.jpg"
+    },
+    {
+      "date": "2026-11-12",
+      "week": "2026-W46",
+      "mealPeriod": "afternoonTea",
+      "mealLabel": "午点",
+      "dishes": [
+        {
+          "name": "红豆莲子西米露",
+          "ingredients": [
+            "红豆",
+            "西米",
+            "红枣",
+            "红糖",
+            "莲子"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        },
+        {
+          "name": "玉米棒",
+          "ingredients": [
+            "玉米棒"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        }
+      ]
+    },
+    {
+      "date": "2026-11-13",
+      "week": "2026-W46",
+      "mealPeriod": "breakfast",
+      "mealLabel": "早餐",
+      "dishes": [
+        {
+          "name": "鸡丝汤面",
+          "ingredients": [
+            "鸡胸肉",
+            "青菜",
+            "蛋黄面",
+            "红萝卜"
+          ],
+          "riskAllergens": [
+            "egg"
+          ],
+          "substitute": null
+        },
+        {
+          "name": "蒸红薯",
+          "ingredients": [
+            "红薯"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        }
+      ]
+    },
+    {
+      "date": "2026-11-13",
+      "week": "2026-W46",
+      "mealPeriod": "morningSnack",
+      "mealLabel": "早点",
+      "dishes": [
+        {
+          "name": "橘子",
+          "ingredients": [
+            "橘子"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        },
+        {
+          "name": "香蕉",
+          "ingredients": [
+            "香蕉"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        }
+      ]
+    },
+    {
+      "date": "2026-11-13",
+      "week": "2026-W46",
+      "mealPeriod": "lunch",
+      "mealLabel": "午餐",
+      "dishes": [
+        {
+          "name": "茄汁牛肉意面",
+          "ingredients": [
+            "西红柿",
+            "牛肉",
+            "意大利面",
+            "小葱"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        },
+        {
+          "name": "西兰花炒肉",
+          "ingredients": [
+            "西兰花",
+            "瘦肉"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        },
+        {
+          "name": "淮山玉米排骨汤",
+          "ingredients": [
+            "淮山",
+            "玉米棒",
+            "排骨"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        }
+      ],
+      "sourceImage": "assets/images/20261113-menu.jpg"
+    },
+    {
+      "date": "2026-11-13",
+      "week": "2026-W46",
+      "mealPeriod": "afternoonTea",
+      "mealLabel": "午点",
+      "dishes": [
+        {
+          "name": "小葱瘦肉卷",
+          "ingredients": [
+            "小葱",
+            "瘦肉",
+            "面粉"
+          ],
+          "riskAllergens": [],
+          "substitute": null
+        },
+        {
+          "name": "纯牛奶",
+          "ingredients": [
+            "纯牛奶"
           ],
           "riskAllergens": [
             "milk"
