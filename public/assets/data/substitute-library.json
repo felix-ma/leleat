@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-06T23:26:00+08:00",
+  "updatedAt": "2026-11-06T23:32:00+08:00",
   "recipes": [
     {
       "id": "sub-egg-steamed-tofu-pork",
@@ -610,6 +610,267 @@
       "verified": false,
       "priority": 64,
       "method": "虾仁去虾线滑炒，加青菜段炒软后下面条（煮八分熟过凉）翻炒，少油少盐。"
+    },
+    {
+      "id": "sub-egg-millet-pumpkin-congee",
+      "name": "小米南瓜粥",
+      "replaces": [
+        "egg"
+      ],
+      "ingredients": [
+        "小米",
+        "南瓜"
+      ],
+      "usedFor": [],
+      "tags": [
+        "主食",
+        "蔬菜"
+      ],
+      "verified": true,
+      "priority": 68,
+      "categories": [
+        "主食"
+      ],
+      "mealPeriods": [
+        "breakfast"
+      ],
+      "method": "小米淘洗后和南瓜小丁同煮 25 分钟至软烂；可提前煮好冷藏，早上热透装焖烧罐。"
+    },
+    {
+      "id": "sub-breakfast-steamed-yam",
+      "name": "蒸山药",
+      "replaces": [
+        "egg"
+      ],
+      "ingredients": [
+        "铁棍山药"
+      ],
+      "usedFor": [],
+      "tags": [
+        "主食",
+        "软食"
+      ],
+      "verified": true,
+      "priority": 60,
+      "categories": [
+        "主食"
+      ],
+      "mealPeriods": [
+        "breakfast",
+        "afternoonTea"
+      ],
+      "method": "铁棍山药去皮切段，上锅蒸 15 分钟，晾到温热装盒；软糯好吞咽，冷了也不硬。"
+    },
+    {
+      "id": "sub-breakfast-banana-pancake",
+      "name": "香蕉松饼",
+      "replaces": [
+        "egg"
+      ],
+      "ingredients": [
+        "香蕉",
+        "面粉"
+      ],
+      "usedFor": [],
+      "tags": [
+        "主食",
+        "水果"
+      ],
+      "verified": true,
+      "priority": 58,
+      "categories": [
+        "主食"
+      ],
+      "mealPeriods": [
+        "breakfast"
+      ],
+      "method": "熟香蕉 1 根压泥，加面粉 40g、清水 40ml 调成稠糊，平底锅小火两面煎熟，不加糖。"
+    },
+    {
+      "id": "sub-egg-pork-vegetable-rice-noodle",
+      "name": "蔬菜瘦肉炒米粉",
+      "replaces": [
+        "egg"
+      ],
+      "ingredients": [
+        "米粉",
+        "瘦肉",
+        "青菜",
+        "胡萝卜"
+      ],
+      "usedFor": [],
+      "tags": [
+        "主食",
+        "蛋白质",
+        "蔬菜"
+      ],
+      "verified": true,
+      "priority": 72,
+      "categories": [
+        "主食"
+      ],
+      "mealPeriods": [
+        "breakfast",
+        "lunch"
+      ],
+      "method": "米粉温水泡软；瘦肉丝滑炒后下青菜丝、胡萝卜丝，再下米粉翻炒，少油少盐。"
+    },
+    {
+      "id": "sub-breakfast-red-bean-bun",
+      "name": "豆沙包",
+      "replaces": [
+        "egg"
+      ],
+      "ingredients": [
+        "面粉",
+        "红豆沙"
+      ],
+      "usedFor": [],
+      "tags": [
+        "主食"
+      ],
+      "verified": true,
+      "priority": 62,
+      "categories": [
+        "主食",
+        "点心"
+      ],
+      "mealPeriods": [
+        "breakfast"
+      ],
+      "method": "发面包入豆沙馅，二发后蒸 12 分钟；也可买配料表只有面粉和豆沙的速冻款蒸透。"
+    },
+    {
+      "id": "sub-egg-steamed-sea-bass",
+      "name": "清蒸鲈鱼",
+      "replaces": [
+        "egg"
+      ],
+      "ingredients": [
+        "鲈鱼",
+        "姜",
+        "小葱"
+      ],
+      "usedFor": [],
+      "tags": [
+        "蛋白质",
+        "鱼虾"
+      ],
+      "verified": true,
+      "priority": 68,
+      "categories": [
+        "菜"
+      ],
+      "mealPeriods": [
+        "lunch"
+      ],
+      "method": "鲈鱼片铺姜丝蒸 6 分钟，淋少许生抽和热油；给孩子吃务必挑净鱼刺。"
+    },
+    {
+      "id": "sub-egg-cabbage-shrimp-ball",
+      "name": "包菜虾肉丸",
+      "replaces": [
+        "egg"
+      ],
+      "ingredients": [
+        "虾仁",
+        "包菜",
+        "淀粉"
+      ],
+      "usedFor": [],
+      "tags": [
+        "蛋白质",
+        "蔬菜"
+      ],
+      "verified": true,
+      "priority": 66,
+      "categories": [
+        "菜"
+      ],
+      "mealPeriods": [
+        "lunch",
+        "dinner"
+      ],
+      "method": "虾肉剁泥，拌包菜碎和少许淀粉搅上劲，搓丸蒸 12 分钟，软嫩不柴。"
+    },
+    {
+      "id": "sub-egg-tomato-beef-potato",
+      "name": "番茄土豆炖牛肉",
+      "replaces": [
+        "egg"
+      ],
+      "ingredients": [
+        "牛肉",
+        "番茄",
+        "土豆"
+      ],
+      "usedFor": [],
+      "tags": [
+        "蛋白质",
+        "蔬菜"
+      ],
+      "verified": true,
+      "priority": 65,
+      "categories": [
+        "菜"
+      ],
+      "mealPeriods": [
+        "lunch",
+        "dinner"
+      ],
+      "method": "牛肉小块焯水，和番茄、土豆炖 40 分钟至软烂，汤汁收浓方便带饭。"
+    },
+    {
+      "id": "sub-egg-mushroom-chicken",
+      "name": "香菇滑鸡",
+      "replaces": [
+        "egg"
+      ],
+      "ingredients": [
+        "鸡腿肉",
+        "香菇"
+      ],
+      "usedFor": [],
+      "tags": [
+        "蛋白质",
+        "蔬菜"
+      ],
+      "verified": true,
+      "priority": 64,
+      "categories": [
+        "菜"
+      ],
+      "mealPeriods": [
+        "lunch",
+        "dinner"
+      ],
+      "method": "鸡腿肉切小块用淀粉抓匀，与香菇片同炒后小火焖 5 分钟，肉嫩汁多。"
+    },
+    {
+      "id": "sub-egg-broccoli-shrimp",
+      "name": "西兰花炒虾仁",
+      "replaces": [
+        "egg"
+      ],
+      "ingredients": [
+        "西兰花",
+        "虾仁"
+      ],
+      "usedFor": [],
+      "tags": [
+        "蛋白质",
+        "蔬菜"
+      ],
+      "verified": true,
+      "priority": 66,
+      "categories": [
+        "菜"
+      ],
+      "mealPeriods": [
+        "lunch",
+        "dinner"
+      ],
+      "method": "西兰花焯水 1 分钟，虾仁滑炒后合炒，少盐；复热后颜色口感都还好。"
     }
   ]
 }
