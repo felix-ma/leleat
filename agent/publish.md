@@ -27,6 +27,8 @@ git fetch origin gh-pages
 git show origin/gh-pages:index.html | grep -o 'index-[A-Za-z0-9_-]*\.js'   # 与本地 dist/index.html 里的 hash 应一致
 ```
 
+**页脚版本号会滞后是正常的**：`gh-pages` 推送成功后，GitHub Pages 还要排队重新构建，且它对 `index.html` 设了 `Cache-Control: max-age=600`，所以页脚「构建 xxxx」可能比最新提交落后 5–15 分钟。这不是没部署，不要为了催它反复 deploy（重复推送不会加速，反而多占构建配额）。用户报「还是旧版本号」时，先用本地核对法确认 `origin/gh-pages` 的 `index.html` 引用与本地 `dist` 一致，若一致就说明是 Pages 侧在排队。
+
 **不要在线复核**：提交 + deploy 之后不要打开线上页面/抓 CDN 校验（Pages 缓存刷新慢，轮询很耗时间和 token）。交付时只在回复里给**最新提交 ID** 和本次改动总结，线上状态由用户自己看。
 
 - 不能提交的东西（API Key、原始未脱敏图、`.agent-out/`、缓存）不要写进工作区，避免手滑提交。
