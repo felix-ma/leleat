@@ -2,6 +2,7 @@ import {
   AlignmentType,
   BorderStyle,
   Document,
+  HeightRule,
   PageBreak,
   PageOrientation,
   Packer,
@@ -25,10 +26,12 @@ import {
   toIsoDate,
 } from './date'
 
-const FONT = '宋体'
+/** 微软雅黑在 Windows / WPS / 手机 Word 上都有，比宋体在小字号下更清楚。 */
+const FONT = '微软雅黑'
 const RED = 'FF0000'
 const BLACK = '000000'
-const TABLE_WIDTH = 16000
+// 横向 A4 可用宽度：16838 - 2 × 283 = 16272 twips，铺满整页。
+const TABLE_WIDTH = 16272
 const LABEL_WIDTH = 900
 // docx 会按 orientation 交换宽高；这里填入 A4 的短边/长边，
 // 生成结果才是 16838 × 11906 的横向页面。
@@ -36,6 +39,8 @@ const A4_SHORT_EDGE = 11906
 const A4_LONG_EDGE = 16838
 const PAGE_MARGIN = 283
 const BORDER = { style: BorderStyle.SINGLE, size: 4, color: '000000' }
+/** 表头与餐次列的浅灰底，和打印版一致。 */
+const HEAD_FILL = 'F2F2F2'
 const WEEKDAY_NAMES = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'] as const
 
 interface WeekColumn {
@@ -103,6 +108,22 @@ function cellMargins(): { top: number; bottom: number; left: number; right: numb
 /** 补剂表只用于勾选，边距压到最小。 */
 function compactCellMargins(): { top: number; bottom: number; left: number; right: number } {
   return { top: 10, bottom: 10, left: 40, right: 40 }
+}
+
+/** 1mm ≈ 56.7 twips；用最小行高把一页铺满，内容多时 Word 会自动加高。 */
+const TWIPS_PER_MM = 56.7
+
+function rowHeight(mm: number): { value: number; rule: (typeof HeightRule)['ATLEAST'] } {
+  return { value: Math.round(mm * TWIPS_PER_MM), rule: HeightRule.ATLEAST }
+}
+
+/** 各餐次的最小行高（mm），让整页高度分布接近打印版。 */
+const MEAL_ROW_HEIGHT_MM: Record<MealPeriod, number> = {
+  breakfast: 21,
+  morningSnack: 14,
+  lunch: 50,
+  afternoonTea: 21,
+  dinner: 19,
 }
 
 function borderSet(): {
@@ -215,6 +236,7 @@ function buildHeaderCell(column: WeekColumn, width: number): TableCell {
     width: { size: width, type: WidthType.DXA },
     verticalAlign: VerticalAlign.CENTER,
     margins: cellMargins(),
+    shading: { fill: HEAD_FILL },
     children: [
       paragraph(column.weekday, { bold: true, size: 20 }),
       paragraph(column.shortDate, { size: 15, color: '555555' }),
@@ -269,11 +291,13 @@ function buildMenuTable(block: WeekBlock): Table {
   const header = new TableRow({
     tableHeader: true,
     cantSplit: true,
+    height: rowHeight(8.5),
     children: [
       new TableCell({
         width: { size: LABEL_WIDTH, type: WidthType.DXA },
         verticalAlign: VerticalAlign.CENTER,
         margins: cellMargins(),
+        shading: { fill: HEAD_FILL },
         children: [paragraph('餐次', { bold: true, size: 20 })],
       }),
       ...block.columns.map((column) => buildHeaderCell(column, dayWidth)),
@@ -286,6 +310,7 @@ function buildMenuTable(block: WeekBlock): Table {
         width: { size: LABEL_WIDTH, type: WidthType.DXA },
         verticalAlign: VerticalAlign.CENTER,
         margins: cellMargins(),
+        shading: { fill: HEAD_FILL },
         children: [paragraph(mealRow.label, { bold: true, size: 21 })],
       }),
     ]
@@ -298,6 +323,7 @@ function buildMenuTable(block: WeekBlock): Table {
 
     return new TableRow({
       cantSplit: true,
+      height: rowHeight(MEAL_ROW_HEIGHT_MM[mealRow.period] ?? 20),
       children: cells,
     })
   })
@@ -325,11 +351,13 @@ function buildSupplementTable(block: WeekBlock, supplements: string[]): Table {
   const header = new TableRow({
     tableHeader: true,
     cantSplit: true,
+    height: rowHeight(7),
     children: [
       new TableCell({
         width: { size: labelWidth, type: WidthType.DXA },
         verticalAlign: VerticalAlign.CENTER,
         margins: compactCellMargins(),
+        shading: { fill: HEAD_FILL },
         children: [paragraph('补剂', { bold: true, size: 15 })],
       }),
       ...supplementDates.map(
@@ -338,6 +366,7 @@ function buildSupplementTable(block: WeekBlock, supplements: string[]): Table {
             width: { size: dayWidth, type: WidthType.DXA },
             verticalAlign: VerticalAlign.CENTER,
             margins: compactCellMargins(),
+            shading: { fill: HEAD_FILL },
             children: [
               paragraph(longWeekday(date), { bold: true, size: 12 }),
               paragraph(shortDate(date), { size: 10, color: '555555' }),
@@ -351,6 +380,7 @@ function buildSupplementTable(block: WeekBlock, supplements: string[]): Table {
     (supplement) =>
       new TableRow({
         cantSplit: true,
+        height: rowHeight(5.4),
         children: [
           new TableCell({
             width: { size: labelWidth, type: WidthType.DXA },
@@ -410,7 +440,7 @@ function buildWeekContent(
       children: [
         textRun(
           '说明：红色菜品含登记过敏原；括号内为已确认替餐，未标注的请与幼儿园确认。',
-          { size: 15, color: '666666' },
+          { size: 16, color: '666666' },
         ),
       ],
     }),
