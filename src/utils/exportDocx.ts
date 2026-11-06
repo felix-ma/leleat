@@ -30,7 +30,9 @@ import {
 } from './date'
 
 /** 微软雅黑在 Windows / WPS / 手机 Word 上都有，比宋体在小字号下更清楚。 */
-const FONT = '微软雅黑'
+// 与网页端自托管字体同源：站点用 Noto Sans SC 子集（Leleat Sans），
+// Word 端写 family 名，Android/WPS 自带 Noto Sans CJK SC 时字形完全一致。
+const FONT = 'Noto Sans CJK SC'
 const RED = 'FF0000'
 const BLACK = '000000'
 // 横向 A4 可用宽度：16838 - 2 × 283 = 16272 twips，铺满整页。
