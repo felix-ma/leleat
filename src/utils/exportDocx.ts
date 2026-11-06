@@ -124,11 +124,11 @@ function rowHeight(mm: number): { value: number; rule: (typeof HeightRule)['ATLE
 
 /** 各餐次的最小行高（mm），让整页高度分布接近打印版。 */
 const MEAL_ROW_HEIGHT_MM: Record<MealPeriod, number> = {
-  breakfast: 17,
-  morningSnack: 12.5,
-  lunch: 42,
-  afternoonTea: 17,
-  dinner: 16,
+  breakfast: 16,
+  morningSnack: 11,
+  lunch: 45,
+  afternoonTea: 16,
+  dinner: 15,
 }
 
 function borderSet(): {
@@ -269,17 +269,17 @@ function buildPrintHeader(block: WeekBlock, options: DocxExportOptions): (Table 
               margins: { top: 0, bottom: 0, left: 0, right: 0 },
               children: [
                 new Paragraph({
-                  spacing: { after: 40, line: 240 },
+                  spacing: { after: 20, line: 220 },
                   children: [
                     textRun(`${options.schoolName || 'Leleat'} · 周食谱`, {
-                      size: 16,
+                      size: 14,
                       color: MUTED,
                     }),
                   ],
                 }),
                 new Paragraph({
                   spacing: { after: 0, line: 240 },
-                  children: [textRun(options.title, { size: 38, bold: true })],
+                  children: [textRun(options.title, { size: 26, bold: true })],
                 }),
               ],
             }),
@@ -291,8 +291,8 @@ function buildPrintHeader(block: WeekBlock, options: DocxExportOptions): (Table 
                 (line) =>
                   new Paragraph({
                     alignment: AlignmentType.RIGHT,
-                    spacing: { after: 20, line: 260 },
-                    children: [textRun(line, { size: 16, color: MUTED })],
+                    spacing: { after: 10, line: 230 },
+                    children: [textRun(line, { size: 14, color: MUTED })],
                   }),
               ),
             }),
@@ -301,7 +301,7 @@ function buildPrintHeader(block: WeekBlock, options: DocxExportOptions): (Table 
       ],
     }),
     new Paragraph({
-      spacing: { before: 40, after: 60, line: 240 },
+      spacing: { before: 10, after: 20, line: 220 },
       border: { bottom: { style: BorderStyle.SINGLE, size: 8, color: '777777', space: 4 } },
       children: [textRun('', { size: 2 })],
     }),
@@ -408,7 +408,7 @@ function buildMenuTable(block: WeekBlock): Table {
   const header = new TableRow({
     tableHeader: true,
     cantSplit: true,
-    height: rowHeight(8.5),
+    height: rowHeight(7.5),
     children: [
       new TableCell({
         width: { size: LABEL_WIDTH, type: WidthType.DXA },
@@ -468,7 +468,7 @@ function buildSupplementTable(block: WeekBlock, supplements: string[]): Table {
   const header = new TableRow({
     tableHeader: true,
     cantSplit: true,
-    height: rowHeight(7),
+    height: rowHeight(5.5),
     children: [
       new TableCell({
         width: { size: labelWidth, type: WidthType.DXA },
@@ -497,7 +497,7 @@ function buildSupplementTable(block: WeekBlock, supplements: string[]): Table {
     (supplement) =>
       new TableRow({
         cantSplit: true,
-        height: rowHeight(4.8),
+        height: rowHeight(4.3),
         children: [
           new TableCell({
             width: { size: labelWidth, type: WidthType.DXA },
@@ -534,7 +534,7 @@ function buildWeekContent(
   return [
     ...buildPrintHeader(block, options),
     buildMenuTable(block),
-    new Paragraph({ spacing: { before: 40, after: 0, line: 240 }, children: [textRun('', { size: 2 })] }),
+    new Paragraph({ spacing: { before: 10, after: 0, line: 240 }, children: [textRun('', { size: 2 })] }),
     buildSupplementHeading(),
     buildSupplementTable(block, options.supplements),
   ]
