@@ -1,3 +1,4 @@
+import { EMBED_FONT_NAME, embedDocxFont } from './docxFontEmbed'
 import {
   AlignmentType,
   BorderStyle,
@@ -32,7 +33,7 @@ import {
 /** 微软雅黑在 Windows / WPS / 手机 Word 上都有，比宋体在小字号下更清楚。 */
 // 与网页端自托管字体同源：站点用 Noto Sans SC 子集（Leleat Sans），
 // Word 端写 family 名，Android/WPS 自带 Noto Sans CJK SC 时字形完全一致。
-const FONT = 'Noto Sans CJK SC'
+const FONT = EMBED_FONT_NAME
 const RED = 'FF0000'
 const BLACK = '000000'
 // 横向 A4 可用宽度：16838 - 2 × 283 = 16272 twips，铺满整页。
@@ -558,5 +559,6 @@ export function buildWeeklyMenuDocument(options: DocxExportOptions): Document {
 export async function exportDocx(options: DocxExportOptions): Promise<void> {
   const document = buildWeeklyMenuDocument(options)
   const blob = await Packer.toBlob(document)
-  downloadBlob(blob, `${options.fileBase}.docx`)
+  const withFont = await embedDocxFont(blob)
+  downloadBlob(withFont, `${options.fileBase}.docx`)
 }
