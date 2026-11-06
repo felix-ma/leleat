@@ -192,6 +192,12 @@ const gridStyle = computed(() => ({
                   : '全天安全'
               }}
             </span>
+            <span
+              v-if="(daysByDate.get(date)?.auditCount ?? 0) > 0"
+              class="text-[0.62rem] font-medium text-honey-700"
+            >
+              搭配提醒 {{ daysByDate.get(date)?.auditCount }}
+            </span>
           </template>
           <span v-else class="text-[0.62rem] text-ink-faint/70">无食谱</span>
         </div>

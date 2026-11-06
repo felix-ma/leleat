@@ -117,6 +117,16 @@ const emit = defineEmits<{
       本餐对乐乐安全，无需替换。
     </div>
 
+    <div
+      v-if="meal.audit.length > 0"
+      class="mt-3 rounded-xl border border-honey-100 bg-honey-50/60 px-3 py-2.5"
+    >
+      <p class="text-[0.68rem] font-bold tracking-wide text-honey-700">搭配审核</p>
+      <ul class="mt-1 space-y-0.5 text-xs leading-5 text-ink-muted">
+        <li v-for="item in meal.audit" :key="item">· {{ item }}</li>
+      </ul>
+    </div>
+
     <p v-if="meal.notes.length > 0" class="mt-3 text-xs leading-5 text-ink-faint">
       {{ meal.notes.join(' · ') }}
     </p>

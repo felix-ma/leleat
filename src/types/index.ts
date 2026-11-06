@@ -163,6 +163,8 @@ export interface MenuMeal {
   dishes: MenuDish[]
   images: MenuImage[]
   notes: string[]
+  /** 替餐落地后的整餐搭配审核结果，不含营养数值。 */
+  audit: string[]
   hasRisk: boolean
   riskDishCount: number
 }
@@ -172,6 +174,7 @@ export interface MenuDay {
   dateLabel: string
   weekdayLabel: string
   meals: MenuMeal[]
+  auditCount: number
   hasRisk: boolean
   riskDishCount: number
 }

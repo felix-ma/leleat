@@ -93,6 +93,35 @@ const VEGETABLE_HINTS = [
   '黄瓜', '菇', '木耳', '番茄', '西红柿', '豆角', '茄子', '莲藕', '芹菜', '韭菜', '芽菜',
   '玉米粒',
 ]
+/** 汤水类：一餐里两样都是稀的，看护人不好配。 */
+const LIQUID_HINTS = ['粥', '汤', '羹', '糊', '米线']
+/** 蛋白质来源分组：避免一餐里出现两份同类蛋白（如汤里有瘦肉、替餐又是瘦肉粥）。 */
+const PROTEIN_GROUPS: { label: string; hints: string[] }[] = [
+  { label: '猪肉', hints: ['瘦肉', '猪肉', '五花肉', '肉末', '肉沫', '排骨', '猪肝', '火腿', '肠'] },
+  { label: '鸡肉', hints: ['鸡肉', '鸡胸', '鲜鸡', '鸡丝'] },
+  { label: '牛肉', hints: ['牛肉', '牛腩'] },
+  { label: '鱼虾', hints: ['鱼', '虾'] },
+  { label: '蛋', hints: ['蛋'] },
+  { label: '豆制品', hints: ['豆腐', '豆干', '豆皮', '腐竹', '黄豆', '豆浆'] },
+  { label: '鸭肉', hints: ['鸭肉', '老鸭'] },
+]
+
+function isLiquidDish(name: string): boolean {
+  return LIQUID_HINTS.some((hint) => name.includes(hint))
+}
+
+function proteinGroupsOf(text: string): string[] {
+  return PROTEIN_GROUPS.filter((group) => group.hints.some((hint) => text.includes(hint))).map(
+    (group) => group.label,
+  )
+}
+
+function daysBetween(left: string, right: string): number {
+  const leftTime = Date.parse(`${left}T00:00:00Z`)
+  const rightTime = Date.parse(`${right}T00:00:00Z`)
+  if (Number.isNaN(leftTime) || Number.isNaN(rightTime)) return 99
+  return Math.round(Math.abs(rightTime - leftTime) / 86400000)
+}
 
 /**
  * 推断菜品品类，用于给替餐加「同品类」约束：
@@ -127,6 +156,35 @@ interface RecommendationContext {
   mealDishNames: Set<string>
   mealPeriod: MealPeriod
   category: DishCategory
+  /** 本餐其它菜（不含当前这道）的搭配画像，用来避免「两个都是稀的」。 */
+  profile: MealProfile
+  /** 每个餐次上一次用的替餐，用来避免连两天上同一道。 */
+  recentByPeriod: Map<string, { date: string; name: string }>
+  date: string
+}
+
+/** 一餐里其余菜的结构画像：汤水数量、主食数量、已出现的蛋白来源。 */
+export interface MealProfile {
+  liquidCount: number
+  stapleCount: number
+  proteinGroups: Set<string>
+}
+
+function buildMealProfile(
+  dishes: { name: string; ingredients: string[] }[],
+  mealPeriod: MealPeriod,
+): MealProfile {
+  let liquidCount = 0
+  let stapleCount = 0
+  const proteinGroups = new Set<string>()
+  for (const dish of dishes) {
+    if (isLiquidDish(dish.name)) liquidCount += 1
+    if (inferDishCategory(dish, mealPeriod) === '主食') stapleCount += 1
+    for (const group of proteinGroupsOf(dish.name + dish.ingredients.join(''))) {
+      proteinGroups.add(group)
+    }
+  }
+  return { liquidCount, stapleCount, proteinGroups }
 }
 
 function scoreCandidate(
@@ -142,6 +200,18 @@ function scoreCandidate(
   // 同类收尾（面→面、粥→粥）降低一点分数，换点花样。
   const similarPenalty =
     dishName.length > 0 && recipe.name.slice(-1) === dishName.slice(-1) ? 60 : 0
+  // 连两天上同一道替餐：强烈降权，但不排除（没有别的可选时仍然可用）。
+  const recent = context.recentByPeriod.get(context.mealPeriod)
+  const repeatPenalty =
+    recent?.name === recipe.name ? (daysBetween(recent.date, context.date) <= 1 ? 3000 : 600) : 0
+  // 本餐已经有汤水了，再上一道汤/粥就变成两样稀的。
+  const liquidPenalty = isLiquidDish(recipe.name) && context.profile.liquidCount >= 1 ? 600 : 0
+  // 本餐已经有同类蛋白（例如汤里的瘦肉），替餐别再撞同一个来源。
+  const proteinPenalty = proteinGroupsOf(recipe.name + recipe.ingredients.join('')).some((group) =>
+    context.profile.proteinGroups.has(group),
+  )
+    ? 300
+    : 0
   return (
     exactMatch +
     verified +
@@ -149,7 +219,10 @@ function scoreCandidate(
     (recipe.priority ?? 0) -
     usedPenalty -
     duplicatePenalty -
-    similarPenalty
+    similarPenalty -
+    repeatPenalty -
+    liquidPenalty -
+    proteinPenalty
   )
 }
 
@@ -195,6 +268,7 @@ function getRecommendation(
 } {
   const custom = typeof dish.substitute === 'string' ? dish.substitute.trim() : ''
   if (custom) {
+    context.recentByPeriod.set(context.mealPeriod, { date: context.date, name: custom })
     return { recommendation: [custom], source: 'dish', tags: [] }
   }
 
@@ -229,6 +303,7 @@ function getRecommendation(
   if (candidates.length > 0) {
     const chosen = candidates[0].recipe
     context.usedCounts.set(chosen.id, (context.usedCounts.get(chosen.id) ?? 0) + 1)
+    context.recentByPeriod.set(context.mealPeriod, { date: context.date, name: chosen.name })
     return {
       recommendation: [chosen.name],
       source: 'library',
@@ -280,6 +355,76 @@ function enrichDish(
   }
 }
 
+/**
+ * 替餐落地后的整餐审核：把「原菜 + 替餐」当成一张真实菜单检查搭配。
+ * 只报结构问题（缺主食、两样稀的、蛋白重复），不给营养数值。
+ * 点心餐（早点/午点）本身只给水果或小食，不做正餐标准审核。
+ */
+export function auditMeal(
+  dishes: MenuDish[],
+  mealPeriod: MealPeriod,
+  library: SubstituteRecipe[] = [],
+): string[] {
+  if (mealPeriod === 'morningSnack' || mealPeriod === 'afternoonTea') return []
+
+  const issues: string[] = []
+  const finalNames = dishes.map((dish) => dish.recommendation[0] ?? dish.name)
+  const substituted = dishes.map((dish) => dish.recommendation.length > 0)
+  const libraryById = new Map(library.map((recipe) => [recipe.id, recipe]))
+  const texts = dishes.map((dish, index) => {
+    // 已替换的菜按替餐本身的食材算，避免拿原菜的食材制造假重复。
+    const recipe = dish.substituteId ? libraryById.get(dish.substituteId) : undefined
+    return finalNames[index] + (recipe ? recipe.ingredients.join('') : dish.ingredients.join(''))
+  })
+
+  const staples = finalNames.filter(
+    (name) => inferDishCategory({ name, ingredients: [] }, mealPeriod) === '主食',
+  )
+  const liquids = finalNames.filter((name) => isLiquidDish(name))
+
+  if (staples.length === 0) {
+    issues.push('这一餐没有主食')
+  }
+  if (liquids.length >= 2) {
+    issues.push(`两样都是汤水（${liquids.join('、')}），缺干点`)
+  }
+  if (staples.length >= 2 && liquids.length === 0 && mealPeriod === 'breakfast') {
+    issues.push('两样都是干主食，可配一份粥/汤')
+  }
+
+  // 只有在替餐参与时才算「替餐带来的重复」，原菜单本身的重复不归替餐管。
+  const groups = texts.flatMap((text, index) =>
+    proteinGroupsOf(text).map((group) => ({ group, index })),
+  )
+  const duplicated = [
+    ...new Set(
+      groups
+        .filter(
+          (item) =>
+            groups.filter((other) => other.group === item.group).length >= 2 &&
+            groups.some(
+              (other) =>
+                other.group === item.group && other.index !== item.index && substituted[other.index],
+            ),
+        )
+        .map((item) => item.group),
+    ),
+  ]
+  if (duplicated.length > 0) {
+    issues.push(`替餐和本餐其它菜蛋白质来源重复（${duplicated.join('、')}）`)
+  }
+
+  if (mealPeriod === 'lunch' || mealPeriod === 'dinner') {
+    const hasVegetable = texts.some((text) => VEGETABLE_HINTS.some((hint) => text.includes(hint)))
+    if (!hasVegetable) issues.push('这一餐没有蔬菜')
+    if (!texts.some((text) => proteinGroupsOf(text).length > 0)) {
+      issues.push('这一餐没有蛋白质')
+    }
+  }
+
+  return issues
+}
+
 export function buildMenuDays(
   entries: RecipeEntry[],
   allergens: Allergen[],
@@ -289,6 +434,8 @@ export function buildMenuDays(
   const mealBuckets = new Map<string, RecipeEntry[]>()
   // 整周共用，保证同一周内替餐不重复。
   const usedCounts = new Map<string, number>()
+  // 每个餐次上一次用的替餐，避免连两天同一道。
+  const recentByPeriod = new Map<string, { date: string; name: string }>()
 
   for (const entry of entries) {
     const key = `${entry.date}__${entry.mealPeriod}`
@@ -300,9 +447,16 @@ export function buildMenuDays(
     }
   }
 
-  const meals: MenuMeal[] = [...mealBuckets.entries()].map(([key, bucket]) => {
+  const orderedBuckets = [...mealBuckets.entries()].sort(([left], [right]) => {
+    const dateCompare = compareIsoDates(left.slice(0, 10), right.slice(0, 10))
+    if (dateCompare !== 0) return dateCompare
+    return MEAL_ORDER[left.split('__')[1] as MealPeriod] - MEAL_ORDER[right.split('__')[1] as MealPeriod]
+  })
+
+  const meals: MenuMeal[] = orderedBuckets.map(([key, bucket]) => {
     const first = bucket[0]
     const mealDishNames = new Set(bucket.flatMap((entry) => entry.dishes.map((dish) => dish.name)))
+    const bucketDishes = bucket.flatMap((entry) => entry.dishes)
     const dishes = bucket.flatMap((entry) =>
       entry.dishes.map((dish) =>
         enrichDish(dish, allergens, substitutes, substituteLibrary.recipes, {
@@ -310,6 +464,12 @@ export function buildMenuDays(
           mealDishNames,
           mealPeriod: entry.mealPeriod,
           category: inferDishCategory(dish, entry.mealPeriod),
+          profile: buildMealProfile(
+            bucketDishes.filter((item) => item.name !== dish.name),
+            entry.mealPeriod,
+          ),
+          recentByPeriod,
+          date: entry.date,
         }),
       ),
     )
@@ -333,6 +493,7 @@ export function buildMenuDays(
       dishes,
       images,
       notes,
+      audit: auditMeal(dishes, first.mealPeriod, substituteLibrary.recipes),
       hasRisk: riskDishCount > 0,
       riskDishCount,
     }
@@ -361,6 +522,7 @@ export function buildMenuDays(
         dateLabel: formatDayHeading(date),
         weekdayLabel: weekdayLabel(date),
         meals: sortedMeals,
+        auditCount: sortedMeals.reduce((total, meal) => total + meal.audit.length, 0),
         hasRisk: riskDishCount > 0,
         riskDishCount,
       }
@@ -374,13 +536,16 @@ export function buildExportRows(
   substituteLibrary: SubstituteLibrary = { recipes: [] },
 ): ExportRow[] {
   const usedCounts = new Map<string, number>()
+  const recentByPeriod = new Map<string, { date: string; name: string }>()
   const mealDishNames = new Map<string, Set<string>>()
+  const mealDishes = new Map<string, RecipeEntry['dishes']>()
 
   for (const entry of entries) {
     const mealKey = `${entry.date}__${entry.mealPeriod}`
     const names = mealDishNames.get(mealKey) ?? new Set<string>()
     for (const dish of entry.dishes) names.add(dish.name)
     mealDishNames.set(mealKey, names)
+    mealDishes.set(mealKey, [...(mealDishes.get(mealKey) ?? []), ...entry.dishes])
   }
 
   return entries
@@ -400,6 +565,12 @@ export function buildExportRows(
               mealDishNames: mealDishNames.get(mealKey) ?? new Set<string>(),
               mealPeriod: entry.mealPeriod,
               category: inferDishCategory(dish, entry.mealPeriod),
+              profile: buildMealProfile(
+                (mealDishes.get(mealKey) ?? []).filter((item) => item.name !== dish.name),
+                entry.mealPeriod,
+              ),
+              recentByPeriod,
+              date: entry.date,
             },
           )
 
