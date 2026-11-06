@@ -62,7 +62,9 @@ function printCurrentWeek(): void {
           <div class="mb-4 flex flex-col gap-2 rounded-2xl border border-leaf-100 bg-leaf-50/70 px-3.5 py-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p class="text-sm font-semibold text-leaf-800">在线打印本周</p>
-              <p class="mt-0.5 text-xs text-leaf-700/75">A4 横向，包含 5 天食谱和周一至周日补剂勾选。</p>
+              <p class="mt-0.5 text-xs text-leaf-700/75">
+                A4 横向，包含 5 天食谱和周一至周日补剂勾选。打印对话框若默认竖向，手动切到「横向」即可。
+              </p>
             </div>
             <button type="button" class="btn btn-secondary shrink-0 bg-white/70" @click="printCurrentWeek">
               打印本周

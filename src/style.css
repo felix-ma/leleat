@@ -127,7 +127,7 @@
 @media print {
   @page {
     size: A4 landscape;
-    margin: 9mm 8mm;
+    margin: 0;
   }
 
   html,
@@ -155,17 +155,31 @@
   .print-sheet {
     width: 100%;
     max-width: none;
+    padding: 9mm 8mm;
     color: #111;
     font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+
+  /* 页面留白交给 .print-sheet 的 padding，整张纸都是白底，不出现黑边。 */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: #fff;
   }
 
   .print-header {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    gap: 8mm;
+    gap: 6mm;
     padding-bottom: 2.5mm;
     border-bottom: 1px solid #777;
+  }
+
+  .print-header > div:first-child {
+    min-width: 0;
   }
 
   .print-kicker {
@@ -184,11 +198,16 @@
 
   .print-meta {
     display: flex;
+    flex: 0 1 auto;
     flex-direction: column;
     align-items: flex-end;
     gap: 1mm;
+    max-width: 46%;
     font-size: 8pt;
+    line-height: 1.35;
     color: #555;
+    text-align: right;
+    word-break: break-word;
   }
 
   .print-menu-table,
@@ -213,7 +232,7 @@
   .print-menu-table th,
   .print-menu-table td {
     padding: 2.6mm 1.5mm;
-    font-size: 10.4pt;
+    font-size: 10.5pt;
     line-height: 1.5;
   }
 
@@ -221,7 +240,7 @@
   .print-supplement-table th,
   .print-supplement-table td {
     padding: 0.7mm 1mm;
-    font-size: 7.8pt;
+    font-size: 7.9pt;
     line-height: 1.15;
   }
 
@@ -255,7 +274,7 @@
 
   .print-dish {
     margin: 0 0 1.4mm;
-    font-size: 10.4pt;
+    font-size: 10.5pt;
     line-height: 1.5;
   }
 
@@ -308,7 +327,7 @@
 
   .print-footnote {
     margin-top: 3mm;
-    font-size: 8.9pt;
+    font-size: 9pt;
     color: #555;
   }
 }
