@@ -35,8 +35,6 @@ import {
 } from './utils/date'
 import { buildMenuDays, createWeekOptions, getWeekEntries } from './utils/menu'
 
-const DATE_STORAGE_KEY = 'leleat:selected-date'
-const VIEW_STORAGE_KEY = 'leleat:view-mode'
 const RECIPES_FALLBACK_ERROR = '食谱数据加载失败，请稍后重试或确认仓库资源。'
 
 type ViewMode = 'day' | 'week'
@@ -45,8 +43,10 @@ const data = ref<DataBundle | null>(null)
 const loading = ref(true)
 const error = ref('')
 const today = todayIsoDate()
+/** 幼儿园放学时间：16 点以后默认看下一天。 */
+const SCHOOL_DAY_END_HOUR = 16
 const selectedDate = ref(today)
-const viewMode = ref<ViewMode>('day')
+const viewMode = ref<ViewMode>('week')
 const exportOpen = ref(false)
 const traceTarget = ref<DishTraceTarget | null>(null)
 const preview = ref<ImagePreview | null>(null)
@@ -114,7 +114,7 @@ const availableDates = computed(() =>
     ? [...new Set(data.value.recipes.map((recipe) => recipe.date))].sort()
     : [],
 )
-const latestDate = computed(() => availableDates.value[availableDates.value.length - 1] ?? '')
+const defaultDate = computed(() => resolveDefaultDate(availableDates.value))
 const knowledgeCount = computed(() =>
   data.value ? Object.keys(data.value.dishCatalog.dishes).length : 0,
 )
@@ -138,26 +138,29 @@ const headerStatusLabel = computed(() => {
 })
 const pageTitle = computed(() => {
   if (viewMode.value === 'week') return '这周吃什么'
-  return selectedDate.value === today ? '乐乐今天吃什么' : '当天食谱'
+  return selectedDate.value === defaultDate.value ? '乐乐今天吃什么' : '当天食谱'
 })
 const overlayOpen = computed(
   () => Boolean(traceTarget.value) || Boolean(preview.value) || exportOpen.value,
 )
 
-function readStorage(key: string): string | null {
-  try {
-    return window.localStorage.getItem(key)
-  } catch {
-    return null
-  }
+/** 周五放学后算下周，周末算下周一，其余 16 点后算次日。 */
+function smartDefaultDate(now = new Date()): string {
+  const iso = todayIsoDate(now)
+  const weekday = now.getDay()
+  if (weekday === 6) return addDays(iso, 2) ?? iso
+  if (weekday === 0) return addDays(iso, 1) ?? iso
+  if (now.getHours() < SCHOOL_DAY_END_HOUR) return iso
+  return addDays(iso, weekday === 5 ? 3 : 1) ?? iso
 }
 
-function writeStorage(key: string, value: string): void {
-  try {
-    window.localStorage.setItem(key, value)
-  } catch {
-    // localStorage 不可用时只影响偏好记忆，不影响内容。
-  }
+/** 默认日期；当天没有食谱时顺延到下一个有食谱的日子，再不行取最新一天。 */
+function resolveDefaultDate(dates: string[], now = new Date()): string {
+  const target = smartDefaultDate(now)
+  if (dates.length === 0) return target
+  if (dates.includes(target)) return target
+  const upcoming = dates.find((date) => date >= target)
+  return upcoming ?? dates[dates.length - 1] ?? target
 }
 
 async function loadPageData(): Promise<void> {
@@ -170,20 +173,9 @@ async function loadPageData(): Promise<void> {
     data.value = bundle
 
     const dates = [...new Set(bundle.recipes.map((recipe) => recipe.date))].sort()
-    const stored = readStorage(DATE_STORAGE_KEY)
-    const storedView = readStorage(VIEW_STORAGE_KEY)
-    const latest = dates[dates.length - 1]
-    const initialDate =
-      stored && parseIsoDate(stored)
-        ? stored
-        : dates.includes(today)
-          ? today
-          : latest ?? today
-
-    selectedDate.value = initialDate
-    if (storedView === 'day' || storedView === 'week') {
-      viewMode.value = storedView
-    }
+    // 每次进入都按当前时间决定默认日期，不再沿用上次记住的日子。
+    selectedDate.value = resolveDefaultDate(dates)
+    viewMode.value = 'week'
   } catch (caught) {
     console.error('[leleat] 数据加载失败', caught)
     error.value = caught instanceof DataLoadError ? caught.message : RECIPES_FALLBACK_ERROR
@@ -193,7 +185,10 @@ async function loadPageData(): Promise<void> {
 }
 
 function setViewMode(mode: ViewMode): void {
+  if (mode === viewMode.value) return
   viewMode.value = mode
+  // 切到日视图时回到「现在该看的那一天」。
+  if (mode === 'day') selectedDate.value = resolveDefaultDate(availableDates.value)
 }
 
 function selectStripDate(date: string): void {
@@ -216,14 +211,8 @@ function onDateChange(event: Event): void {
   if (parseIsoDate(value)) selectedDate.value = value
 }
 
-function goToday(): void {
-  selectedDate.value = today
-}
-
-function goLatest(): void {
-  if (!latestDate.value) return
-  selectedDate.value = latestDate.value
-  viewMode.value = 'day'
+function goCurrent(): void {
+  selectedDate.value = resolveDefaultDate(availableDates.value)
 }
 
 function openTrace(dish: MenuDish, meal: MenuMeal): void {
@@ -275,12 +264,7 @@ function printWeek(): void {
 
 watch(selectedDate, (date) => {
   if (!date) return
-  writeStorage(DATE_STORAGE_KEY, date)
   document.title = `${formatMonthDay(date)} · Leleat`
-})
-
-watch(viewMode, (mode) => {
-  writeStorage(VIEW_STORAGE_KEY, mode)
 })
 
 watch(overlayOpen, (open) => {
@@ -446,7 +430,7 @@ onBeforeUnmount(() => {
                   <path d="m12.5 4.5-5.5 5.5 5.5 5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
               </button>
-              <label class="relative">
+              <label v-if="viewMode === 'day'" class="relative">
                 <span class="sr-only">选择日期</span>
                 <input
                   type="date"
@@ -455,6 +439,12 @@ onBeforeUnmount(() => {
                   @change="onDateChange"
                 />
               </label>
+              <span
+                v-else
+                class="flex h-10 items-center rounded-xl border border-ink/10 bg-white/80 px-3 text-sm font-semibold text-ink"
+              >
+                {{ weekRangeLabel }}
+              </span>
               <button type="button" class="icon-btn h-10 w-10" aria-label="下一个日期或周" @click="stepDate(1)">
                 <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                   <path d="m7.5 4.5 5.5 5.5-5.5 5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
@@ -462,19 +452,11 @@ onBeforeUnmount(() => {
               </button>
               <button
                 type="button"
-                class="rounded-full px-3 py-2 text-xs font-semibold text-ink-muted transition hover:bg-ink/[0.045] hover:text-ink"
-                :disabled="selectedDate === today"
-                @click="goToday"
+                class="rounded-full px-3 py-2 text-xs font-semibold text-ink-muted transition hover:bg-ink/[0.045] hover:text-ink disabled:opacity-40"
+                :disabled="selectedDate === defaultDate"
+                @click="goCurrent"
               >
-                今天
-              </button>
-              <button
-                v-if="latestDate && selectedDate !== latestDate"
-                type="button"
-                class="rounded-full px-3 py-2 text-xs font-semibold text-leaf-700 transition hover:bg-leaf-50"
-                @click="goLatest"
-              >
-                最近食谱
+                {{ viewMode === 'week' ? '本周' : '今天' }}
               </button>
             </div>
 
@@ -495,10 +477,10 @@ onBeforeUnmount(() => {
             :week="selectedWeek"
             :day="day"
             :images="dayImages"
-            :is-today="selectedDate === today"
+            :is-today="selectedDate === defaultDate"
             @trace="openTrace"
             @preview="openPreview"
-            @latest="goLatest"
+            @today="goCurrent"
           />
 
           <WeekView

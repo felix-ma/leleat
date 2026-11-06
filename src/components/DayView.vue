@@ -15,7 +15,7 @@ const props = defineProps<{
 const emit = defineEmits<{
   trace: [dish: MenuDish, meal: MenuMeal]
   preview: [image: ImagePreview]
-  latest: []
+  today: []
 }>()
 
 const riskDishCount = computed(() => props.day?.riskDishCount ?? 0)
@@ -128,10 +128,10 @@ const visibleMeals = computed(() => {
       </span>
       <h3 class="mt-4 text-lg font-bold text-ink">这天还没有食谱</h3>
       <p class="mt-1.5 max-w-sm text-sm leading-6 text-ink-muted">
-        幼儿园通常只登记周一到周五。可以切换到其他日期，或查看最近一次有食谱的一天。
+        幼儿园通常只登记周一到周五。可以切换到其他日期，或回到今天。
       </p>
-      <button type="button" class="btn btn-secondary mt-5" @click="emit('latest')">
-        查看最近食谱
+      <button type="button" class="btn btn-secondary mt-5" @click="emit('today')">
+        回到今天
       </button>
     </div>
   </section>
