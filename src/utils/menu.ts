@@ -83,6 +83,16 @@ const STAPLE_HINTS = [
   '馄饨', '玉米', '红薯', '紫薯', '山药', '意面', '汤圆',
 ]
 const SNACK_HINTS = ['山楂', '葡萄干', '饼干', '薯片', '坚果', '果干']
+const PROTEIN_HINTS = [
+  '瘦肉', '猪肉', '五花肉', '肉末', '肉沫', '牛肉', '鸡肉', '鸡胸', '鲜鸡', '鸭肉', '老鸭',
+  '鱼', '虾', '蛋', '豆腐', '豆干', '豆皮', '腐竹', '排骨', '猪肝', '火腿', '肠', '鹌鹑',
+  '黄豆', '花生',
+]
+const VEGETABLE_HINTS = [
+  '青菜', '时菜', '包菜', '白菜', '菠菜', '生菜', '西兰花', '萝卜', '冬瓜', '丝瓜', '南瓜',
+  '黄瓜', '菇', '木耳', '番茄', '西红柿', '豆角', '茄子', '莲藕', '芹菜', '韭菜', '芽菜',
+  '玉米粒',
+]
 
 /**
  * 推断菜品品类，用于给替餐加「同品类」约束：
@@ -151,6 +161,26 @@ function inCategory(recipe: SubstituteRecipe, category: DishCategory): boolean {
   return !recipe.categories?.length || recipe.categories.includes(category)
 }
 
+/**
+ * 原菜的关键营养结构：有肉/蛋/豆就要求蛋白质，有蔬菜就要求蔬菜，有主食就要求主食。
+ * 只做「有无」判断，不编造克重或热量数值。
+ */
+function inferNutritionNeeds(dish: { name: string; ingredients: string[] }): string[] {
+  const text = dish.name + dish.ingredients.join('')
+  const needs: string[] = []
+  if (PROTEIN_HINTS.some((hint) => text.includes(hint))) needs.push('蛋白质')
+  if (VEGETABLE_HINTS.some((hint) => text.includes(hint))) needs.push('蔬菜')
+  if (STAPLE_HINTS.some((hint) => text.includes(hint))) needs.push('主食')
+  if (FRUIT_HINTS.some((hint) => dish.name.includes(hint))) needs.push('水果')
+  return needs
+}
+
+function coversNutrition(recipe: SubstituteRecipe, needs: string[]): boolean {
+  if (needs.length === 0) return true
+  const tags = new Set((recipe.tags ?? []).map((tag) => (tag === '蛋白' ? '蛋白质' : tag)))
+  return needs.every((need) => tags.has(need))
+}
+
 function getRecommendation(
   dish: RecipeEntry['dishes'][number],
   allergens: Allergen[],
@@ -176,14 +206,19 @@ function getRecommendation(
     dish.riskAllergens.every((id) => recipe.replaces.includes(id)),
   )
 
-  // 从严格到宽松依次尝试，保证「品类对得上」优先，实在没有才放宽。
+  // 从严格到宽松依次尝试：先保证营养结构、品类、餐次都对得上，实在没有才逐级放宽。
+  const needs = inferNutritionNeeds(dish)
+  const nutritionOk = (recipe: SubstituteRecipe) => coversNutrition(recipe, needs)
+  const inPeriod = (recipe: SubstituteRecipe) => inMealPeriod(recipe, context.mealPeriod)
+  const inCat = (recipe: SubstituteRecipe) => inCategory(recipe, context.category)
+
   const tiers = [
-    allSatisfied.filter(
-      (recipe) =>
-        inMealPeriod(recipe, context.mealPeriod) && inCategory(recipe, context.category),
-    ),
-    allSatisfied.filter((recipe) => inMealPeriod(recipe, context.mealPeriod)),
-    allSatisfied.filter((recipe) => inCategory(recipe, context.category)),
+    allSatisfied.filter((recipe) => inPeriod(recipe) && inCat(recipe) && nutritionOk(recipe)),
+    allSatisfied.filter((recipe) => inPeriod(recipe) && nutritionOk(recipe)),
+    allSatisfied.filter((recipe) => inCat(recipe) && nutritionOk(recipe)),
+    allSatisfied.filter((recipe) => inPeriod(recipe) && inCat(recipe)),
+    allSatisfied.filter((recipe) => inPeriod(recipe)),
+    allSatisfied.filter((recipe) => inCat(recipe)),
     allSatisfied,
   ]
 
