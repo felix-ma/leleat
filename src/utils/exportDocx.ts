@@ -112,18 +112,18 @@ function paragraph(
 
 function cellMargins(): { top: number; bottom: number; left: number; right: number } {
   // 与打印版 padding: 2.6mm 1.5mm 对齐（147 / 85 twips）
-  return { top: 147, bottom: 147, left: 85, right: 85 }
+  return { top: 118, bottom: 118, left: 85, right: 85 }
 }
 
 /** 补剂表只用于勾选，边距压到最小。 */
 function compactCellMargins(): { top: number; bottom: number; left: number; right: number } {
   // 与打印版 padding: 0.7mm 1mm 对齐（40 / 57 twips）
-  return { top: 40, bottom: 40, left: 57, right: 57 }
+  return { top: 32, bottom: 32, left: 57, right: 57 }
 }
 
 /** 固定行距：Word 与 LibreOffice 对「单倍行距」的解释随字体不同，固定行高才能保证两边排版一致。 */
 function exactLine(size: number, after = 0, before = 0) {
-  return { before, after, line: Math.round(size * 15), lineRule: LineRuleType.EXACT }
+  return { before, after, line: Math.round(size * 14.4), lineRule: LineRuleType.EXACT }
 }
 
 
@@ -325,7 +325,7 @@ function buildDishParagraph(dish: MenuMeal['dishes'][number]): Paragraph {
 
   return new Paragraph({
     alignment: AlignmentType.CENTER,
-    spacing: { after: 50, line: 270 },
+    spacing: exactLine(21, 50),
     children: runs,
   })
 }
@@ -486,16 +486,17 @@ export function buildWeeklyMenuDocument(options: DocxExportOptions): Document {
     children.push(
       new Paragraph({
         alignment: AlignmentType.CENTER,
-        spacing: { after: 140 },
+        spacing: exactLine(28, 140),
         children: [textRun(options.title, { size: 28, bold: true })],
       }),
       new Paragraph({
         alignment: AlignmentType.CENTER,
-        spacing: { after: 240 },
+        spacing: exactLine(17, 240),
         children: [textRun(options.rangeLabel, { size: 17, color: '666666' })],
       }),
       new Paragraph({
         alignment: AlignmentType.CENTER,
+        spacing: exactLine(21),
         children: [textRun('所选范围没有可导出的食谱。', { size: 21, color: '555555' })],
       }),
     )
@@ -513,7 +514,7 @@ export function buildWeeklyMenuDocument(options: DocxExportOptions): Document {
       default: {
         document: {
           run: { font: FONT, size: 21 },
-          paragraph: { spacing: { line: 240 } },
+          paragraph: { spacing: { line: 315, lineRule: LineRuleType.EXACT } },
         },
       },
     },
