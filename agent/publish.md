@@ -18,7 +18,16 @@ npm run deploy                # 图片/数据改动后重建 gh-pages
 
 结束前自检：`git status --short` 干净、`git log origin/main..HEAD` 为空。
 
-**不要在线复核**：用户要求提交 + `npm run deploy` 之后不要打开线上页面/抓 CDN 校验（Pages 缓存刷新慢，轮询很耗时间和 token）。交付时只在回复里给**最新提交 ID** 和本次改动总结，线上状态由用户自己看。
+**部署本身不是可选项**：任何代码/数据改动，`git push` 之后一律要跑 `npm run deploy`（`gh-pages` 分支）。用户说的「不用检查部署」只指**不打开线上页面/不抓 CDN 轮询**，不是说不部署。漏跑 deploy 等于线上还是旧版，属于交付失败。
+
+自检可以只做本地一次性的零成本核对（允许，不算在线复核）：
+
+```bash
+git fetch origin gh-pages
+git show origin/gh-pages:index.html | grep -o 'index-[A-Za-z0-9_-]*\.js'   # 与本地 dist/index.html 里的 hash 应一致
+```
+
+**不要在线复核**：提交 + deploy 之后不要打开线上页面/抓 CDN 校验（Pages 缓存刷新慢，轮询很耗时间和 token）。交付时只在回复里给**最新提交 ID** 和本次改动总结，线上状态由用户自己看。
 
 - 不能提交的东西（API Key、原始未脱敏图、`.agent-out/`、缓存）不要写进工作区，避免手滑提交。
 - 只提交本次任务相关的文件，不顺手 `git add -A` 带上无关改动。
