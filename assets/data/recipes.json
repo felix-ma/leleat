@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-06T17:22:00+08:00",
+  "updatedAt": "2026-11-06T23:05:00+08:00",
   "recipes": [
     {
       "date": "2026-10-12",
@@ -135,7 +135,7 @@
           "riskAllergens": [
             "milk"
           ],
-          "substitute": null
+          "substitute": "米奶"
         }
       ]
     },
@@ -181,7 +181,7 @@
           "riskAllergens": [
             "milk"
           ],
-          "substitute": null
+          "substitute": "米奶"
         },
         {
           "name": "山楂条",
@@ -416,7 +416,7 @@
           "riskAllergens": [
             "milk"
           ],
-          "substitute": null
+          "substitute": "米奶"
         }
       ]
     },
@@ -673,7 +673,7 @@
           "riskAllergens": [
             "milk"
           ],
-          "substitute": null
+          "substitute": "米奶"
         }
       ]
     },
@@ -811,7 +811,7 @@
           "riskAllergens": [
             "milk"
           ],
-          "substitute": null
+          "substitute": "米奶"
         }
       ]
     },
@@ -858,7 +858,7 @@
           "riskAllergens": [
             "milk"
           ],
-          "substitute": null
+          "substitute": "米奶"
         },
         {
           "name": "葡萄干",
@@ -1090,7 +1090,7 @@
           "riskAllergens": [
             "milk"
           ],
-          "substitute": null
+          "substitute": "米奶"
         }
       ]
     },
@@ -1351,7 +1351,7 @@
           "riskAllergens": [
             "milk"
           ],
-          "substitute": null
+          "substitute": "米奶"
         }
       ]
     },
@@ -2172,7 +2172,7 @@
           "riskAllergens": [
             "milk"
           ],
-          "substitute": null
+          "substitute": "米奶"
         }
       ]
     },
@@ -2311,7 +2311,7 @@
           "riskAllergens": [
             "milk"
           ],
-          "substitute": null
+          "substitute": "米奶"
         }
       ]
     },
@@ -2490,7 +2490,7 @@
           "riskAllergens": [
             "milk"
           ],
-          "substitute": null
+          "substitute": "米奶"
         },
         {
           "name": "山楂片",
@@ -2704,7 +2704,7 @@
           "riskAllergens": [
             "milk"
           ],
-          "substitute": null
+          "substitute": "米奶"
         }
       ]
     }
