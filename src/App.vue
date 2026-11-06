@@ -131,6 +131,9 @@ const defaultHint = computed(() => {
   }
   return `已过放学时间或到周末，默认先看下周（${formatMonthDay(defaultDate.value)} ${weekdayLabel(defaultDate.value)} 起）的食谱`
 })
+// 构建号由 vite.config.ts 在打包时注入，用来核对是不是最新的构建。
+const buildCommit = typeof __BUILD_COMMIT__ === 'string' ? __BUILD_COMMIT__ : 'dev'
+
 const knowledgeCount = computed(() =>
   data.value ? Object.keys(data.value.dishCatalog.dishes).length : 0,
 )
@@ -553,6 +556,7 @@ onBeforeUnmount(() => {
         class="mx-auto flex max-w-6xl flex-col gap-1.5 px-4 py-6 text-[0.7rem] leading-5 text-ink-faint sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8"
       >
         <p>Leleat v0.1 · 日视图 / 周视图 · 菜品知识库 {{ knowledgeCount }} 道</p>
+        <p class="font-mono text-ink-faint/80">构建 {{ buildCommit }}</p>
         <p>前端只读静态 JSON；识别与知识库增量维护由本地 Agent 完成。</p>
       </div>
     </footer>

@@ -1,3 +1,4 @@
+declare const __BUILD_COMMIT__: string
 /// <reference types="vite/client" />
 
 declare module '*.vue' {
