@@ -11,6 +11,8 @@ import {
   TableCell,
   TableLayoutType,
   TableRow,
+  Tab,
+  TabStopType,
   TextRun,
   VerticalAlign,
   WidthType,
@@ -124,11 +126,11 @@ function rowHeight(mm: number): { value: number; rule: (typeof HeightRule)['ATLE
 
 /** 各餐次的最小行高（mm），让整页高度分布接近打印版。 */
 const MEAL_ROW_HEIGHT_MM: Record<MealPeriod, number> = {
-  breakfast: 16,
-  morningSnack: 11,
-  lunch: 45,
-  afternoonTea: 16,
-  dinner: 15,
+  breakfast: 21,
+  morningSnack: 14,
+  lunch: 50,
+  afternoonTea: 21,
+  dinner: 18,
 }
 
 function borderSet(): {
@@ -248,102 +250,46 @@ function noBorders() {
   }
 }
 
-/** 页首：左侧小字+大标题，右侧两行 meta，下方一条横线，对齐打印版。 */
-function buildPrintHeader(block: WeekBlock, options: DocxExportOptions): (Table | Paragraph)[] {
-  const leftWidth = Math.round(TABLE_WIDTH * 0.58)
-  const rightWidth = TABLE_WIDTH - leftWidth
+/** 页首：左侧小字+大标题，右侧两行 meta，下方一条横线。只用段落 + 右对齐制表位，
+ *  避免嵌套表格在 Word 里被额外撑高（那会让整份文档溢出到第二页）。 */
+function buildPrintHeader(block: WeekBlock, options: DocxExportOptions): Paragraph[] {
   const meta = [options.rangeLabel ? `${block.rangeLabel} · ${block.week}` : block.week]
   if (options.updatedAt) meta.push(`数据更新：${options.updatedAt}`)
+  const tabStops = [{ type: TabStopType.RIGHT, position: TABLE_WIDTH }]
+  const tab = () => new TextRun({ children: [new Tab()], size: 14 })
 
   return [
-    new Table({
-      width: { size: TABLE_WIDTH, type: WidthType.DXA },
-      columnWidths: [leftWidth, rightWidth],
-      layout: TableLayoutType.FIXED,
-      borders: noBorders(),
-      rows: [
-        new TableRow({
-          children: [
-            new TableCell({
-              width: { size: leftWidth, type: WidthType.DXA },
-              margins: { top: 0, bottom: 0, left: 0, right: 0 },
-              children: [
-                new Paragraph({
-                  spacing: { after: 20, line: 220 },
-                  children: [
-                    textRun(`${options.schoolName || 'Leleat'} · 周食谱`, {
-                      size: 14,
-                      color: MUTED,
-                    }),
-                  ],
-                }),
-                new Paragraph({
-                  spacing: { after: 0, line: 240 },
-                  children: [textRun(options.title, { size: 26, bold: true })],
-                }),
-              ],
-            }),
-            new TableCell({
-              width: { size: rightWidth, type: WidthType.DXA },
-              verticalAlign: VerticalAlign.BOTTOM,
-              margins: { top: 0, bottom: 0, left: 120, right: 0 },
-              children: meta.map(
-                (line) =>
-                  new Paragraph({
-                    alignment: AlignmentType.RIGHT,
-                    spacing: { after: 10, line: 230 },
-                    children: [textRun(line, { size: 14, color: MUTED })],
-                  }),
-              ),
-            }),
-          ],
-        }),
+    new Paragraph({
+      tabStops,
+      spacing: { after: 0, line: 220 },
+      children: [
+        textRun(`${options.schoolName || 'Leleat'} · 周食谱`, { size: 14, color: MUTED }),
+        tab(),
+        textRun(meta[0] || '', { size: 14, color: MUTED }),
       ],
     }),
     new Paragraph({
-      spacing: { before: 10, after: 20, line: 220 },
-      border: { bottom: { style: BorderStyle.SINGLE, size: 8, color: '777777', space: 4 } },
+      tabStops,
+      spacing: { after: 20, line: 240 },
+      children: [textRun(options.title, { size: 26, bold: true }), tab(), textRun(meta[1] || '', { size: 14, color: MUTED })],
+    }),
+    new Paragraph({
+      spacing: { before: 0, after: 60, line: 200 },
+      border: { bottom: { style: BorderStyle.SINGLE, size: 8, color: '777777', space: 2 } },
       children: [textRun('', { size: 2 })],
     }),
   ]
 }
 
-/** 补剂区标题：左侧标题 + 右侧小字，对齐打印版。 */
-function buildSupplementHeading(): Table {
-  const leftWidth = Math.round(TABLE_WIDTH * 0.5)
-  const rightWidth = TABLE_WIDTH - leftWidth
-  return new Table({
-    width: { size: TABLE_WIDTH, type: WidthType.DXA },
-    columnWidths: [leftWidth, rightWidth],
-    layout: TableLayoutType.FIXED,
-    borders: noBorders(),
-    rows: [
-      new TableRow({
-        children: [
-          new TableCell({
-            width: { size: leftWidth, type: WidthType.DXA },
-            margins: { top: 0, bottom: 0, left: 0, right: 0 },
-            children: [
-              new Paragraph({
-                spacing: { after: 0, line: 240 },
-                children: [textRun('每日补剂（周一至周日，逐日勾选）', { size: 20, bold: true })],
-              }),
-            ],
-          }),
-          new TableCell({
-            width: { size: rightWidth, type: WidthType.DXA },
-            verticalAlign: VerticalAlign.BOTTOM,
-            margins: { top: 0, bottom: 0, left: 120, right: 0 },
-            children: [
-              new Paragraph({
-                alignment: AlignmentType.RIGHT,
-                spacing: { after: 0, line: 240 },
-                children: [textRun('一周 5 天食谱 · 7 天补剂', { size: 16, color: '666666' })],
-              }),
-            ],
-          }),
-        ],
-      }),
+/** 补剂区标题：左侧标题 + 右侧小字，用制表位对齐打印版。 */
+function buildSupplementHeading(): Paragraph {
+  return new Paragraph({
+    tabStops: [{ type: TabStopType.RIGHT, position: TABLE_WIDTH }],
+    spacing: { before: 80, after: 30, line: 220 },
+    children: [
+      textRun('每日补剂（周一至周日，逐日勾选）', { size: 20, bold: true }),
+      new TextRun({ children: [new Tab()], size: 14 }),
+      textRun('一周 5 天食谱 · 7 天补剂', { size: 16, color: '666666' }),
     ],
   })
 }
@@ -383,7 +329,7 @@ function buildDishParagraph(dish: MenuMeal['dishes'][number]): Paragraph {
 
   return new Paragraph({
     alignment: AlignmentType.CENTER,
-    spacing: { after: 70, line: 300 },
+    spacing: { after: 50, line: 270 },
     children: runs,
   })
 }
@@ -497,7 +443,7 @@ function buildSupplementTable(block: WeekBlock, supplements: string[]): Table {
     (supplement) =>
       new TableRow({
         cantSplit: true,
-        height: rowHeight(4.3),
+        height: rowHeight(5.2),
         children: [
           new TableCell({
             width: { size: labelWidth, type: WidthType.DXA },
