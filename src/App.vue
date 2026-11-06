@@ -115,6 +115,22 @@ const availableDates = computed(() =>
     : [],
 )
 const defaultDate = computed(() => resolveDefaultDate(availableDates.value))
+const todayWeek = computed(() => isoWeekForDate(today) ?? '')
+/** 当前是否停在真实的今天 / 本周。 */
+const onToday = computed(() =>
+  viewMode.value === 'week'
+    ? selectedWeek.value === todayWeek.value
+    : selectedDate.value === today,
+)
+/** 默认日期因为放学或周末被推到了后面。 */
+const defaultAhead = computed(() => defaultDate.value !== today)
+const defaultHint = computed(() => {
+  if (!defaultAhead.value) return ''
+  if (defaultDate.value === addDays(today, 1)) {
+    return `已过放学时间，默认先看明天（${formatMonthDay(defaultDate.value)} ${weekdayLabel(defaultDate.value)}）的食谱`
+  }
+  return `已过放学时间或到周末，默认先看下周（${formatMonthDay(defaultDate.value)} ${weekdayLabel(defaultDate.value)} 起）的食谱`
+})
 const knowledgeCount = computed(() =>
   data.value ? Object.keys(data.value.dishCatalog.dishes).length : 0,
 )
@@ -138,7 +154,7 @@ const headerStatusLabel = computed(() => {
 })
 const pageTitle = computed(() => {
   if (viewMode.value === 'week') return '这周吃什么'
-  return selectedDate.value === defaultDate.value ? '乐乐今天吃什么' : '当天食谱'
+  return selectedDate.value === today ? '乐乐今天吃什么' : '当天食谱'
 })
 const overlayOpen = computed(
   () => Boolean(traceTarget.value) || Boolean(preview.value) || exportOpen.value,
@@ -211,8 +227,8 @@ function onDateChange(event: Event): void {
   if (parseIsoDate(value)) selectedDate.value = value
 }
 
-function goCurrent(): void {
-  selectedDate.value = resolveDefaultDate(availableDates.value)
+function goToday(): void {
+  selectedDate.value = today
 }
 
 function openTrace(dish: MenuDish, meal: MenuMeal): void {
@@ -453,8 +469,8 @@ onBeforeUnmount(() => {
               <button
                 type="button"
                 class="rounded-full px-3 py-2 text-xs font-semibold text-ink-muted transition hover:bg-ink/[0.045] hover:text-ink disabled:opacity-40"
-                :disabled="selectedDate === defaultDate"
-                @click="goCurrent"
+                :disabled="onToday"
+                @click="goToday"
               >
                 {{ viewMode === 'week' ? '本周' : '今天' }}
               </button>
@@ -465,6 +481,21 @@ onBeforeUnmount(() => {
             </p>
           </div>
         </section>
+
+        <div
+          v-if="defaultHint && !onToday"
+          class="mt-3 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-honey-100 bg-honey-50/70 px-3.5 py-2.5 text-xs leading-5 text-honey-700"
+          role="status"
+        >
+          <span>{{ defaultHint }}；「今天」标记仍是真实的 {{ formatMonthDay(today) }}。</span>
+          <button
+            type="button"
+            class="rounded-full bg-white/80 px-3 py-1 text-[0.68rem] font-semibold text-honey-700 ring-1 ring-inset ring-honey-100"
+            @click="goToday"
+          >
+            回到今天 {{ formatMonthDay(today) }}
+          </button>
+        </div>
 
         <div v-if="viewMode === 'day'" class="mt-4">
           <WeekStrip :days="calendarCells" @select="selectStripDate" />
@@ -477,10 +508,10 @@ onBeforeUnmount(() => {
             :week="selectedWeek"
             :day="day"
             :images="dayImages"
-            :is-today="selectedDate === defaultDate"
+            :is-today="selectedDate === today"
             @trace="openTrace"
             @preview="openPreview"
-            @today="goCurrent"
+            @today="goToday"
           />
 
           <WeekView
