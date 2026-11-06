@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-06T17:20:00+08:00",
+  "updatedAt": "2026-11-06T23:20:00+08:00",
   "recipes": [
     {
       "id": "sub-egg-steamed-tofu-pork",
@@ -483,6 +483,32 @@
       ],
       "verified": false,
       "priority": 60
+    },
+    {
+      "id": "sub-egg-steamed-dumpling",
+      "name": "蒸饺",
+      "replaces": [
+        "egg"
+      ],
+      "ingredients": [
+        "面粉",
+        "猪肉",
+        "大白菜"
+      ],
+      "usedFor": [],
+      "tags": [
+        "主食",
+        "蛋白质",
+        "蔬菜"
+      ],
+      "categories": [
+        "主食"
+      ],
+      "mealPeriods": [
+        "breakfast"
+      ],
+      "verified": false,
+      "priority": 65
     }
   ]
 }
