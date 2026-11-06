@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-05T14:00:00+08:00",
+  "updatedAt": "2026-11-06T17:10:00+08:00",
   "dishes": {
     "鹌鹑蛋": {
       "name": "鹌鹑蛋",
@@ -123,6 +123,51 @@
       ],
       "sourceImages": []
     },
+    "菠菜猪肝瘦肉汤": {
+      "name": "菠菜猪肝瘦肉汤",
+      "aliases": [],
+      "ingredients": [
+        "瘦肉",
+        "猪肝",
+        "菠菜"
+      ],
+      "riskAllergens": [],
+      "substitute": null,
+      "firstSeen": "2026-11-12",
+      "lastSeen": "2026-11-12",
+      "occurrences": [
+        {
+          "date": "2026-11-12",
+          "week": "2026-W46",
+          "mealPeriod": "breakfast",
+          "mealLabel": "早餐"
+        }
+      ],
+      "sourceImages": []
+    },
+    "彩蔬肉粥": {
+      "name": "彩蔬肉粥",
+      "aliases": [],
+      "ingredients": [
+        "红萝卜",
+        "瘦肉",
+        "大米",
+        "青菜"
+      ],
+      "riskAllergens": [],
+      "substitute": null,
+      "firstSeen": "2026-11-09",
+      "lastSeen": "2026-11-09",
+      "occurrences": [
+        {
+          "date": "2026-11-09",
+          "week": "2026-W46",
+          "mealPeriod": "breakfast",
+          "mealLabel": "早餐"
+        }
+      ],
+      "sourceImages": []
+    },
     "炒三丁": {
       "name": "炒三丁",
       "aliases": [],
@@ -167,6 +212,31 @@
       ],
       "sourceImages": []
     },
+    "虫草花红枣冬菇蒸鸡": {
+      "name": "虫草花红枣冬菇蒸鸡",
+      "aliases": [],
+      "ingredients": [
+        "冬菇",
+        "鲜鸡",
+        "红枣",
+        "虫草花"
+      ],
+      "riskAllergens": [],
+      "substitute": null,
+      "firstSeen": "2026-11-09",
+      "lastSeen": "2026-11-09",
+      "occurrences": [
+        {
+          "date": "2026-11-09",
+          "week": "2026-W46",
+          "mealPeriod": "lunch",
+          "mealLabel": "午餐"
+        }
+      ],
+      "sourceImages": [
+        "assets/images/20261109-menu.jpg"
+      ]
+    },
     "虫草花蒸鸡": {
       "name": "虫草花蒸鸡",
       "aliases": [],
@@ -203,7 +273,7 @@
       ],
       "substitute": "米奶",
       "firstSeen": "2026-10-12",
-      "lastSeen": "2026-11-03",
+      "lastSeen": "2026-11-13",
       "occurrences": [
         {
           "date": "2026-10-12",
@@ -250,6 +320,18 @@
         {
           "date": "2026-11-03",
           "week": "2026-W45",
+          "mealPeriod": "afternoonTea",
+          "mealLabel": "午点"
+        },
+        {
+          "date": "2026-11-10",
+          "week": "2026-W46",
+          "mealPeriod": "afternoonTea",
+          "mealLabel": "午点"
+        },
+        {
+          "date": "2026-11-13",
+          "week": "2026-W46",
           "mealPeriod": "afternoonTea",
           "mealLabel": "午点"
         }
@@ -352,6 +434,31 @@
         "assets/images/20261103-menu.jpg"
       ]
     },
+    "冬瓜薏米老鸭汤": {
+      "name": "冬瓜薏米老鸭汤",
+      "aliases": [],
+      "ingredients": [
+        "冬瓜",
+        "老鸭",
+        "薏苡仁",
+        "红枣"
+      ],
+      "riskAllergens": [],
+      "substitute": null,
+      "firstSeen": "2026-11-11",
+      "lastSeen": "2026-11-11",
+      "occurrences": [
+        {
+          "date": "2026-11-11",
+          "week": "2026-W46",
+          "mealPeriod": "lunch",
+          "mealLabel": "午餐"
+        }
+      ],
+      "sourceImages": [
+        "assets/images/20261111-menu.jpg"
+      ]
+    },
     "豆腐蒸肉卷": {
       "name": "豆腐蒸肉卷",
       "aliases": [],
@@ -388,7 +495,7 @@
       "riskAllergens": [],
       "substitute": null,
       "firstSeen": "2026-10-15",
-      "lastSeen": "2026-11-04",
+      "lastSeen": "2026-11-11",
       "occurrences": [
         {
           "date": "2026-10-15",
@@ -405,6 +512,12 @@
         {
           "date": "2026-11-04",
           "week": "2026-W45",
+          "mealPeriod": "breakfast",
+          "mealLabel": "早餐"
+        },
+        {
+          "date": "2026-11-11",
+          "week": "2026-W46",
           "mealPeriod": "breakfast",
           "mealLabel": "早餐"
         }
@@ -547,7 +660,7 @@
       "riskAllergens": [],
       "substitute": null,
       "firstSeen": "2026-10-14",
-      "lastSeen": "2026-11-06",
+      "lastSeen": "2026-11-10",
       "occurrences": [
         {
           "date": "2026-10-14",
@@ -576,6 +689,12 @@
         {
           "date": "2026-11-06",
           "week": "2026-W45",
+          "mealPeriod": "morningSnack",
+          "mealLabel": "早点"
+        },
+        {
+          "date": "2026-11-10",
+          "week": "2026-W46",
           "mealPeriod": "morningSnack",
           "mealLabel": "早点"
         }
@@ -613,6 +732,31 @@
         "assets/images/20261102-menu.jpg"
       ]
     },
+    "海底椰苹果肉汤": {
+      "name": "海底椰苹果肉汤",
+      "aliases": [],
+      "ingredients": [
+        "海底椰",
+        "苹果",
+        "红枣",
+        "瘦肉"
+      ],
+      "riskAllergens": [],
+      "substitute": null,
+      "firstSeen": "2026-11-12",
+      "lastSeen": "2026-11-12",
+      "occurrences": [
+        {
+          "date": "2026-11-12",
+          "week": "2026-W46",
+          "mealPeriod": "lunch",
+          "mealLabel": "午餐"
+        }
+      ],
+      "sourceImages": [
+        "assets/images/20261112-menu.jpg"
+      ]
+    },
     "海鲜菇山药瘦肉汤": {
       "name": "海鲜菇山药瘦肉汤",
       "aliases": [],
@@ -638,6 +782,30 @@
         "assets/images/20261103-menu.jpg"
       ]
     },
+    "红豆莲子西米露": {
+      "name": "红豆莲子西米露",
+      "aliases": [],
+      "ingredients": [
+        "红豆",
+        "西米",
+        "红枣",
+        "红糖",
+        "莲子"
+      ],
+      "riskAllergens": [],
+      "substitute": null,
+      "firstSeen": "2026-11-12",
+      "lastSeen": "2026-11-12",
+      "occurrences": [
+        {
+          "date": "2026-11-12",
+          "week": "2026-W46",
+          "mealPeriod": "afternoonTea",
+          "mealLabel": "午点"
+        }
+      ],
+      "sourceImages": []
+    },
     "红烧牛肉面": {
       "name": "红烧牛肉面",
       "aliases": [],
@@ -660,6 +828,54 @@
         }
       ],
       "sourceImages": []
+    },
+    "红烧肉炖土豆": {
+      "name": "红烧肉炖土豆",
+      "aliases": [],
+      "ingredients": [
+        "五花肉",
+        "土豆"
+      ],
+      "riskAllergens": [],
+      "substitute": null,
+      "firstSeen": "2026-11-11",
+      "lastSeen": "2026-11-11",
+      "occurrences": [
+        {
+          "date": "2026-11-11",
+          "week": "2026-W46",
+          "mealPeriod": "lunch",
+          "mealLabel": "午餐"
+        }
+      ],
+      "sourceImages": [
+        "assets/images/20261111-menu.jpg"
+      ]
+    },
+    "红烧肉酱豆腐": {
+      "name": "红烧肉酱豆腐",
+      "aliases": [],
+      "ingredients": [
+        "瘦肉",
+        "豆腐",
+        "小葱",
+        "红萝卜"
+      ],
+      "riskAllergens": [],
+      "substitute": null,
+      "firstSeen": "2026-11-09",
+      "lastSeen": "2026-11-09",
+      "occurrences": [
+        {
+          "date": "2026-11-09",
+          "week": "2026-W46",
+          "mealPeriod": "lunch",
+          "mealLabel": "午餐"
+        }
+      ],
+      "sourceImages": [
+        "assets/images/20261109-menu.jpg"
+      ]
     },
     "红烧土豆": {
       "name": "红烧土豆",
@@ -723,11 +939,17 @@
       "riskAllergens": [],
       "substitute": null,
       "firstSeen": "2026-10-13",
-      "lastSeen": "2026-10-13",
+      "lastSeen": "2026-11-10",
       "occurrences": [
         {
           "date": "2026-10-13",
           "week": "2026-W42",
+          "mealPeriod": "afternoonTea",
+          "mealLabel": "午点"
+        },
+        {
+          "date": "2026-11-10",
+          "week": "2026-W46",
           "mealPeriod": "afternoonTea",
           "mealLabel": "午点"
         }
@@ -781,6 +1003,77 @@
       ],
       "sourceImages": []
     },
+    "淮山玉米排骨汤": {
+      "name": "淮山玉米排骨汤",
+      "aliases": [],
+      "ingredients": [
+        "淮山",
+        "玉米棒",
+        "排骨"
+      ],
+      "riskAllergens": [],
+      "substitute": null,
+      "firstSeen": "2026-11-13",
+      "lastSeen": "2026-11-13",
+      "occurrences": [
+        {
+          "date": "2026-11-13",
+          "week": "2026-W46",
+          "mealPeriod": "lunch",
+          "mealLabel": "午餐"
+        }
+      ],
+      "sourceImages": [
+        "assets/images/20261113-menu.jpg"
+      ]
+    },
+    "黄豆焖排骨": {
+      "name": "黄豆焖排骨",
+      "aliases": [],
+      "ingredients": [
+        "黄豆",
+        "排骨",
+        "小葱"
+      ],
+      "riskAllergens": [],
+      "substitute": null,
+      "firstSeen": "2026-11-10",
+      "lastSeen": "2026-11-10",
+      "occurrences": [
+        {
+          "date": "2026-11-10",
+          "week": "2026-W46",
+          "mealPeriod": "lunch",
+          "mealLabel": "午餐"
+        }
+      ],
+      "sourceImages": [
+        "assets/images/20261110-menu.jpg"
+      ]
+    },
+    "黄金米饭": {
+      "name": "黄金米饭",
+      "aliases": [],
+      "ingredients": [
+        "大米",
+        "小米"
+      ],
+      "riskAllergens": [],
+      "substitute": null,
+      "firstSeen": "2026-11-12",
+      "lastSeen": "2026-11-12",
+      "occurrences": [
+        {
+          "date": "2026-11-12",
+          "week": "2026-W46",
+          "mealPeriod": "lunch",
+          "mealLabel": "午餐"
+        }
+      ],
+      "sourceImages": [
+        "assets/images/20261112-menu.jpg"
+      ]
+    },
     "火龙果": {
       "name": "火龙果",
       "aliases": [],
@@ -800,6 +1093,101 @@
         }
       ],
       "sourceImages": []
+    },
+    "火腿炒豆角粒": {
+      "name": "火腿炒豆角粒",
+      "aliases": [],
+      "ingredients": [
+        "火腿",
+        "豆角"
+      ],
+      "riskAllergens": [],
+      "substitute": null,
+      "firstSeen": "2026-11-12",
+      "lastSeen": "2026-11-12",
+      "occurrences": [
+        {
+          "date": "2026-11-12",
+          "week": "2026-W46",
+          "mealPeriod": "lunch",
+          "mealLabel": "午餐"
+        }
+      ],
+      "sourceImages": [
+        "assets/images/20261112-menu.jpg"
+      ]
+    },
+    "鸡蛋": {
+      "name": "鸡蛋",
+      "aliases": [],
+      "ingredients": [
+        "鸡蛋"
+      ],
+      "riskAllergens": [
+        "egg"
+      ],
+      "substitute": null,
+      "firstSeen": "2026-11-09",
+      "lastSeen": "2026-11-09",
+      "occurrences": [
+        {
+          "date": "2026-11-09",
+          "week": "2026-W46",
+          "mealPeriod": "breakfast",
+          "mealLabel": "早餐"
+        }
+      ],
+      "sourceImages": []
+    },
+    "鸡丝汤面": {
+      "name": "鸡丝汤面",
+      "aliases": [],
+      "ingredients": [
+        "鸡胸肉",
+        "青菜",
+        "蛋黄面",
+        "红萝卜"
+      ],
+      "riskAllergens": [
+        "egg"
+      ],
+      "substitute": null,
+      "firstSeen": "2026-11-13",
+      "lastSeen": "2026-11-13",
+      "occurrences": [
+        {
+          "date": "2026-11-13",
+          "week": "2026-W46",
+          "mealPeriod": "breakfast",
+          "mealLabel": "早餐"
+        }
+      ],
+      "sourceImages": []
+    },
+    "茄汁牛肉意面": {
+      "name": "茄汁牛肉意面",
+      "aliases": [],
+      "ingredients": [
+        "西红柿",
+        "牛肉",
+        "意大利面",
+        "小葱"
+      ],
+      "riskAllergens": [],
+      "substitute": null,
+      "firstSeen": "2026-11-13",
+      "lastSeen": "2026-11-13",
+      "occurrences": [
+        {
+          "date": "2026-11-13",
+          "week": "2026-W46",
+          "mealPeriod": "lunch",
+          "mealLabel": "午餐"
+        }
+      ],
+      "sourceImages": [
+        "assets/images/20261113-menu.jpg"
+      ]
     },
     "酱香肉沫蒸米粉": {
       "name": "酱香肉沫蒸米粉",
@@ -857,7 +1245,7 @@
       "riskAllergens": [],
       "substitute": null,
       "firstSeen": "2026-10-19",
-      "lastSeen": "2026-11-02",
+      "lastSeen": "2026-11-13",
       "occurrences": [
         {
           "date": "2026-10-19",
@@ -874,6 +1262,12 @@
         {
           "date": "2026-11-02",
           "week": "2026-W45",
+          "mealPeriod": "morningSnack",
+          "mealLabel": "早点"
+        },
+        {
+          "date": "2026-11-13",
+          "week": "2026-W46",
           "mealPeriod": "morningSnack",
           "mealLabel": "早点"
         }
@@ -1230,6 +1624,26 @@
         "assets/images/20261022-menu.jpg"
       ]
     },
+    "蜜橘": {
+      "name": "蜜橘",
+      "aliases": [],
+      "ingredients": [
+        "蜜橘"
+      ],
+      "riskAllergens": [],
+      "substitute": null,
+      "firstSeen": "2026-11-10",
+      "lastSeen": "2026-11-10",
+      "occurrences": [
+        {
+          "date": "2026-11-10",
+          "week": "2026-W46",
+          "mealPeriod": "morningSnack",
+          "mealLabel": "早点"
+        }
+      ],
+      "sourceImages": []
+    },
     "蘑菇烩牛肉": {
       "name": "蘑菇烩牛肉",
       "aliases": [],
@@ -1254,6 +1668,31 @@
         "assets/images/20261012-menu.jpg"
       ]
     },
+    "木瓜花生瘦肉汤": {
+      "name": "木瓜花生瘦肉汤",
+      "aliases": [],
+      "ingredients": [
+        "木瓜",
+        "花生",
+        "瘦肉",
+        "红枣"
+      ],
+      "riskAllergens": [],
+      "substitute": null,
+      "firstSeen": "2026-11-09",
+      "lastSeen": "2026-11-09",
+      "occurrences": [
+        {
+          "date": "2026-11-09",
+          "week": "2026-W46",
+          "mealPeriod": "lunch",
+          "mealLabel": "午餐"
+        }
+      ],
+      "sourceImages": [
+        "assets/images/20261109-menu.jpg"
+      ]
+    },
     "奶香馒头": {
       "name": "奶香馒头",
       "aliases": [],
@@ -1276,6 +1715,28 @@
       ],
       "sourceImages": []
     },
+    "奶香小馒头": {
+      "name": "奶香小馒头",
+      "aliases": [],
+      "ingredients": [
+        "面粉",
+        "白糖",
+        "奶粉"
+      ],
+      "riskAllergens": [],
+      "substitute": null,
+      "firstSeen": "2026-11-11",
+      "lastSeen": "2026-11-11",
+      "occurrences": [
+        {
+          "date": "2026-11-11",
+          "week": "2026-W46",
+          "mealPeriod": "breakfast",
+          "mealLabel": "早餐"
+        }
+      ],
+      "sourceImages": []
+    },
     "牛奶": {
       "name": "牛奶",
       "aliases": [],
@@ -1287,11 +1748,17 @@
       ],
       "substitute": "米奶",
       "firstSeen": "2026-11-06",
-      "lastSeen": "2026-11-06",
+      "lastSeen": "2026-11-09",
       "occurrences": [
         {
           "date": "2026-11-06",
           "week": "2026-W45",
+          "mealPeriod": "afternoonTea",
+          "mealLabel": "午点"
+        },
+        {
+          "date": "2026-11-09",
+          "week": "2026-W46",
           "mealPeriod": "afternoonTea",
           "mealLabel": "午点"
         }
@@ -1452,6 +1919,30 @@
         "assets/images/20261020-menu.jpg"
       ]
     },
+    "肉沫焖萝卜": {
+      "name": "肉沫焖萝卜",
+      "aliases": [],
+      "ingredients": [
+        "瘦肉",
+        "白萝卜",
+        "小葱"
+      ],
+      "riskAllergens": [],
+      "substitute": null,
+      "firstSeen": "2026-11-10",
+      "lastSeen": "2026-11-10",
+      "occurrences": [
+        {
+          "date": "2026-11-10",
+          "week": "2026-W46",
+          "mealPeriod": "lunch",
+          "mealLabel": "午餐"
+        }
+      ],
+      "sourceImages": [
+        "assets/images/20261110-menu.jpg"
+      ]
+    },
     "肉沫青菜蝴蝶粉": {
       "name": "肉沫青菜蝴蝶粉",
       "aliases": [],
@@ -1485,7 +1976,7 @@
       "riskAllergens": [],
       "substitute": null,
       "firstSeen": "2026-10-12",
-      "lastSeen": "2026-10-15",
+      "lastSeen": "2026-11-12",
       "occurrences": [
         {
           "date": "2026-10-12",
@@ -1510,13 +2001,41 @@
           "week": "2026-W42",
           "mealPeriod": "lunch",
           "mealLabel": "午餐"
+        },
+        {
+          "date": "2026-11-09",
+          "week": "2026-W46",
+          "mealPeriod": "lunch",
+          "mealLabel": "午餐"
+        },
+        {
+          "date": "2026-11-10",
+          "week": "2026-W46",
+          "mealPeriod": "lunch",
+          "mealLabel": "午餐"
+        },
+        {
+          "date": "2026-11-11",
+          "week": "2026-W46",
+          "mealPeriod": "lunch",
+          "mealLabel": "午餐"
+        },
+        {
+          "date": "2026-11-12",
+          "week": "2026-W46",
+          "mealPeriod": "lunch",
+          "mealLabel": "午餐"
         }
       ],
       "sourceImages": [
         "assets/images/20261012-menu.jpg",
         "assets/images/20261013-menu.jpg",
         "assets/images/20261014-menu.jpg",
-        "assets/images/20261015-menu.jpg"
+        "assets/images/20261015-menu.jpg",
+        "assets/images/20261109-menu.jpg",
+        "assets/images/20261110-menu.jpg",
+        "assets/images/20261111-menu.jpg",
+        "assets/images/20261112-menu.jpg"
       ]
     },
     "肉沫时蔬": {
@@ -1594,6 +2113,32 @@
         "assets/images/20261022-menu.jpg"
       ]
     },
+    "三丝炒米粉": {
+      "name": "三丝炒米粉",
+      "aliases": [],
+      "ingredients": [
+        "米粉",
+        "红萝卜",
+        "瘦肉",
+        "包菜",
+        "鸡蛋"
+      ],
+      "riskAllergens": [
+        "egg"
+      ],
+      "substitute": null,
+      "firstSeen": "2026-11-12",
+      "lastSeen": "2026-11-12",
+      "occurrences": [
+        {
+          "date": "2026-11-12",
+          "week": "2026-W46",
+          "mealPeriod": "breakfast",
+          "mealLabel": "早餐"
+        }
+      ],
+      "sourceImages": []
+    },
     "三鲜螺纹粉": {
       "name": "三鲜螺纹粉",
       "aliases": [],
@@ -1611,6 +2156,31 @@
         {
           "date": "2026-11-02",
           "week": "2026-W45",
+          "mealPeriod": "breakfast",
+          "mealLabel": "早餐"
+        }
+      ],
+      "sourceImages": []
+    },
+    "三鲜通心粉": {
+      "name": "三鲜通心粉",
+      "aliases": [],
+      "ingredients": [
+        "通心粉",
+        "瘦肉",
+        "青菜",
+        "鸡蛋"
+      ],
+      "riskAllergens": [
+        "egg"
+      ],
+      "substitute": null,
+      "firstSeen": "2026-11-10",
+      "lastSeen": "2026-11-10",
+      "occurrences": [
+        {
+          "date": "2026-11-10",
+          "week": "2026-W46",
           "mealPeriod": "breakfast",
           "mealLabel": "早餐"
         }
@@ -1641,6 +2211,26 @@
         "assets/images/20261012-menu.jpg"
       ]
     },
+    "山楂片": {
+      "name": "山楂片",
+      "aliases": [],
+      "ingredients": [
+        "山楂片"
+      ],
+      "riskAllergens": [],
+      "substitute": null,
+      "firstSeen": "2026-11-12",
+      "lastSeen": "2026-11-12",
+      "occurrences": [
+        {
+          "date": "2026-11-12",
+          "week": "2026-W46",
+          "mealPeriod": "morningSnack",
+          "mealLabel": "早点"
+        }
+      ],
+      "sourceImages": []
+    },
     "山楂条": {
       "name": "山楂条",
       "aliases": [],
@@ -1668,16 +2258,23 @@
         "面粉",
         "瘦肉",
         "玉米粒",
-        "红萝卜"
+        "红萝卜",
+        "火腿"
       ],
       "riskAllergens": [],
       "substitute": null,
       "firstSeen": "2026-10-12",
-      "lastSeen": "2026-10-12",
+      "lastSeen": "2026-11-09",
       "occurrences": [
         {
           "date": "2026-10-12",
           "week": "2026-W42",
+          "mealPeriod": "afternoonTea",
+          "mealLabel": "午点"
+        },
+        {
+          "date": "2026-11-09",
+          "week": "2026-W46",
           "mealPeriod": "afternoonTea",
           "mealLabel": "午点"
         }
@@ -1693,7 +2290,7 @@
       "riskAllergens": [],
       "substitute": null,
       "firstSeen": "2026-10-22",
-      "lastSeen": "2026-11-04",
+      "lastSeen": "2026-11-11",
       "occurrences": [
         {
           "date": "2026-10-22",
@@ -1704,6 +2301,12 @@
         {
           "date": "2026-11-04",
           "week": "2026-W45",
+          "mealPeriod": "morningSnack",
+          "mealLabel": "早点"
+        },
+        {
+          "date": "2026-11-11",
+          "week": "2026-W46",
           "mealPeriod": "morningSnack",
           "mealLabel": "早点"
         }
@@ -2010,6 +2613,35 @@
       ],
       "sourceImages": []
     },
+    "水晶米饭": {
+      "name": "水晶米饭",
+      "aliases": [],
+      "ingredients": [
+        "大米"
+      ],
+      "riskAllergens": [],
+      "substitute": null,
+      "firstSeen": "2026-11-09",
+      "lastSeen": "2026-11-11",
+      "occurrences": [
+        {
+          "date": "2026-11-09",
+          "week": "2026-W46",
+          "mealPeriod": "lunch",
+          "mealLabel": "午餐"
+        },
+        {
+          "date": "2026-11-11",
+          "week": "2026-W46",
+          "mealPeriod": "lunch",
+          "mealLabel": "午餐"
+        }
+      ],
+      "sourceImages": [
+        "assets/images/20261109-menu.jpg",
+        "assets/images/20261111-menu.jpg"
+      ]
+    },
     "水煮鹌鹑蛋": {
       "name": "水煮鹌鹑蛋",
       "aliases": [],
@@ -2091,7 +2723,7 @@
       ],
       "substitute": "米奶",
       "firstSeen": "2026-10-13",
-      "lastSeen": "2026-11-05",
+      "lastSeen": "2026-11-12",
       "occurrences": [
         {
           "date": "2026-10-13",
@@ -2108,6 +2740,12 @@
         {
           "date": "2026-11-05",
           "week": "2026-W45",
+          "mealPeriod": "morningSnack",
+          "mealLabel": "早点"
+        },
+        {
+          "date": "2026-11-12",
+          "week": "2026-W46",
           "mealPeriod": "morningSnack",
           "mealLabel": "早点"
         }
@@ -2275,6 +2913,29 @@
         "assets/images/20261015-menu.jpg"
       ]
     },
+    "西兰花炒肉": {
+      "name": "西兰花炒肉",
+      "aliases": [],
+      "ingredients": [
+        "西兰花",
+        "瘦肉"
+      ],
+      "riskAllergens": [],
+      "substitute": null,
+      "firstSeen": "2026-11-13",
+      "lastSeen": "2026-11-13",
+      "occurrences": [
+        {
+          "date": "2026-11-13",
+          "week": "2026-W46",
+          "mealPeriod": "lunch",
+          "mealLabel": "午餐"
+        }
+      ],
+      "sourceImages": [
+        "assets/images/20261113-menu.jpg"
+      ]
+    },
     "鲜肉鸟巢蒸蛋": {
       "name": "鲜肉鸟巢蒸蛋",
       "aliases": [],
@@ -2349,6 +3010,30 @@
         "assets/images/20261022-menu.jpg"
       ]
     },
+    "香菇瘦肉虾粥": {
+      "name": "香菇瘦肉虾粥",
+      "aliases": [],
+      "ingredients": [
+        "鲜虾",
+        "香菇",
+        "瘦肉",
+        "青菜",
+        "大米"
+      ],
+      "riskAllergens": [],
+      "substitute": null,
+      "firstSeen": "2026-11-11",
+      "lastSeen": "2026-11-11",
+      "occurrences": [
+        {
+          "date": "2026-11-11",
+          "week": "2026-W46",
+          "mealPeriod": "afternoonTea",
+          "mealLabel": "午点"
+        }
+      ],
+      "sourceImages": []
+    },
     "香蕉": {
       "name": "香蕉",
       "aliases": [],
@@ -2358,7 +3043,7 @@
       "riskAllergens": [],
       "substitute": null,
       "firstSeen": "2026-10-12",
-      "lastSeen": "2026-11-02",
+      "lastSeen": "2026-11-13",
       "occurrences": [
         {
           "date": "2026-10-12",
@@ -2387,6 +3072,44 @@
         {
           "date": "2026-11-02",
           "week": "2026-W45",
+          "mealPeriod": "morningSnack",
+          "mealLabel": "早点"
+        },
+        {
+          "date": "2026-11-09",
+          "week": "2026-W46",
+          "mealPeriod": "morningSnack",
+          "mealLabel": "早点"
+        },
+        {
+          "date": "2026-11-13",
+          "week": "2026-W46",
+          "mealPeriod": "morningSnack",
+          "mealLabel": "早点"
+        }
+      ],
+      "sourceImages": []
+    },
+    "香梨": {
+      "name": "香梨",
+      "aliases": [],
+      "ingredients": [
+        "香梨"
+      ],
+      "riskAllergens": [],
+      "substitute": null,
+      "firstSeen": "2026-11-09",
+      "lastSeen": "2026-11-11",
+      "occurrences": [
+        {
+          "date": "2026-11-09",
+          "week": "2026-W46",
+          "mealPeriod": "morningSnack",
+          "mealLabel": "早点"
+        },
+        {
+          "date": "2026-11-11",
+          "week": "2026-W46",
           "mealPeriod": "morningSnack",
           "mealLabel": "早点"
         }
@@ -2440,11 +3163,17 @@
       "riskAllergens": [],
       "substitute": null,
       "firstSeen": "2026-10-16",
-      "lastSeen": "2026-10-16",
+      "lastSeen": "2026-11-13",
       "occurrences": [
         {
           "date": "2026-10-16",
           "week": "2026-W42",
+          "mealPeriod": "afternoonTea",
+          "mealLabel": "午点"
+        },
+        {
+          "date": "2026-11-13",
+          "week": "2026-W46",
           "mealPeriod": "afternoonTea",
           "mealLabel": "午点"
         }
@@ -2594,6 +3323,31 @@
         "assets/images/20261106-menu.jpg"
       ]
     },
+    "腰果玉米炒肉丁": {
+      "name": "腰果玉米炒肉丁",
+      "aliases": [],
+      "ingredients": [
+        "腰果",
+        "玉米粒",
+        "鸡胸肉",
+        "红萝卜"
+      ],
+      "riskAllergens": [],
+      "substitute": null,
+      "firstSeen": "2026-11-11",
+      "lastSeen": "2026-11-11",
+      "occurrences": [
+        {
+          "date": "2026-11-11",
+          "week": "2026-W46",
+          "mealPeriod": "lunch",
+          "mealLabel": "午餐"
+        }
+      ],
+      "sourceImages": [
+        "assets/images/20261111-menu.jpg"
+      ]
+    },
     "油焖大虾": {
       "name": "油焖大虾",
       "aliases": [],
@@ -2659,7 +3413,7 @@
       "riskAllergens": [],
       "substitute": null,
       "firstSeen": "2026-10-13",
-      "lastSeen": "2026-10-20",
+      "lastSeen": "2026-11-12",
       "occurrences": [
         {
           "date": "2026-10-13",
@@ -2672,6 +3426,12 @@
           "week": "2026-W43",
           "mealPeriod": "breakfast",
           "mealLabel": "早餐"
+        },
+        {
+          "date": "2026-11-12",
+          "week": "2026-W46",
+          "mealPeriod": "afternoonTea",
+          "mealLabel": "午点"
         }
       ],
       "sourceImages": []
@@ -2685,11 +3445,17 @@
       "riskAllergens": [],
       "substitute": null,
       "firstSeen": "2026-10-23",
-      "lastSeen": "2026-10-23",
+      "lastSeen": "2026-11-10",
       "occurrences": [
         {
           "date": "2026-10-23",
           "week": "2026-W43",
+          "mealPeriod": "breakfast",
+          "mealLabel": "早餐"
+        },
+        {
+          "date": "2026-11-10",
+          "week": "2026-W46",
           "mealPeriod": "breakfast",
           "mealLabel": "早餐"
         }
@@ -2705,13 +3471,19 @@
       "riskAllergens": [],
       "substitute": null,
       "firstSeen": "2026-11-05",
-      "lastSeen": "2026-11-05",
+      "lastSeen": "2026-11-13",
       "occurrences": [
         {
           "date": "2026-11-05",
           "week": "2026-W45",
           "mealPeriod": "afternoonTea",
           "mealLabel": "午点"
+        },
+        {
+          "date": "2026-11-13",
+          "week": "2026-W46",
+          "mealPeriod": "breakfast",
+          "mealLabel": "早餐"
         }
       ],
       "sourceImages": []
@@ -2738,6 +3510,31 @@
         }
       ],
       "sourceImages": []
+    },
+    "竹蔗雪梨红枣瘦肉汤": {
+      "name": "竹蔗雪梨红枣瘦肉汤",
+      "aliases": [],
+      "ingredients": [
+        "甘蔗",
+        "瘦肉",
+        "红枣",
+        "雪梨"
+      ],
+      "riskAllergens": [],
+      "substitute": null,
+      "firstSeen": "2026-11-10",
+      "lastSeen": "2026-11-10",
+      "occurrences": [
+        {
+          "date": "2026-11-10",
+          "week": "2026-W46",
+          "mealPeriod": "lunch",
+          "mealLabel": "午餐"
+        }
+      ],
+      "sourceImages": [
+        "assets/images/20261110-menu.jpg"
+      ]
     },
     "紫菜鸡蛋汤": {
       "name": "紫菜鸡蛋汤",
@@ -2796,28 +3593,60 @@
       ],
       "sourceImages": []
     },
+    "紫薯饭": {
+      "name": "紫薯饭",
+      "aliases": [],
+      "ingredients": [
+        "大米",
+        "紫薯"
+      ],
+      "riskAllergens": [],
+      "substitute": null,
+      "firstSeen": "2026-11-10",
+      "lastSeen": "2026-11-10",
+      "occurrences": [
+        {
+          "date": "2026-11-10",
+          "week": "2026-W46",
+          "mealPeriod": "lunch",
+          "mealLabel": "午餐"
+        }
+      ],
+      "sourceImages": [
+        "assets/images/20261110-menu.jpg"
+      ]
+    },
     "自制肉丸": {
       "name": "自制肉丸",
       "aliases": [],
       "ingredients": [
         "白萝卜",
         "瘦肉",
-        "小葱"
+        "小葱",
+        "莲藕",
+        "红萝卜"
       ],
       "riskAllergens": [],
       "substitute": null,
       "firstSeen": "2026-10-15",
-      "lastSeen": "2026-10-15",
+      "lastSeen": "2026-11-12",
       "occurrences": [
         {
           "date": "2026-10-15",
           "week": "2026-W42",
           "mealPeriod": "lunch",
           "mealLabel": "午餐"
+        },
+        {
+          "date": "2026-11-12",
+          "week": "2026-W46",
+          "mealPeriod": "lunch",
+          "mealLabel": "午餐"
         }
       ],
       "sourceImages": [
-        "assets/images/20261015-menu.jpg"
+        "assets/images/20261015-menu.jpg",
+        "assets/images/20261112-menu.jpg"
       ]
     }
   }
