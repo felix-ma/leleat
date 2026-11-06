@@ -2,7 +2,6 @@ import {
   AlignmentType,
   BorderStyle,
   Document,
-  HeightRule,
   LineRuleType,
   PageBreak,
   PageOrientation,
@@ -22,6 +21,7 @@ import { MEAL_LABELS, MEAL_ORDER, type MealPeriod, type MenuDay, type MenuMeal }
 import { downloadBlob } from './download'
 import {
   addDays,
+  formatWeekNumber,
   formatWeekRange,
   isoWeekForDate,
   isoWeekStart,
@@ -34,13 +34,14 @@ const FONT = '微软雅黑'
 const RED = 'FF0000'
 const BLACK = '000000'
 // 横向 A4 可用宽度：16838 - 2 × 283 = 16272 twips，铺满整页。
-const TABLE_WIDTH = 16272
+const TABLE_WIDTH = 15926
 const LABEL_WIDTH = 900
 // docx 会按 orientation 交换宽高；这里填入 A4 的短边/长边，
 // 生成结果才是 16838 × 11906 的横向页面。
 const A4_SHORT_EDGE = 11906
 const A4_LONG_EDGE = 16838
-const PAGE_MARGIN = 283
+const PAGE_MARGIN_X = 454
+const PAGE_MARGIN_Y = 510
 // 与打印版一致：1px 深灰边框、浅灰表头、更浅的餐次列。
 const BORDER = { style: BorderStyle.SINGLE, size: 6, color: '666666' }
 const HEAD_FILL = 'F1F1F1'
@@ -110,34 +111,21 @@ function paragraph(
 }
 
 function cellMargins(): { top: number; bottom: number; left: number; right: number } {
-  return { top: 60, bottom: 60, left: 55, right: 55 }
+  // 与打印版 padding: 2.6mm 1.5mm 对齐（147 / 85 twips）
+  return { top: 147, bottom: 147, left: 85, right: 85 }
 }
 
 /** 补剂表只用于勾选，边距压到最小。 */
 function compactCellMargins(): { top: number; bottom: number; left: number; right: number } {
-  return { top: 10, bottom: 10, left: 40, right: 40 }
+  // 与打印版 padding: 0.7mm 1mm 对齐（40 / 57 twips）
+  return { top: 40, bottom: 40, left: 57, right: 57 }
 }
 
 /** 固定行距：Word 与 LibreOffice 对「单倍行距」的解释随字体不同，固定行高才能保证两边排版一致。 */
 function exactLine(size: number, after = 0, before = 0) {
-  return { before, after, line: Math.round(size * 14.5), lineRule: LineRuleType.EXACT }
+  return { before, after, line: Math.round(size * 15), lineRule: LineRuleType.EXACT }
 }
 
-/** 1mm ≈ 56.7 twips；用最小行高把一页铺满，内容多时 Word 会自动加高。 */
-const TWIPS_PER_MM = 56.7
-
-function rowHeight(mm: number): { value: number; rule: (typeof HeightRule)['ATLEAST'] } {
-  return { value: Math.round(mm * TWIPS_PER_MM), rule: HeightRule.ATLEAST }
-}
-
-/** 各餐次的最小行高（mm），让整页高度分布接近打印版。 */
-const MEAL_ROW_HEIGHT_MM: Record<MealPeriod, number> = {
-  breakfast: 21,
-  morningSnack: 14,
-  lunch: 50,
-  afternoonTea: 21,
-  dinner: 18,
-}
 
 function borderSet(): {
   top: typeof BORDER
@@ -166,7 +154,8 @@ function longWeekday(isoDate: string): string {
 function shortDate(isoDate: string): string {
   const date = parseIsoDate(isoDate)
   if (!date) return isoDate
-  return `${String(date.getUTCMonth() + 1).padStart(2, '0')}/${String(date.getUTCDate()).padStart(2, '0')}`
+  // 与打印版一致：11/9，不补前导零
+  return `${date.getUTCMonth() + 1}/${date.getUTCDate()}`
 }
 
 function buildWeekBlocks(options: DocxExportOptions): WeekBlock[] {
@@ -259,25 +248,30 @@ function noBorders() {
 /** 页首：左侧小字+大标题，右侧两行 meta，下方一条横线。只用段落 + 右对齐制表位，
  *  避免嵌套表格在 Word 里被额外撑高（那会让整份文档溢出到第二页）。 */
 function buildPrintHeader(block: WeekBlock, options: DocxExportOptions): Paragraph[] {
-  const meta = [options.rangeLabel ? `${block.rangeLabel} · ${block.week}` : block.week]
+  // 与打印版一致：周一到周日的完整区间 + 「第 N 周」
+  const monday = isoWeekStart(block.week)
+  const mondayIso = monday ? toIsoDate(monday) : null
+  const sundayIso = mondayIso ? addDays(mondayIso, 6) : null
+  const range = mondayIso && sundayIso ? formatWeekRange(mondayIso, sundayIso) : options.rangeLabel
+  const meta = [`${range} · ${formatWeekNumber(block.week)}`]
   if (options.updatedAt) meta.push(`数据更新：${options.updatedAt}`)
   const tabStops = [{ type: TabStopType.RIGHT, position: TABLE_WIDTH }]
-  const tab = () => new TextRun({ children: [new Tab()], size: 14 })
+  const tab = () => new TextRun({ children: [new Tab()], size: 16 })
 
   return [
     new Paragraph({
       tabStops,
-      spacing: exactLine(14, 0),
+      spacing: exactLine(16, 0),
       children: [
-        textRun(`${options.schoolName || 'Leleat'} · 周食谱`, { size: 14, color: MUTED }),
+        textRun(`${options.schoolName || 'Leleat'} · 周食谱`, { size: 16, color: MUTED }),
         tab(),
-        textRun(meta[0] || '', { size: 14, color: MUTED }),
+        textRun(meta[0] || '', { size: 16, color: MUTED }),
       ],
     }),
     new Paragraph({
       tabStops,
-      spacing: exactLine(26, 20),
-      children: [textRun(options.title, { size: 26, bold: true }), tab(), textRun(meta[1] || '', { size: 14, color: MUTED })],
+      spacing: exactLine(38, 30),
+      children: [textRun(options.title, { size: 38, bold: true }), tab(), textRun(meta[1] || '', { size: 16, color: MUTED })],
     }),
     new Paragraph({
       spacing: exactLine(2, 60),
@@ -360,7 +354,6 @@ function buildMenuTable(block: WeekBlock): Table {
   const header = new TableRow({
     tableHeader: true,
     cantSplit: true,
-    height: rowHeight(7.5),
     children: [
       new TableCell({
         width: { size: LABEL_WIDTH, type: WidthType.DXA },
@@ -392,7 +385,6 @@ function buildMenuTable(block: WeekBlock): Table {
 
     return new TableRow({
       cantSplit: true,
-      height: rowHeight(MEAL_ROW_HEIGHT_MM[mealRow.period] ?? 20),
       children: cells,
     })
   })
@@ -420,7 +412,6 @@ function buildSupplementTable(block: WeekBlock, supplements: string[]): Table {
   const header = new TableRow({
     tableHeader: true,
     cantSplit: true,
-    height: rowHeight(5.5),
     children: [
       new TableCell({
         width: { size: labelWidth, type: WidthType.DXA },
@@ -449,7 +440,6 @@ function buildSupplementTable(block: WeekBlock, supplements: string[]): Table {
     (supplement) =>
       new TableRow({
         cantSplit: true,
-        height: rowHeight(5.4),
         children: [
           new TableCell({
             width: { size: labelWidth, type: WidthType.DXA },
@@ -489,6 +479,15 @@ function buildWeekContent(
     new Paragraph({ spacing: exactLine(2, 0, 10), children: [textRun('', { size: 2 })] }),
     buildSupplementHeading(),
     buildSupplementTable(block, options.supplements),
+    new Paragraph({
+      spacing: exactLine(18, 0, 170),
+      children: [
+        textRun(
+          '说明：红色为含登记过敏原的菜品，括号内为已确认替餐；未标注替餐的请与幼儿园确认。补剂请在对应日期勾选。',
+          { size: 18, color: '555555' },
+        ),
+      ],
+    }),
   ]
 }
 
@@ -541,10 +540,10 @@ export function buildWeeklyMenuDocument(options: DocxExportOptions): Document {
               orientation: PageOrientation.LANDSCAPE,
             },
             margin: {
-              top: PAGE_MARGIN,
-              right: PAGE_MARGIN,
-              bottom: PAGE_MARGIN,
-              left: PAGE_MARGIN,
+              top: PAGE_MARGIN_Y,
+              right: PAGE_MARGIN_X,
+              bottom: PAGE_MARGIN_Y,
+              left: PAGE_MARGIN_X,
             },
           },
         },
