@@ -100,6 +100,11 @@ function cellMargins(): { top: number; bottom: number; left: number; right: numb
   return { top: 60, bottom: 60, left: 55, right: 55 }
 }
 
+/** 补剂表只用于勾选，边距压到最小。 */
+function compactCellMargins(): { top: number; bottom: number; left: number; right: number } {
+  return { top: 10, bottom: 10, left: 40, right: 40 }
+}
+
 function borderSet(): {
   top: typeof BORDER
   bottom: typeof BORDER
@@ -324,18 +329,18 @@ function buildSupplementTable(block: WeekBlock, supplements: string[]): Table {
       new TableCell({
         width: { size: labelWidth, type: WidthType.DXA },
         verticalAlign: VerticalAlign.CENTER,
-        margins: cellMargins(),
-        children: [paragraph('补剂', { bold: true, size: 18 })],
+        margins: compactCellMargins(),
+        children: [paragraph('补剂', { bold: true, size: 15 })],
       }),
       ...supplementDates.map(
         (date) =>
           new TableCell({
             width: { size: dayWidth, type: WidthType.DXA },
             verticalAlign: VerticalAlign.CENTER,
-            margins: cellMargins(),
+            margins: compactCellMargins(),
             children: [
-              paragraph(longWeekday(date), { bold: true, size: 16 }),
-              paragraph(shortDate(date), { size: 13, color: '555555' }),
+              paragraph(longWeekday(date), { bold: true, size: 12 }),
+              paragraph(shortDate(date), { size: 10, color: '555555' }),
             ],
           }),
       ),
@@ -350,16 +355,16 @@ function buildSupplementTable(block: WeekBlock, supplements: string[]): Table {
           new TableCell({
             width: { size: labelWidth, type: WidthType.DXA },
             verticalAlign: VerticalAlign.CENTER,
-            margins: cellMargins(),
-            children: [paragraph(supplement, { size: 18, bold: true })],
+            margins: compactCellMargins(),
+            children: [paragraph(supplement, { size: 14, bold: true })],
           }),
           ...supplementDates.map(
             () =>
               new TableCell({
                 width: { size: dayWidth, type: WidthType.DXA },
                 verticalAlign: VerticalAlign.CENTER,
-                margins: cellMargins(),
-                children: [paragraph('□', { size: 22 })],
+                margins: compactCellMargins(),
+                children: [paragraph('□', { size: 15 })],
               }),
           ),
         ],
@@ -396,8 +401,8 @@ function buildWeekContent(
     }),
     buildMenuTable(block),
     new Paragraph({
-      spacing: { before: 150, after: 60, line: 240 },
-      children: [textRun('每日补剂（周一至周日，逐日勾选）', { size: 18, bold: true })],
+      spacing: { before: 90, after: 40, line: 240 },
+      children: [textRun('每日补剂（周一至周日，逐日勾选）', { size: 15, bold: true })],
     }),
     buildSupplementTable(block, supplements),
     new Paragraph({

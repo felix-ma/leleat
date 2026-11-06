@@ -204,12 +204,25 @@
   .print-supplement-table th,
   .print-supplement-table td {
     border: 1px solid #666;
-    padding: 1.5mm 1.2mm;
     text-align: center;
     vertical-align: middle;
-    font-size: 8pt;
-    line-height: 1.45;
     word-break: break-word;
+  }
+
+  /* 食谱表：留足行高，字号大一点，占住版面主体。 */
+  .print-menu-table th,
+  .print-menu-table td {
+    padding: 2.2mm 1.4mm;
+    font-size: 8.8pt;
+    line-height: 1.5;
+  }
+
+  /* 补剂表：只做勾选，压到最小。 */
+  .print-supplement-table th,
+  .print-supplement-table td {
+    padding: 0.6mm 1mm;
+    font-size: 6.6pt;
+    line-height: 1.15;
   }
 
   .print-menu-table thead,
@@ -241,9 +254,9 @@
   }
 
   .print-dish {
-    margin: 0 0 1mm;
-    font-size: 8pt;
-    line-height: 1.45;
+    margin: 0 0 1.2mm;
+    font-size: 8.8pt;
+    line-height: 1.5;
   }
 
   .print-dish:last-child {
@@ -268,7 +281,7 @@
   }
 
   .print-supplement {
-    margin-top: 5mm;
+    margin-top: 2.5mm;
   }
 
   .print-section-heading {
@@ -280,16 +293,16 @@
 
   .print-section-heading h2 {
     margin: 0;
-    font-size: 10pt;
+    font-size: 8.5pt;
   }
 
   .print-section-heading span {
-    font-size: 7.5pt;
+    font-size: 6.5pt;
     color: #666;
   }
 
   .print-supplement-table td {
-    font-size: 13pt;
+    font-size: 8.5pt;
     line-height: 1;
   }
 
