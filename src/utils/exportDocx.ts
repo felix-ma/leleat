@@ -38,9 +38,12 @@ const LABEL_WIDTH = 900
 const A4_SHORT_EDGE = 11906
 const A4_LONG_EDGE = 16838
 const PAGE_MARGIN = 283
-const BORDER = { style: BorderStyle.SINGLE, size: 4, color: '000000' }
-/** 表头与餐次列的浅灰底，和打印版一致。 */
-const HEAD_FILL = 'F2F2F2'
+// 与打印版一致：1px 深灰边框、浅灰表头、更浅的餐次列。
+const BORDER = { style: BorderStyle.SINGLE, size: 6, color: '666666' }
+const HEAD_FILL = 'F1F1F1'
+const LABEL_FILL = 'F7F7F7'
+const MUTED = '555555'
+const NO_BORDER = { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' }
 const WEEKDAY_NAMES = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'] as const
 
 interface WeekColumn {
@@ -70,6 +73,8 @@ export interface DocxExportOptions {
   title: string
   rangeLabel: string
   fileBase: string
+  schoolName?: string
+  updatedAt?: string
 }
 
 function textRun(
@@ -119,11 +124,11 @@ function rowHeight(mm: number): { value: number; rule: (typeof HeightRule)['ATLE
 
 /** 各餐次的最小行高（mm），让整页高度分布接近打印版。 */
 const MEAL_ROW_HEIGHT_MM: Record<MealPeriod, number> = {
-  breakfast: 21,
-  morningSnack: 14,
-  lunch: 50,
-  afternoonTea: 21,
-  dinner: 19,
+  breakfast: 17,
+  morningSnack: 12.5,
+  lunch: 42,
+  afternoonTea: 17,
+  dinner: 16,
 }
 
 function borderSet(): {
@@ -231,6 +236,118 @@ function buildWeekBlocks(options: DocxExportOptions): WeekBlock[] {
     .filter((block): block is WeekBlock => block !== null)
 }
 
+
+function noBorders() {
+  return {
+    top: NO_BORDER,
+    bottom: NO_BORDER,
+    left: NO_BORDER,
+    right: NO_BORDER,
+    insideHorizontal: NO_BORDER,
+    insideVertical: NO_BORDER,
+  }
+}
+
+/** 页首：左侧小字+大标题，右侧两行 meta，下方一条横线，对齐打印版。 */
+function buildPrintHeader(block: WeekBlock, options: DocxExportOptions): (Table | Paragraph)[] {
+  const leftWidth = Math.round(TABLE_WIDTH * 0.58)
+  const rightWidth = TABLE_WIDTH - leftWidth
+  const meta = [options.rangeLabel ? `${block.rangeLabel} · ${block.week}` : block.week]
+  if (options.updatedAt) meta.push(`数据更新：${options.updatedAt}`)
+
+  return [
+    new Table({
+      width: { size: TABLE_WIDTH, type: WidthType.DXA },
+      columnWidths: [leftWidth, rightWidth],
+      layout: TableLayoutType.FIXED,
+      borders: noBorders(),
+      rows: [
+        new TableRow({
+          children: [
+            new TableCell({
+              width: { size: leftWidth, type: WidthType.DXA },
+              margins: { top: 0, bottom: 0, left: 0, right: 0 },
+              children: [
+                new Paragraph({
+                  spacing: { after: 40, line: 240 },
+                  children: [
+                    textRun(`${options.schoolName || 'Leleat'} · 周食谱`, {
+                      size: 16,
+                      color: MUTED,
+                    }),
+                  ],
+                }),
+                new Paragraph({
+                  spacing: { after: 0, line: 240 },
+                  children: [textRun(options.title, { size: 38, bold: true })],
+                }),
+              ],
+            }),
+            new TableCell({
+              width: { size: rightWidth, type: WidthType.DXA },
+              verticalAlign: VerticalAlign.BOTTOM,
+              margins: { top: 0, bottom: 0, left: 120, right: 0 },
+              children: meta.map(
+                (line) =>
+                  new Paragraph({
+                    alignment: AlignmentType.RIGHT,
+                    spacing: { after: 20, line: 260 },
+                    children: [textRun(line, { size: 16, color: MUTED })],
+                  }),
+              ),
+            }),
+          ],
+        }),
+      ],
+    }),
+    new Paragraph({
+      spacing: { before: 40, after: 60, line: 240 },
+      border: { bottom: { style: BorderStyle.SINGLE, size: 8, color: '777777', space: 4 } },
+      children: [textRun('', { size: 2 })],
+    }),
+  ]
+}
+
+/** 补剂区标题：左侧标题 + 右侧小字，对齐打印版。 */
+function buildSupplementHeading(): Table {
+  const leftWidth = Math.round(TABLE_WIDTH * 0.5)
+  const rightWidth = TABLE_WIDTH - leftWidth
+  return new Table({
+    width: { size: TABLE_WIDTH, type: WidthType.DXA },
+    columnWidths: [leftWidth, rightWidth],
+    layout: TableLayoutType.FIXED,
+    borders: noBorders(),
+    rows: [
+      new TableRow({
+        children: [
+          new TableCell({
+            width: { size: leftWidth, type: WidthType.DXA },
+            margins: { top: 0, bottom: 0, left: 0, right: 0 },
+            children: [
+              new Paragraph({
+                spacing: { after: 0, line: 240 },
+                children: [textRun('每日补剂（周一至周日，逐日勾选）', { size: 20, bold: true })],
+              }),
+            ],
+          }),
+          new TableCell({
+            width: { size: rightWidth, type: WidthType.DXA },
+            verticalAlign: VerticalAlign.BOTTOM,
+            margins: { top: 0, bottom: 0, left: 120, right: 0 },
+            children: [
+              new Paragraph({
+                alignment: AlignmentType.RIGHT,
+                spacing: { after: 0, line: 240 },
+                children: [textRun('一周 5 天食谱 · 7 天补剂', { size: 16, color: '666666' })],
+              }),
+            ],
+          }),
+        ],
+      }),
+    ],
+  })
+}
+
 function buildHeaderCell(column: WeekColumn, width: number): TableCell {
   return new TableCell({
     width: { size: width, type: WidthType.DXA },
@@ -238,8 +355,8 @@ function buildHeaderCell(column: WeekColumn, width: number): TableCell {
     margins: cellMargins(),
     shading: { fill: HEAD_FILL },
     children: [
-      paragraph(column.weekday, { bold: true, size: 20 }),
-      paragraph(column.shortDate, { size: 15, color: '555555' }),
+      paragraph(column.weekday, { bold: true, size: 21 }),
+      paragraph(column.shortDate, { size: 16, color: MUTED }),
     ],
   })
 }
@@ -248,7 +365,7 @@ function buildDishParagraph(dish: MenuMeal['dishes'][number]): Paragraph {
   const hasRisk = dish.riskAllergens.length > 0
   const runs: TextRun[] = [
     textRun(dish.name, {
-      size: hasRisk ? 20 : 21,
+      size: 21,
       bold: hasRisk,
       color: hasRisk ? RED : BLACK,
     }),
@@ -257,7 +374,7 @@ function buildDishParagraph(dish: MenuMeal['dishes'][number]): Paragraph {
   if (hasRisk && dish.recommendation[0]) {
     runs.push(
       textRun(`（替：${dish.recommendation[0]}）`, {
-        size: 20,
+        size: 21,
         bold: true,
         color: RED,
       }),
@@ -266,7 +383,7 @@ function buildDishParagraph(dish: MenuMeal['dishes'][number]): Paragraph {
 
   return new Paragraph({
     alignment: AlignmentType.CENTER,
-    spacing: { after: 35, line: 235 },
+    spacing: { after: 70, line: 300 },
     children: runs,
   })
 }
@@ -298,7 +415,7 @@ function buildMenuTable(block: WeekBlock): Table {
         verticalAlign: VerticalAlign.CENTER,
         margins: cellMargins(),
         shading: { fill: HEAD_FILL },
-        children: [paragraph('餐次', { bold: true, size: 20 })],
+        children: [paragraph('餐次', { bold: true, size: 21 })],
       }),
       ...block.columns.map((column) => buildHeaderCell(column, dayWidth)),
     ],
@@ -310,7 +427,7 @@ function buildMenuTable(block: WeekBlock): Table {
         width: { size: LABEL_WIDTH, type: WidthType.DXA },
         verticalAlign: VerticalAlign.CENTER,
         margins: cellMargins(),
-        shading: { fill: HEAD_FILL },
+        shading: { fill: LABEL_FILL },
         children: [paragraph(mealRow.label, { bold: true, size: 21 })],
       }),
     ]
@@ -358,7 +475,7 @@ function buildSupplementTable(block: WeekBlock, supplements: string[]): Table {
         verticalAlign: VerticalAlign.CENTER,
         margins: compactCellMargins(),
         shading: { fill: HEAD_FILL },
-        children: [paragraph('补剂', { bold: true, size: 15 })],
+        children: [paragraph('补剂', { bold: true, size: 16 })],
       }),
       ...supplementDates.map(
         (date) =>
@@ -368,8 +485,8 @@ function buildSupplementTable(block: WeekBlock, supplements: string[]): Table {
             margins: compactCellMargins(),
             shading: { fill: HEAD_FILL },
             children: [
-              paragraph(longWeekday(date), { bold: true, size: 12 }),
-              paragraph(shortDate(date), { size: 10, color: '555555' }),
+              paragraph(longWeekday(date), { bold: true, size: 16 }),
+              paragraph(shortDate(date), { size: 16, color: MUTED }),
             ],
           }),
       ),
@@ -380,13 +497,13 @@ function buildSupplementTable(block: WeekBlock, supplements: string[]): Table {
     (supplement) =>
       new TableRow({
         cantSplit: true,
-        height: rowHeight(5.4),
+        height: rowHeight(4.8),
         children: [
           new TableCell({
             width: { size: labelWidth, type: WidthType.DXA },
             verticalAlign: VerticalAlign.CENTER,
             margins: compactCellMargins(),
-            children: [paragraph(supplement, { size: 14, bold: true })],
+            children: [paragraph(supplement, { size: 16, bold: true })],
           }),
           ...supplementDates.map(
             () =>
@@ -394,7 +511,7 @@ function buildSupplementTable(block: WeekBlock, supplements: string[]): Table {
                 width: { size: dayWidth, type: WidthType.DXA },
                 verticalAlign: VerticalAlign.CENTER,
                 margins: compactCellMargins(),
-                children: [paragraph('□', { size: 15 })],
+                children: [paragraph('□', { size: 20 })],
               }),
           ),
         ],
@@ -412,29 +529,14 @@ function buildSupplementTable(block: WeekBlock, supplements: string[]): Table {
 
 function buildWeekContent(
   block: WeekBlock,
-  title: string,
-  supplements: string[],
+  options: DocxExportOptions,
 ): (Paragraph | Table)[] {
   return [
-    new Paragraph({
-      alignment: AlignmentType.CENTER,
-      spacing: { after: 45, line: 240 },
-      children: [textRun(title, { size: 28, bold: true })],
-    }),
-    new Paragraph({
-      alignment: AlignmentType.CENTER,
-      spacing: { after: 120, line: 240 },
-      children: [
-        textRun(`${block.rangeLabel} · ${block.week}`, { size: 17, color: '444444' }),
-        textRun('  ·  红色为含过敏原菜品，括号内为已确认替餐', { size: 17, color: '8A3A34' }),
-      ],
-    }),
+    ...buildPrintHeader(block, options),
     buildMenuTable(block),
-    new Paragraph({
-      spacing: { before: 90, after: 40, line: 240 },
-      children: [textRun('每日补剂（周一至周日，逐日勾选）', { size: 15, bold: true })],
-    }),
-    buildSupplementTable(block, supplements),
+    new Paragraph({ spacing: { before: 40, after: 0, line: 240 }, children: [textRun('', { size: 2 })] }),
+    buildSupplementHeading(),
+    buildSupplementTable(block, options.supplements),
   ]
 }
 
@@ -464,7 +566,7 @@ export function buildWeeklyMenuDocument(options: DocxExportOptions): Document {
       if (index > 0) {
         children.push(new Paragraph({ children: [new PageBreak()] }))
       }
-      children.push(...buildWeekContent(block, options.title, options.supplements))
+      children.push(...buildWeekContent(block, options))
     })
   }
 

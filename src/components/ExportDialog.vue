@@ -17,6 +17,8 @@ defineProps<{
   substitutes: SubstitutesMap
   substituteLibrary: SubstituteLibrary
   supplements: string[]
+  schoolName?: string
+  updatedAt?: string
 }>()
 
 const emit = defineEmits<{
@@ -79,6 +81,8 @@ function printCurrentWeek(): void {
             :substitutes="substitutes"
             :substitute-library="substituteLibrary"
             :supplements="supplements"
+            :school-name="schoolName"
+            :updated-at="updatedAt"
           />
         </div>
       </div>

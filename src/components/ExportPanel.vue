@@ -25,6 +25,8 @@ const props = defineProps<{
   substitutes: SubstitutesMap
   substituteLibrary: SubstituteLibrary
   supplements: string[]
+  schoolName?: string
+  updatedAt?: string
 }>()
 
 type RangeMode = 'week' | 'custom'
@@ -162,6 +164,8 @@ async function handleDocx(): Promise<void> {
       title: title.value,
       rangeLabel: rangeLabel.value,
       fileBase: fileBase.value,
+      schoolName: props.schoolName,
+      updatedAt: props.updatedAt,
     })
     status.value = { tone: 'success', message: `已生成 ${fileBase.value}.docx` }
   } catch (error) {

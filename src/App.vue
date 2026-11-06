@@ -581,6 +581,8 @@ onBeforeUnmount(() => {
     :substitutes="data.substitutes"
     :substitute-library="data.substituteLibrary"
     :supplements="data.settings.supplements"
+    :school-name="data.settings.schoolName"
+    :updated-at="updatedAtLabel"
     @close="exportOpen = false"
   />
 </template>
