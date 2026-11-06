@@ -38,7 +38,6 @@ export default {
       },
       fontFamily: {
         sans: [
-          '"Leleat Sans"',
           '"Noto Sans SC"',
           '"PingFang SC"',
           '"Hiragino Sans GB"',
