@@ -170,13 +170,30 @@ function smartDefaultDate(now = new Date()): string {
   return addDays(iso, weekday === 5 ? 3 : 1) ?? iso
 }
 
-/** 默认日期；当天没有食谱时顺延到下一个有食谱的日子，再不行取最新一天。 */
+/**
+ * 默认日期。
+ * 1. 目标日有食谱就直接用；
+ * 2. 目标日没食谱（放假、停课）时，优先在目标日所在那一周里找最近的一天；
+ * 3. 目标那一周整体没有食谱时，取「最近有食谱的那一周」的第一个有食谱日，
+ *    而不是最后一天——否则周五放学后会高亮到下周的周五。
+ */
 function resolveDefaultDate(dates: string[], now = new Date()): string {
   const target = smartDefaultDate(now)
   if (dates.length === 0) return target
   if (dates.includes(target)) return target
-  const upcoming = dates.find((date) => date >= target)
-  return upcoming ?? dates[dates.length - 1] ?? target
+  const targetWeek = isoWeekForDate(target)
+  const sameWeek = dates.filter((date) => isoWeekForDate(date) === targetWeek)
+  if (sameWeek.length > 0) {
+    const next = sameWeek.find((date) => date >= target)
+    return next ?? sameWeek[sameWeek.length - 1] ?? target
+  }
+  const later = dates.filter((date) => date > target)
+  if (later.length > 0) {
+    const week = isoWeekForDate(later[0])
+    return dates.find((date) => isoWeekForDate(date) === week) ?? later[0]
+  }
+  const lastWeek = isoWeekForDate(dates[dates.length - 1])
+  return dates.find((date) => isoWeekForDate(date) === lastWeek) ?? dates[dates.length - 1]
 }
 
 async function loadPageData(): Promise<void> {
