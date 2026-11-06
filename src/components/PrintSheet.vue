@@ -52,7 +52,6 @@ function shortDate(date: string): string {
   <section class="print-only print-sheet" aria-label="打印用周食谱和补剂清单">
     <header class="print-header">
       <div>
-        <p class="print-kicker">{{ schoolName || 'Leleat' }} · 周食谱</p>
         <h1>乐乐 · 本周食谱与替餐</h1>
       </div>
       <div class="print-meta">
@@ -127,9 +126,5 @@ function shortDate(date: string): string {
         </tbody>
       </table>
     </section>
-
-    <p class="print-footnote">
-      说明：红色为含登记过敏原的菜品，括号内为已确认替餐；未标注替餐的请与幼儿园确认。补剂请在对应日期勾选。
-    </p>
   </section>
 </template>

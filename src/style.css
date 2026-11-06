@@ -182,13 +182,6 @@
     min-width: 0;
   }
 
-  .print-kicker {
-    margin: 0 0 1mm;
-    font-size: 8pt;
-    letter-spacing: 0.08em;
-    color: #555;
-  }
-
   .print-header h1 {
     margin: 0;
     font-size: 19pt;
@@ -325,11 +318,6 @@
     line-height: 1;
   }
 
-  .print-footnote {
-    margin-top: 3mm;
-    font-size: 9pt;
-    color: #555;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

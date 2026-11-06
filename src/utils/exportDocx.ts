@@ -112,7 +112,7 @@ function paragraph(
 
 function cellMargins(): { top: number; bottom: number; left: number; right: number } {
   // 与打印版 padding: 2.6mm 1.5mm 对齐（147 / 85 twips）
-  return { top: 130, bottom: 130, left: 85, right: 85 }
+  return { top: 147, bottom: 147, left: 85, right: 85 }
 }
 
 /** 补剂表只用于勾选，边距压到最小。 */
@@ -123,7 +123,7 @@ function compactCellMargins(): { top: number; bottom: number; left: number; righ
 
 /** 固定行距：Word 与 LibreOffice 对「单倍行距」的解释随字体不同，固定行高才能保证两边排版一致。 */
 function exactLine(size: number, after = 0, before = 0) {
-  return { before, after, line: Math.round(size * 14.4), lineRule: LineRuleType.EXACT }
+  return { before, after, line: Math.round(size * 15), lineRule: LineRuleType.EXACT }
 }
 
 
@@ -262,11 +262,7 @@ function buildPrintHeader(block: WeekBlock, options: DocxExportOptions): Paragra
     new Paragraph({
       tabStops,
       spacing: exactLine(16, 0),
-      children: [
-        textRun(`${options.schoolName || 'Leleat'} · 周食谱`, { size: 16, color: MUTED }),
-        tab(),
-        textRun(meta[0] || '', { size: 16, color: MUTED }),
-      ],
+      children: [tab(), textRun(meta[0] || '', { size: 16, color: MUTED })],
     }),
     new Paragraph({
       tabStops,
@@ -479,15 +475,6 @@ function buildWeekContent(
     new Paragraph({ spacing: exactLine(2, 0, 10), children: [textRun('', { size: 2 })] }),
     buildSupplementHeading(),
     buildSupplementTable(block, options.supplements),
-    new Paragraph({
-      spacing: exactLine(18, 0, 170),
-      children: [
-        textRun(
-          '说明：红色为含登记过敏原的菜品，括号内为已确认替餐；未标注替餐的请与幼儿园确认。补剂请在对应日期勾选。',
-          { size: 18, color: '555555' },
-        ),
-      ],
-    }),
   ]
 }
 
