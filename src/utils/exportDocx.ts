@@ -235,7 +235,7 @@ function buildDishParagraph(dish: MenuMeal['dishes'][number]): Paragraph {
   if (hasRisk && dish.recommendation[0]) {
     runs.push(
       textRun(`（替：${dish.recommendation[0]}）`, {
-        size: 17,
+        size: 20,
         bold: true,
         color: RED,
       }),
@@ -253,7 +253,7 @@ function buildMealCell(meal: MenuMeal | undefined, width: number): TableCell {
   const children =
     meal && meal.dishes.length > 0
       ? meal.dishes.map((dish) => buildDishParagraph(dish))
-      : [paragraph('—', { size: 18, color: '777777' })]
+      : [paragraph('—', { size: 20, color: '777777' })]
 
   return new TableCell({
     width: { size: width, type: WidthType.DXA },
@@ -286,7 +286,7 @@ function buildMenuTable(block: WeekBlock): Table {
         width: { size: LABEL_WIDTH, type: WidthType.DXA },
         verticalAlign: VerticalAlign.CENTER,
         margins: cellMargins(),
-        children: [paragraph(mealRow.label, { bold: true, size: 19 })],
+        children: [paragraph(mealRow.label, { bold: true, size: 21 })],
       }),
     ]
 

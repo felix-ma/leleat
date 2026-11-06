@@ -177,7 +177,7 @@
 
   .print-header h1 {
     margin: 0;
-    font-size: 16pt;
+    font-size: 19pt;
     font-weight: 700;
     letter-spacing: 0.03em;
   }
@@ -212,16 +212,16 @@
   /* 食谱表：留足行高，字号大一点，占住版面主体。 */
   .print-menu-table th,
   .print-menu-table td {
-    padding: 2.2mm 1.4mm;
-    font-size: 8.8pt;
+    padding: 2.6mm 1.5mm;
+    font-size: 10.4pt;
     line-height: 1.5;
   }
 
   /* 补剂表：只做勾选，压到最小。 */
   .print-supplement-table th,
   .print-supplement-table td {
-    padding: 0.6mm 1mm;
-    font-size: 6.6pt;
+    padding: 0.7mm 1mm;
+    font-size: 7.8pt;
     line-height: 1.15;
   }
 
@@ -243,7 +243,7 @@
   }
 
   .print-date {
-    font-size: 7pt;
+    font-size: 8pt;
     font-weight: 400;
     color: #555;
   }
@@ -254,8 +254,8 @@
   }
 
   .print-dish {
-    margin: 0 0 1.2mm;
-    font-size: 8.8pt;
+    margin: 0 0 1.4mm;
+    font-size: 10.4pt;
     line-height: 1.5;
   }
 
@@ -293,22 +293,22 @@
 
   .print-section-heading h2 {
     margin: 0;
-    font-size: 8.5pt;
+    font-size: 10pt;
   }
 
   .print-section-heading span {
-    font-size: 6.5pt;
+    font-size: 7.7pt;
     color: #666;
   }
 
   .print-supplement-table td {
-    font-size: 8.5pt;
+    font-size: 10pt;
     line-height: 1;
   }
 
   .print-footnote {
     margin-top: 3mm;
-    font-size: 7.5pt;
+    font-size: 8.9pt;
     color: #555;
   }
 }
