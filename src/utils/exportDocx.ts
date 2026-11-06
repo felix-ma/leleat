@@ -3,6 +3,7 @@ import {
   BorderStyle,
   Document,
   HeightRule,
+  LineRuleType,
   PageBreak,
   PageOrientation,
   Packer,
@@ -103,7 +104,7 @@ function paragraph(
 ): Paragraph {
   return new Paragraph({
     alignment: AlignmentType.CENTER,
-    spacing: { after: options.after ?? 0, line: 240 },
+    spacing: exactLine(options.size ?? 21, options.after ?? 0),
     children: [textRun(text, options)],
   })
 }
@@ -117,6 +118,11 @@ function compactCellMargins(): { top: number; bottom: number; left: number; righ
   return { top: 10, bottom: 10, left: 40, right: 40 }
 }
 
+/** 固定行距：Word 与 LibreOffice 对「单倍行距」的解释随字体不同，固定行高才能保证两边排版一致。 */
+function exactLine(size: number, after = 0, before = 0) {
+  return { before, after, line: Math.round(size * 14.5), lineRule: LineRuleType.EXACT }
+}
+
 /** 1mm ≈ 56.7 twips；用最小行高把一页铺满，内容多时 Word 会自动加高。 */
 const TWIPS_PER_MM = 56.7
 
@@ -126,10 +132,10 @@ function rowHeight(mm: number): { value: number; rule: (typeof HeightRule)['ATLE
 
 /** 各餐次的最小行高（mm），让整页高度分布接近打印版。 */
 const MEAL_ROW_HEIGHT_MM: Record<MealPeriod, number> = {
-  breakfast: 22,
+  breakfast: 21,
   morningSnack: 14,
-  lunch: 52,
-  afternoonTea: 22,
+  lunch: 50,
+  afternoonTea: 21,
   dinner: 18,
 }
 
@@ -261,7 +267,7 @@ function buildPrintHeader(block: WeekBlock, options: DocxExportOptions): Paragra
   return [
     new Paragraph({
       tabStops,
-      spacing: { after: 0, line: 220 },
+      spacing: exactLine(14, 0),
       children: [
         textRun(`${options.schoolName || 'Leleat'} · 周食谱`, { size: 14, color: MUTED }),
         tab(),
@@ -270,11 +276,11 @@ function buildPrintHeader(block: WeekBlock, options: DocxExportOptions): Paragra
     }),
     new Paragraph({
       tabStops,
-      spacing: { after: 20, line: 240 },
+      spacing: exactLine(26, 20),
       children: [textRun(options.title, { size: 26, bold: true }), tab(), textRun(meta[1] || '', { size: 14, color: MUTED })],
     }),
     new Paragraph({
-      spacing: { before: 0, after: 60, line: 200 },
+      spacing: exactLine(2, 60),
       border: { bottom: { style: BorderStyle.SINGLE, size: 8, color: '777777', space: 2 } },
       children: [textRun('', { size: 2 })],
     }),
@@ -285,7 +291,7 @@ function buildPrintHeader(block: WeekBlock, options: DocxExportOptions): Paragra
 function buildSupplementHeading(): Paragraph {
   return new Paragraph({
     tabStops: [{ type: TabStopType.RIGHT, position: TABLE_WIDTH }],
-    spacing: { before: 80, after: 30, line: 220 },
+    spacing: exactLine(20, 30, 80),
     children: [
       textRun('每日补剂（周一至周日，逐日勾选）', { size: 20, bold: true }),
       new TextRun({ children: [new Tab()], size: 14 }),
@@ -480,7 +486,7 @@ function buildWeekContent(
   return [
     ...buildPrintHeader(block, options),
     buildMenuTable(block),
-    new Paragraph({ spacing: { before: 10, after: 0, line: 240 }, children: [textRun('', { size: 2 })] }),
+    new Paragraph({ spacing: exactLine(2, 0, 10), children: [textRun('', { size: 2 })] }),
     buildSupplementHeading(),
     buildSupplementTable(block, options.supplements),
   ]
