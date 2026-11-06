@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import type { ImagePreview, MenuDay, MenuDish, MenuMeal, MenuImage } from '../types'
 import { formatMonthDay, formatWeekNumber, weekdayLong } from '../utils/date'
 import MealCard from './MealCard.vue'
@@ -23,6 +23,11 @@ const mealCount = computed(() => props.day?.meals.length ?? 0)
 const safeMealCount = computed(
   () => props.day?.meals.filter((meal) => !meal.hasRisk).length ?? 0,
 )
+const onlyRisk = ref(false)
+const visibleMeals = computed(() => {
+  const meals = props.day?.meals ?? []
+  return onlyRisk.value ? meals.filter((meal) => meal.hasRisk) : meals
+})
 </script>
 
 <template>
@@ -52,10 +57,24 @@ const safeMealCount = computed(
           <span class="text-ink-faint">餐次</span>
           <strong>{{ mealCount }}</strong>
         </span>
-        <span class="summary-chip" :class="riskDishCount > 0 ? 'border-berry-100 bg-berry-50/70' : ''">
+        <button
+          type="button"
+          class="summary-chip transition"
+          :class="[
+            riskDishCount > 0 ? 'border-berry-100 bg-berry-50/70' : '',
+            onlyRisk ? 'ring-2 ring-berry-300' : '',
+          ]"
+          :aria-pressed="onlyRisk"
+          :disabled="riskDishCount === 0"
+          :title="onlyRisk ? '显示全部餐次' : '只看需要替餐的餐次'"
+          @click="onlyRisk = !onlyRisk"
+        >
           <span :class="riskDishCount > 0 ? 'text-berry-700' : 'text-ink-faint'">需替餐</span>
           <strong :class="riskDishCount > 0 ? 'text-berry-700' : ''">{{ riskDishCount }}</strong>
-        </span>
+          <span v-if="riskDishCount > 0" class="text-[0.62rem] text-berry-700">
+            {{ onlyRisk ? '只看这些' : '点击只看' }}
+          </span>
+        </button>
         <button
           v-for="(image, index) in images"
           :key="image.src"
@@ -81,8 +100,14 @@ const safeMealCount = computed(
     </div>
 
     <div v-if="day" class="mt-5 space-y-3.5">
+      <p v-if="onlyRisk" class="text-xs text-ink-faint">
+        只显示需要替餐的餐次（{{ visibleMeals.length }} / {{ mealCount }}），再点「需替餐」可看全部。
+      </p>
+      <p v-if="onlyRisk && visibleMeals.length === 0" class="text-sm text-leaf-700">
+        这一天没有需要替餐的餐次。
+      </p>
       <MealCard
-        v-for="meal in day.meals"
+        v-for="meal in visibleMeals"
         :key="meal.key"
         :meal="meal"
         @trace="(dish, currentMeal) => emit('trace', dish, currentMeal)"

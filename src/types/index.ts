@@ -34,6 +34,10 @@ export interface Allergen {
 
 export type SubstitutesMap = Record<string, string[]>
 
+export const DISH_CATEGORIES = ['蛋白', '主食', '饮品', '汤', '水果', '点心', '菜'] as const
+
+export type DishCategory = (typeof DISH_CATEGORIES)[number]
+
 export interface SubstituteRecipe {
   id: string
   name: string
@@ -41,6 +45,10 @@ export interface SubstituteRecipe {
   ingredients: string[]
   usedFor?: string[]
   tags: string[]
+  /** 只能替代这些餐次；缺省表示不限餐次。 */
+  mealPeriods?: MealPeriod[]
+  /** 只能替代这些品类的菜品；缺省表示不限品类。 */
+  categories?: DishCategory[]
   verified?: boolean
   priority?: number
 }

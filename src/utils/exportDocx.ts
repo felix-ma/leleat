@@ -227,9 +227,9 @@ function buildDishParagraph(dish: MenuMeal['dishes'][number]): Paragraph {
     }),
   ]
 
-  if (hasRisk && dish.substituteSource === 'dish' && dish.recommendation[0]) {
+  if (hasRisk && dish.recommendation[0]) {
     runs.push(
-      textRun(`（${dish.recommendation[0]}）`, {
+      textRun(`（替：${dish.recommendation[0]}）`, {
         size: 17,
         bold: true,
         color: RED,

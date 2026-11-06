@@ -113,7 +113,10 @@ const rangeLabel = computed(() => formatWeekRange(props.dates[0] ?? '', props.da
                   class="text-[0.72rem] leading-[1.55]"
                   :class="dish.riskAllergens.length > 0 ? 'font-semibold text-berry-700' : 'text-ink-muted'"
                 >
-                  {{ dish.name }}
+                  {{ dish.name
+                  }}<template v-if="dish.riskAllergens.length > 0 && dish.recommendation[0]"
+                    ><span class="font-normal text-berry-500">（替：{{ dish.recommendation[0] }}）</span></template
+                  >
                 </p>
               </div>
             </div>

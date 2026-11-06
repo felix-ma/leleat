@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-05T14:00:00+08:00",
+  "updatedAt": "2026-11-06T17:20:00+08:00",
   "recipes": [
     {
       "id": "sub-egg-steamed-tofu-pork",
@@ -24,13 +24,20 @@
         "软食"
       ],
       "verified": true,
-      "priority": 100
+      "priority": 100,
+      "categories": [
+        "菜"
+      ],
+      "mealPeriods": [
+        "lunch"
+      ]
     },
     {
       "id": "sub-egg-steamed-sweet-potato",
       "name": "蒸红薯",
       "replaces": [
-        "egg"
+        "egg",
+        "milk"
       ],
       "ingredients": [
         "红薯"
@@ -45,7 +52,15 @@
         "膳食纤维"
       ],
       "verified": true,
-      "priority": 90
+      "priority": 90,
+      "categories": [
+        "主食",
+        "蛋白"
+      ],
+      "mealPeriods": [
+        "breakfast",
+        "afternoonTea"
+      ]
     },
     {
       "id": "sub-egg-mixed-fried-rice",
@@ -70,7 +85,13 @@
         "蔬菜"
       ],
       "verified": true,
-      "priority": 85
+      "priority": 85,
+      "categories": [
+        "主食"
+      ],
+      "mealPeriods": [
+        "lunch"
+      ]
     },
     {
       "id": "sub-egg-pork-vegetable-noodles",
@@ -92,7 +113,13 @@
         "蔬菜"
       ],
       "verified": true,
-      "priority": 85
+      "priority": 85,
+      "categories": [
+        "主食"
+      ],
+      "mealPeriods": [
+        "lunch"
+      ]
     },
     {
       "id": "sub-milk-rice-milk",
@@ -114,7 +141,10 @@
         "主食"
       ],
       "verified": true,
-      "priority": 100
+      "priority": 100,
+      "categories": [
+        "饮品"
+      ]
     },
     {
       "id": "sub-egg-tofu",
@@ -131,7 +161,13 @@
         "软食"
       ],
       "verified": false,
-      "priority": 50
+      "priority": 50,
+      "categories": [
+        "菜"
+      ],
+      "mealPeriods": [
+        "lunch"
+      ]
     },
     {
       "id": "sub-egg-dried-tofu",
@@ -149,7 +185,13 @@
         "钙"
       ],
       "verified": false,
-      "priority": 45
+      "priority": 45,
+      "categories": [
+        "菜"
+      ],
+      "mealPeriods": [
+        "lunch"
+      ]
     },
     {
       "id": "sub-egg-seaweed-tofu-soup",
@@ -171,7 +213,14 @@
         "钙"
       ],
       "verified": false,
-      "priority": 40
+      "priority": 40,
+      "categories": [
+        "汤"
+      ],
+      "mealPeriods": [
+        "breakfast",
+        "lunch"
+      ]
     },
     {
       "id": "sub-milk-oat-milk",
@@ -188,7 +237,10 @@
         "谷物"
       ],
       "verified": false,
-      "priority": 50
+      "priority": 50,
+      "categories": [
+        "饮品"
+      ]
     },
     {
       "id": "sub-milk-soy-milk",
@@ -205,7 +257,10 @@
         "蛋白质"
       ],
       "verified": false,
-      "priority": 45
+      "priority": 45,
+      "categories": [
+        "饮品"
+      ]
     },
     {
       "id": "sub-milk-coconut-milk",
@@ -221,7 +276,10 @@
         "植物饮品"
       ],
       "verified": false,
-      "priority": 40
+      "priority": 40,
+      "categories": [
+        "饮品"
+      ]
     },
     {
       "id": "sub-egg-pork-vegetable-noodle-soup",
@@ -243,7 +301,14 @@
         "蔬菜"
       ],
       "verified": false,
-      "priority": 70
+      "priority": 70,
+      "categories": [
+        "主食"
+      ],
+      "mealPeriods": [
+        "breakfast",
+        "lunch"
+      ]
     },
     {
       "id": "sub-egg-pork-vegetable-congee",
@@ -265,7 +330,13 @@
         "蔬菜"
       ],
       "verified": false,
-      "priority": 70
+      "priority": 70,
+      "categories": [
+        "主食"
+      ],
+      "mealPeriods": [
+        "breakfast"
+      ]
     },
     {
       "id": "sub-egg-tofu-meatball",
@@ -287,7 +358,131 @@
         "软食"
       ],
       "verified": false,
-      "priority": 70
+      "priority": 70,
+      "categories": [
+        "菜"
+      ],
+      "mealPeriods": [
+        "lunch"
+      ]
+    },
+    {
+      "id": "sub-breakfast-meat-bun",
+      "name": "肉包子",
+      "replaces": [
+        "egg",
+        "milk"
+      ],
+      "ingredients": [
+        "面粉",
+        "猪肉",
+        "大白菜"
+      ],
+      "usedFor": [
+        "鸡蛋",
+        "水煮蛋",
+        "水煮鹌鹑蛋",
+        "鹌鹑蛋"
+      ],
+      "tags": [
+        "主食",
+        "蛋白质"
+      ],
+      "mealPeriods": [
+        "breakfast"
+      ],
+      "categories": [
+        "主食",
+        "蛋白",
+        "点心"
+      ],
+      "verified": true,
+      "priority": 95
+    },
+    {
+      "id": "sub-breakfast-scallion-noodle",
+      "name": "葱油拌面",
+      "replaces": [
+        "egg"
+      ],
+      "ingredients": [
+        "面条",
+        "小葱",
+        "植物油"
+      ],
+      "usedFor": [
+        "三鲜通心粉",
+        "通心粉",
+        "瘦肉青菜鸡蛋炒面"
+      ],
+      "tags": [
+        "主食"
+      ],
+      "mealPeriods": [
+        "breakfast"
+      ],
+      "categories": [
+        "主食"
+      ],
+      "verified": false,
+      "priority": 92
+    },
+    {
+      "id": "sub-breakfast-fagao",
+      "name": "发糕",
+      "replaces": [
+        "egg",
+        "milk"
+      ],
+      "ingredients": [
+        "面粉",
+        "红糖",
+        "酵母"
+      ],
+      "usedFor": [
+        "奶香小馒头",
+        "奶香馒头",
+        "馒头",
+        "豆沙卷",
+        "红糖馒头"
+      ],
+      "tags": [
+        "主食"
+      ],
+      "mealPeriods": [
+        "breakfast",
+        "afternoonTea"
+      ],
+      "categories": [
+        "主食",
+        "蛋白"
+      ],
+      "verified": false,
+      "priority": 88
+    },
+    {
+      "id": "sub-breakfast-corn",
+      "name": "蒸玉米",
+      "replaces": [
+        "egg",
+        "milk"
+      ],
+      "ingredients": [
+        "玉米棒"
+      ],
+      "usedFor": [],
+      "tags": [
+        "主食"
+      ],
+      "mealPeriods": [
+        "breakfast",
+        "afternoonTea"
+      ],
+      "categories": [
+        "主食"
+      ],
+      "verified": false,
+      "priority": 60
     }
   ]
 }

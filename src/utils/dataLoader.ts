@@ -1,9 +1,11 @@
 import {
+  DISH_CATEGORIES,
   MEAL_PERIODS,
   type Allergen,
   type AppSettings,
   type DataBundle,
   type DishCatalog,
+  type DishCategory,
   type DishKnowledge,
   type DishOccurrence,
   type MealPeriod,
@@ -460,6 +462,13 @@ function parseSubstituteLibrary(value: unknown): SubstituteLibrary {
     const ingredients = parseStringArray(raw.ingredients) ?? []
     const usedFor = parseStringArray(raw.usedFor) ?? []
     const tags = parseStringArray(raw.tags) ?? []
+    const mealPeriods = (parseStringArray(raw.mealPeriods) ?? []).filter(
+      (period): period is MealPeriod => MEAL_PERIODS.includes(period as MealPeriod),
+    )
+    const categories = (parseStringArray(raw.categories) ?? []).filter(
+      (category): category is DishCategory =>
+        DISH_CATEGORIES.includes(category as DishCategory),
+    )
 
     if (!id || !name || !replaces || replaces.length === 0) {
       warn(`substitute-library.json recipes[${index}] 缺少 id/name/replaces，已跳过。`)
@@ -478,6 +487,8 @@ function parseSubstituteLibrary(value: unknown): SubstituteLibrary {
       ingredients,
       usedFor,
       tags,
+      ...(mealPeriods.length > 0 ? { mealPeriods } : {}),
+      ...(categories.length > 0 ? { categories } : {}),
       ...(typeof raw.verified === 'boolean' ? { verified: raw.verified } : {}),
       ...(typeof raw.priority === 'number' && Number.isFinite(raw.priority)
         ? { priority: raw.priority }

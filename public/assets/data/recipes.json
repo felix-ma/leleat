@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-06T17:10:00+08:00",
+  "updatedAt": "2026-11-06T17:22:00+08:00",
   "recipes": [
     {
       "date": "2026-10-12",
@@ -433,7 +433,9 @@
             "白糖",
             "奶粉"
           ],
-          "riskAllergens": [],
+          "riskAllergens": [
+            "milk"
+          ],
           "substitute": null
         },
         {
@@ -1336,7 +1338,9 @@
             "豆沙",
             "奶粉"
           ],
-          "riskAllergens": [],
+          "riskAllergens": [
+            "milk"
+          ],
           "substitute": null
         },
         {
@@ -2013,7 +2017,9 @@
             "面粉",
             "奶粉"
           ],
-          "riskAllergens": [],
+          "riskAllergens": [
+            "milk"
+          ],
           "substitute": null
         },
         {
@@ -2166,7 +2172,7 @@
           "riskAllergens": [
             "milk"
           ],
-          "substitute": "米奶"
+          "substitute": null
         }
       ]
     },
@@ -2305,7 +2311,7 @@
           "riskAllergens": [
             "milk"
           ],
-          "substitute": "米奶"
+          "substitute": null
         }
       ]
     },
@@ -2322,7 +2328,9 @@
             "白糖",
             "奶粉"
           ],
-          "riskAllergens": [],
+          "riskAllergens": [
+            "milk"
+          ],
           "substitute": null
         },
         {
@@ -2482,7 +2490,7 @@
           "riskAllergens": [
             "milk"
           ],
-          "substitute": "米奶"
+          "substitute": null
         },
         {
           "name": "山楂片",
@@ -2696,7 +2704,7 @@
           "riskAllergens": [
             "milk"
           ],
-          "substitute": "米奶"
+          "substitute": null
         }
       ]
     }

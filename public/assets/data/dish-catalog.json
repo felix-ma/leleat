@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-06T17:10:00+08:00",
+  "updatedAt": "2026-11-06T17:22:00+08:00",
   "dishes": {
     "鹌鹑蛋": {
       "name": "鹌鹑蛋",
@@ -534,7 +534,9 @@
         "红豆",
         "白糖"
       ],
-      "riskAllergens": [],
+      "riskAllergens": [
+        "milk"
+      ],
       "substitute": null,
       "firstSeen": "2026-10-23",
       "lastSeen": "2026-11-03",
@@ -908,7 +910,9 @@
         "面粉",
         "奶粉"
       ],
-      "riskAllergens": [],
+      "riskAllergens": [
+        "milk"
+      ],
       "substitute": null,
       "firstSeen": "2026-10-20",
       "lastSeen": "2026-11-06",
@@ -1701,7 +1705,9 @@
         "白糖",
         "奶粉"
       ],
-      "riskAllergens": [],
+      "riskAllergens": [
+        "milk"
+      ],
       "substitute": null,
       "firstSeen": "2026-10-15",
       "lastSeen": "2026-10-15",
@@ -1723,7 +1729,9 @@
         "白糖",
         "奶粉"
       ],
-      "riskAllergens": [],
+      "riskAllergens": [
+        "milk"
+      ],
       "substitute": null,
       "firstSeen": "2026-11-11",
       "lastSeen": "2026-11-11",

@@ -86,7 +86,10 @@ function shortDate(date: string): string {
                   class="print-dish"
                   :class="{ 'print-risk': dish.riskAllergens.length > 0 }"
                 >
-                  {{ dish.name }}<template v-if="dish.substituteSource === 'dish' && dish.recommendation[0]">（{{ dish.recommendation[0] }}）</template>
+                  {{ dish.name
+                  }}<template v-if="dish.riskAllergens.length > 0 && dish.recommendation[0]"
+                    >（替：{{ dish.recommendation[0] }}）</template
+                  >
                 </p>
               </template>
               <span v-else class="print-empty-cell">—</span>
