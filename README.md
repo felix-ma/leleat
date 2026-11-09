@@ -82,7 +82,47 @@ python3 -m venv .venv
 
 > 说明：仓库当前**没有**可执行的 `.py` 脚本，`agent/*.md` 中的 Python 片段是规则与 §12 建议 CLI 契约；依赖清单覆盖这些片段用到的库，避免下次补脚本时再临时装包。pip 源使用本机 `/etc/pip.conf` 的清华镜像，无需在仓库内配置。
 
-另有两个 Node 校验脚本（[scripts/check-docx.mjs](scripts/check-docx.mjs)）依赖系统 `soffice`（LibreOffice），属于 apt 级软件、不在 venv 内，缺失时按需 `apt-get install -y libreoffice-writer`，与本项目 Python 依赖无关。
+## 系统级依赖（apt / 系统软件）
+
+上面的 `.venv/` 只负责 Python 库。还有一类依赖是**操作系统级软件**（apt 包）：它们不进 `.venv/`、也不进 `node_modules/`，由 `apt-get` 装到系统里；Linux 环境重装后同样会丢，按下面一条命令即可重建。这类依赖只服务于 DOCX / 打印验收，不影响前端构建与 Pages 部署。
+
+| apt 包 | 提供的命令 / 能力 | 谁在用 |
+| --- | --- | --- |
+| `libreoffice-writer` | `soffice`：把 DOCX 转 PDF，实测导出 Word 是否只占一页 | [scripts/check-docx.mjs](scripts/check-docx.mjs)（`npm run check-docx`） |
+| `fonts-noto-cjk` | 中文字体（Noto Sans CJK SC 等） | `soffice` 转 PDF 时渲染中文表格；缺字体时中文变方框、版式与页数判定会失真 |
+| `fontconfig` | `fc-list` 等字体工具 | 检查中文字体是否就绪 |
+| `poppler-utils` | `pdfinfo` / `pdftoppm` / `pdftotext` | 人工核对转换出的 PDF 页数、把 PDF 转图检查版式（`check-docx.mjs` 本身不直接调用，排障时用） |
+
+安装（Ubuntu 24.04 / Debian，需要 root）：
+
+```bash
+sudo apt-get update
+sudo apt-get install -y libreoffice-writer fonts-noto-cjk fontconfig poppler-utils
+```
+
+> 本环境为免 Root 的 proot、直接以 root 运行，去掉 `sudo` 即可。apt 源使用本机配置的镜像（见 `/etc/apt/sources.list.d/`）；不要在仓库里配置镜像，也不要把这些系统包提交进 Git。
+
+验证：
+
+```bash
+soffice --version                                  # LibreOffice 版本
+fc-list :lang=zh | head                            # 有输出即中文字体就绪
+command -v pdfinfo pdftoppm                       # poppler 工具
+npm run check-docx -- docs/samples/leleat-2026-W45-sample.docx   # 实测导出的 Word 是否单页
+```
+
+### 容器 / proot 环境的已知限制
+
+在部分容器（含 proot / Termux 类环境）里，`/proc` 由宿主机以 `hidepid` 方式挂载，`/proc/version`、`/proc/stat` 可能返回 `Permission denied`。此时 LibreOffice 的启动器会报 `ERROR: /proc not mounted - LibreOffice is unlikely to work well if at all` 并退出，`soffice --version` 与 `npm run check-docx` 随之失败——但 **apt 包本身是装好的**，直接调用主程序可正常转换：
+
+```bash
+/usr/lib/libreoffice/program/soffice.bin --headless --norestore \
+  --convert-to pdf --outdir /tmp docs/samples/leleat-2026-W45-sample.docx
+```
+
+`check-docx.mjs` 固定调用 `soffice`（启动器），所以在这类环境里若需走 `npm run check-docx`，得先让 `/proc/version` 可读（例如由环境维护者 bind-mount 一个可读文件），或改用上面的主程序直连命令做人工验收。这是宿主机 `/proc` 挂载策略问题，不是依赖缺失，也不需要改仓库脚本。
+
+> 说明：`npm run measure-docx`（[scripts/measure-docx-height.mjs](scripts/measure-docx-height.mjs)）是纯 Node 估算、**不依赖**这些系统软件；只有 `check-docx` 及人工把 PDF 转图核对才需要 apt 包。前端 `npm run build` / `npm run deploy` 完全不需要 LibreOffice。
 
 ## 部署到 GitHub Pages
 

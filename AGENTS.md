@@ -13,6 +13,7 @@
 - 只改数据与图片：不动前端布局、不动 `vite.config.ts` 的 `base`、不动 JSON 引用路径。
 - **改完就发布**：每个任务的改动完成后必须 `git commit` 并 `git push origin main`；涉图/涉数据再跑 `npm run deploy`。不留在工作区等确认。
 - Python 管理端工具统一装在项目级 `.venv/`，用 `./.venv/bin/python` 调用，不装全局 `python3`；依赖清单是 `requirements.txt`，重建方式见 [README.md](README.md)「Python 管理端工具：项目级 venv」。
+- 系统级软件（LibreOffice / 中文字体 / poppler）由 `apt-get` 装到系统、不进仓库也不进 `.venv/`；清单与重建命令见 [README.md](README.md)「系统级依赖（apt / 系统软件）」，环境重装后按需重装。
 - 不能提交的东西（API Key、原始未脱敏图、`.agent-out/`、`.venv/`、缓存）不要写进工作区。
 
 ## 常用命令

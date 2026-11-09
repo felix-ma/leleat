@@ -4,7 +4,10 @@
  *
  *   node scripts/check-docx.mjs path/to/leleat-2026-W46.docx
  *
- * 需要本机有 `soffice`（apt install libreoffice-writer）。输出页数；页数 > 1 时退出码为 1。
+ * 需要系统级软件：`soffice`（LibreOffice）+ 中文字体，否则中文变方框、页数判定失真。
+ * apt 安装：libreoffice-writer fonts-noto-cjk fontconfig poppler-utils
+ * 完整清单与重建命令见 README.md「系统级依赖（apt / 系统软件）」。
+ * 输出页数；页数 > 1 时退出码为 1。
  */
 import { execFileSync } from 'node:child_process'
 import { mkdtempSync, readFileSync, rmSync } from 'node:fs'
