@@ -12,7 +12,8 @@
 - 原图只放 `/tmp`，`public/assets/images/` 只放裁好的版本；`YYYYMMDD-*.jpg` 一旦发布不改名（`recipes.json.sourceImage` 引用它）。
 - 只改数据与图片：不动前端布局、不动 `vite.config.ts` 的 `base`、不动 JSON 引用路径。
 - **改完就发布**：每个任务的改动完成后必须 `git commit` 并 `git push origin main`；涉图/涉数据再跑 `npm run deploy`。不留在工作区等确认。
-- 不能提交的东西（API Key、原始未脱敏图、`.agent-out/`、缓存）不要写进工作区。
+- Python 管理端工具统一装在项目级 `.venv/`，用 `./.venv/bin/python` 调用，不装全局 `python3`；依赖清单是 `requirements.txt`，重建方式见 [README.md](README.md)「Python 管理端工具：项目级 venv」。
+- 不能提交的东西（API Key、原始未脱敏图、`.agent-out/`、`.venv/`、缓存）不要写进工作区。
 
 ## 常用命令
 

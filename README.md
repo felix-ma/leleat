@@ -51,6 +51,39 @@ npm run catalog     # 从 recipes.json 重新生成/合并菜品知识库
 npm run deploy      # 构建并发布 gh-pages 分支
 ```
 
+## Python 管理端工具：项目级 venv
+
+站点本身是纯前端（Node + Vite），但仓库外的 Agent 管理端脚本会用到 Python：裁图与横线检测（[agent/images.md](agent/images.md) §10.2）、中间结果 JSON Schema 校验、DeepSeek 多模态识别（[agent/recognition.md](agent/recognition.md) §3.3）、线上图片哈希核对等。这些脚本按 [agent/publish.md](agent/publish.md) §12 的 CLI 契约以 `python …` 调用。
+
+**约定：Python 依赖一律装在项目级 `.venv/`，不装进全局 `python3`，也不提交 `.venv/`。** 这样 Linux 环境重装、或换机器时，按 `requirements.txt` 一条命令即可重建，不会再把依赖散落在系统里被清空。
+
+重建（在项目根目录，要求 Python 3.10+，本机为 3.12）：
+
+```bash
+python3 -m venv .venv
+./.venv/bin/python -m pip install --upgrade pip
+./.venv/bin/python -m pip install -r requirements.txt
+```
+
+验证：
+
+```bash
+./.venv/bin/python -c "import PIL, numpy, jsonschema, openai; print('deps OK')"
+```
+
+调用管理端脚本时一律用 `./.venv/bin/python`（不要写裸 `python3` / `pip install`）；`agent/publish.md` §12 里的 `python …` 示例按此理解。`.venv/` 已加入 [.gitignore](.gitignore)，`requirements.txt` 由 `./.venv/bin/python -m pip freeze` 锁定，升级依赖后请回写该文件。
+
+| 包 | 用途 | 出处 |
+| --- | --- | --- |
+| `Pillow` | 打开图片、裁切、JPEG 压缩、转灰度 | [agent/images.md](agent/images.md) §10.2 裁图 |
+| `numpy` | 每行暗像素占比、横线定位、裁后自检 | [agent/images.md](agent/images.md) §10.2 / §10.3 |
+| `jsonschema` | 中间结果 / 知识库 JSON 校验与失败重试 | [agent/recognition.md](agent/recognition.md) §3.3 |
+| `openai` | DeepSeek OpenAI 兼容多模态调用 | [agent/recognition.md](agent/recognition.md) §3.3 |
+
+> 说明：仓库当前**没有**可执行的 `.py` 脚本，`agent/*.md` 中的 Python 片段是规则与 §12 建议 CLI 契约；依赖清单覆盖这些片段用到的库，避免下次补脚本时再临时装包。pip 源使用本机 `/etc/pip.conf` 的清华镜像，无需在仓库内配置。
+
+另有两个 Node 校验脚本（[scripts/check-docx.mjs](scripts/check-docx.mjs)）依赖系统 `soffice`（LibreOffice），属于 apt 级软件、不在 venv 内，缺失时按需 `apt-get install -y libreoffice-writer`，与本项目 Python 依赖无关。
+
 ## 部署到 GitHub Pages
 
 1. 仓库名保持 `leleat`（与 `vite.config.ts` 的 `base: '/leleat/'` 对应）。
@@ -146,6 +179,7 @@ leleat/
 ├── vite.config.ts
 ├── tailwind.config.js
 ├── package.json
+├── requirements.txt            # Python 管理端依赖（项目级 .venv，不提交虚拟环境）
 └── README.md
 ```
 

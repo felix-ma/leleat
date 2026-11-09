@@ -1,0 +1,30 @@
+# Leleat 管理端 Python 工具依赖（项目级 venv，不用全局 python3）
+# 重建：python3 -m venv .venv && ./.venv/bin/python -m pip install -r requirements.txt
+# 说明见 README.md「Python 管理端工具：项目级 venv」一节
+# 版本由 `./.venv/bin/python -m pip freeze` 锁定，升级后请回写本文件。
+# 调用一律用 ./.venv/bin/python；API Key / 模型名走环境变量，不写仓库。
+
+# 直接依赖（用途见 README.md 表格）
+Pillow==13.0.0       # 裁图 / JPEG 压缩 / 转灰度（agent/images.md §10.2）
+numpy==2.5.4         # 按行暗像素统计、横线定位（agent/images.md §10.2）
+jsonschema==4.26.0   # 中间结果与知识库 JSON 校验（agent/recognition.md §3.3）
+openai==3.46.0       # DeepSeek OpenAI 兼容多模态调用（agent/recognition.md §3.3）
+
+# 传递依赖（pip 解析所得，一并锁定以保证环境重装后可复现重建）
+annotated-types==0.8.0
+anyio==4.16.0
+attrs==26.1.0
+h11==0.16.0
+httpcore2==2.16.0
+httpx2==2.16.0
+idna==3.20
+jiter==0.19.0
+jsonschema-specifications==2025.9.1
+pydantic==2.14.3
+pydantic_core==2.50.4
+referencing==0.37.0
+rpds-py==2026.9.1
+sniffio==1.3.1
+truststore==0.10.5
+typing-inspection==0.4.5
+typing_extensions==4.16.0

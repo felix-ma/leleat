@@ -9,6 +9,12 @@ yarn-debug.log*
 yarn-error.log*
 .agent-out/
 .cache/leleat-agent/
+# Python 项目级 venv（不提交，靠 requirements.txt 重建）
+.venv/
+__pycache__/
+*.py[cod]
+# 工具运行时数据（仓库为 public，不提交）
+.mnemon/
 .env
 .env.*
 !.env.example
