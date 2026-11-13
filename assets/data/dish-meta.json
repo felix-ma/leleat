@@ -4,13 +4,57 @@
     "note": "同名菜出现多种配方时，主配方取「最近一次出现」的那版；历史配方仍完整保留在 dish-catalog.json 的 variants[] 和 weeks/ 里，不删除、不改写原表。单条可用 dishes.菜名.primaryVariant 钉住某个 variantId 覆盖该策略。"
   },
   "dishes": {
-    "牛奶": { "aliases": [], "substitute": "米奶" },
-    "纯牛奶": { "aliases": [], "substitute": "米奶" },
-    "豆奶": { "aliases": [], "substitute": "米奶" },
-    "酸牛奶": { "aliases": [], "substitute": "米奶" },
-    "肉沫蒸滑蛋": { "aliases": [], "substitute": "肉末蒸豆腐" },
-    "瘦肉青菜鸡蛋炒面": { "aliases": [], "substitute": "瘦肉青菜炒面" },
-    "水煮鹌鹑蛋": { "aliases": [], "substitute": "蒸红薯" },
-    "扬州炒饭": { "aliases": [], "substitute": "什锦炒饭" }
+    "山楂": {
+      "aliases": [
+        "山楂条",
+        "山楂片"
+      ]
+    },
+    "扬州炒饭": {
+      "aliases": [],
+      "substitute": "什锦炒饭"
+    },
+    "炒三丁": {
+      "aliases": [
+        "肉炒三丁"
+      ]
+    },
+    "瘦肉青菜鸡蛋炒面": {
+      "aliases": [],
+      "substitute": "瘦肉青菜炒面"
+    },
+    "米饭": {
+      "aliases": [
+        "香米饭",
+        "水晶米饭",
+        "金银米饭",
+        "黄金米饭",
+        "燕麦香米饭"
+      ]
+    },
+    "纯牛奶": {
+      "aliases": [
+        "牛奶"
+      ],
+      "substitute": "米奶"
+    },
+    "肉沫蒸滑蛋": {
+      "aliases": [],
+      "substitute": "肉末蒸豆腐"
+    },
+    "豆奶": {
+      "aliases": [],
+      "substitute": "米奶"
+    },
+    "酸牛奶": {
+      "aliases": [],
+      "substitute": "米奶"
+    },
+    "鹌鹑蛋": {
+      "aliases": [
+        "水煮鹌鹑蛋"
+      ],
+      "substitute": "蒸红薯"
+    }
   }
 }

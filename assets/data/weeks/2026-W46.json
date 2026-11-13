@@ -120,7 +120,7 @@
           ],
           "riskAllergens": [],
           "substitute": null,
-          "variantId": "水晶米饭#4add1d38"
+          "variantId": "米饭#1ef23f79"
         }
       ],
       "sourceImage": "assets/images/20261109-menu.jpg"
@@ -153,7 +153,7 @@
             "milk"
           ],
           "substitute": "米奶",
-          "variantId": "牛奶#3cd16acb"
+          "variantId": "纯牛奶#e9dd22df"
         }
       ]
     },
@@ -420,7 +420,7 @@
           ],
           "riskAllergens": [],
           "substitute": null,
-          "variantId": "水晶米饭#4add1d38"
+          "variantId": "米饭#1ef23f79"
         }
       ],
       "sourceImage": "assets/images/20261111-menu.jpg"
@@ -504,7 +504,7 @@
           ],
           "riskAllergens": [],
           "substitute": null,
-          "variantId": "山楂片#7947ceda"
+          "variantId": "山楂#007e9df1"
         }
       ]
     },
@@ -566,7 +566,7 @@
           ],
           "riskAllergens": [],
           "substitute": null,
-          "variantId": "黄金米饭#6ae67204"
+          "variantId": "米饭#d22190b1"
         }
       ],
       "sourceImage": "assets/images/20261112-menu.jpg"
