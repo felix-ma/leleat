@@ -147,7 +147,11 @@ export interface DishKnowledge {
   sourceImages: string[]
   /** 该菜名下的全部配方变体（按出现次数降序）。 */
   variants?: DishVariant[]
-  /** 同名菜存在多种配方，等人工复核是否要统一或加别名。 */
+  /** 当前主配方指向的变体；历史配方仍在 variants[] 里。 */
+  primaryVariantId?: string
+  /** 主配方是怎么选出来的：latest=最近一次出现 / frequency=出现次数最多 / manual=人工钉住。 */
+  primaryBasis?: 'latest' | 'frequency' | 'manual'
+  /** 同名菜存在多种配方且尚未定口径，等人工复核是否要统一或加别名。 */
   needsReview?: boolean
   verified?: boolean
 }

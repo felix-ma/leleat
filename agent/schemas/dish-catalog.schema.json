@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://leleat.local/schemas/dish-catalog.schema.json",
   "title": "Leleat 菜品知识库",
-  "description": "按菜名归一化后的菜品知识库，由 scripts/build-dish-catalog.mjs 从 weeks/*.json 全量重建。同名菜的不同配方各占一个 variantId，菜记录保留全部 variants；顶层 ingredients/riskAllergens 只代表主变体（出现次数最多的那版），不是各变体的并集。前端只读，不写入。",
+  "description": "按菜名归一化后的菜品知识库，由 scripts/build-dish-catalog.mjs 从 weeks/*.json 全量重建。同名菜的不同配方各占一个 variantId，菜记录保留全部 variants；顶层 ingredients/riskAllergens 只代表主配方（默认取最近一次出现的那版，见 dish-meta.json reviewPolicy.mode），不是各变体的并集；全部历史配方都在 variants[] 里，不会被删除。前端只读，不写入。",
   "type": "object",
   "additionalProperties": false,
   "required": ["dishes"],
@@ -47,7 +47,7 @@
           }
         },
         "ingredients": {
-          "description": "主变体（variants[0]，出现次数最多那版）的食材，不是全部变体的并集。",
+          "description": "主配方（primaryVariantId 指向的变体，默认最近一次出现那版）的食材，不是全部变体的并集。",
           "type": "array",
           "items": {
             "type": "string",
@@ -55,7 +55,7 @@
           }
         },
         "riskAllergens": {
-          "description": "主变体（variants[0]）的过敏原，不是全部变体的并集。",
+          "description": "主配方（primaryVariantId 指向的变体）的过敏原，不是全部变体的并集。",
           "type": "array",
           "items": {
             "type": "string",
@@ -85,15 +85,24 @@
           }
         },
         "variants": {
-          "description": "该菜名下的全部配方变体，按 count 降序；variants[0] 即主变体。",
+          "description": "该菜名下的全部配方变体（历史配方全部保留），按 count 降序、并列时最近出现的在前。",
           "type": "array",
           "minItems": 1,
           "items": {
             "$ref": "#/$defs/variant"
           }
         },
+        "primaryVariantId": {
+          "description": "主配方指向的 variantId；不写时按 reviewPolicy 从 variants 里选。",
+          "$ref": "#/$defs/variantId"
+        },
+        "primaryBasis": {
+          "description": "主配方是怎么选出来的：latest=最近一次出现，frequency=出现次数最多，manual=人工钉住。",
+          "type": "string",
+          "enum": ["latest", "frequency", "manual"]
+        },
         "needsReview": {
-          "description": "同名菜存在多种配方（variants 多于一条）时为 true，进人工复核清单。",
+          "description": "同名菜有多种配方、且主配方口径未定（primaryBasis=frequency）时为 true，进人工复核清单；latest 口径下为 false 或缺省，历史配方仍保留在 variants 里。",
           "type": "boolean"
         },
         "verified": {

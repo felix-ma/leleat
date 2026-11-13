@@ -2,11 +2,26 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://leleat.local/schemas/dish-meta.schema.json",
   "title": "Leleat 菜品人工字段（dish-meta.json）",
-  "description": "public/assets/data/dish-meta.json：人工维护的菜品字段，只有别名、替餐和人工确认标记。scripts/build-dish-catalog.mjs 重建 dish-catalog.json 时会把这些字段合并进去，重建不会覆盖它们。",
+  "description": "public/assets/data/dish-meta.json：人工维护的菜品字段。reviewPolicy 决定同名多配方时主配方的口径，dishes 里是别名、替餐、人工钉住的主配方和确认标记。scripts/build-dish-catalog.mjs 重建 dish-catalog.json 时会把这些字段合并进去，重建不会覆盖它们。",
   "type": "object",
   "additionalProperties": false,
   "required": ["dishes"],
   "properties": {
+    "reviewPolicy": {
+      "description": "同名多配方的主配方口径。mode=latest（默认）取最近一次出现的配方；mode=frequency 取出现次数最多的一版并保留 needsReview 供人工复核。",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode"],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["latest", "frequency"]
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
     "dishes": {
       "description": "key 为规范菜名，值是该菜的人工字段。",
       "type": "object",
@@ -32,6 +47,11 @@
         "substitute": {
           "description": "过敏替餐菜名；null 或不写表示没有人工指定的替餐。",
           "type": ["string", "null"]
+        },
+        "primaryVariant": {
+          "description": "人工钉住的主配方 variantId（形如「豆沙卷#ca30d511」）。写上就以它为准，覆盖 reviewPolicy.mode；变体不存在时忽略。",
+          "type": "string",
+          "pattern": "^.+#[0-9a-f]{8}$"
         },
         "verified": {
           "type": "boolean"

@@ -161,7 +161,7 @@ npm run check-docx -- docs/samples/leleat-2026-W45-sample.docx   # 实测导出�
 - `dish-catalog.json`：按菜名归一化的菜品知识库，同名菜的不同配方各占一个 `variantId`，`variants[]` 全量保留
 - `ingredient-index.json`：食材反查索引（规范名 → 写法、命中菜名/变体/日期）
 - `ingredient-aliases.json`：人工维护的食材同物异写合并表
-- `dish-meta.json`：人工维护的菜品字段（别名、替餐、verified）
+- `dish-meta.json`：人工维护的菜品字段（别名、替餐、主配方口径、verified）
 - `substitute-library.json`：动态替餐配方库（替换过敏原、适用菜品、营养标签、确认状态）
 - `settings.json`：幼儿园信息和补剂项
 - `allergens.json` / `substitutes.json`：风险词库与旧版替餐回退
@@ -181,7 +181,7 @@ leleat/
 │           ├── dish-catalog.json   # 菜品知识库（按变体）
 │           ├── ingredient-index.json   # 食材反查索引
 │           ├── ingredient-aliases.json # 人工同物异写合并表
-│           ├── dish-meta.json      # 人工字段：别名、替餐、verified
+│           ├── dish-meta.json      # 人工字段：别名、替餐、主配方口径、verified
 │           ├── substitute-library.json # 动态替餐库
 │           ├── settings.json       # 学校信息、7 天补剂项
 │           ├── allergens.json
@@ -329,7 +329,7 @@ Schema：[week-file.schema.json](agent/schemas/week-file.schema.json)。
 
 ### dish-catalog.json
 
-同名菜的不同配方各占一个 `variantId`，`variants[]` 全量保留；顶层 `ingredients` / `riskAllergens` 是**主变体**（出现次数最多的那版）的语义，不是并集：
+同名菜的不同配方各占一个 `variantId`，`variants[]` 把历史配方全量保留；顶层 `ingredients` / `riskAllergens` 是**主配方**的语义，不是并集。默认口径是「最近一次出现的那版为准」（`dish-meta.json` 的 `reviewPolicy.mode = "latest"`），换配方时库里自动跟进，历史版本仍留在 `variants[]`：
 
 ```json
 {
@@ -366,7 +366,8 @@ Schema：[week-file.schema.json](agent/schemas/week-file.schema.json)。
           "lastSeen": "2026-11-03"
         }
       ],
-      "needsReview": true
+      "primaryVariantId": "豆沙卷#ca30d511",
+      "primaryBasis": "latest"
     }
   }
 }
@@ -378,7 +379,7 @@ Schema：[week-file.schema.json](agent/schemas/week-file.schema.json)。
 npm run catalog
 ```
 
-脚本从 `weeks/*.json` 全量重建 catalog 与 `ingredient-index.json`：同一 `variantId` 合并计数与时间范围，`variants` 按出现次数降序；出现多种配方的菜自动标 `needsReview: true`，进人工复核清单。人工字段（`aliases`、`substitute`、`verified`）来自 `dish-meta.json`，重建不会覆盖。机器可读 Schema：[agent/schemas/dish-catalog.schema.json](agent/schemas/dish-catalog.schema.json)。
+脚本从 `weeks/*.json` 全量重建 catalog 与 `ingredient-index.json`：同一 `variantId` 合并计数与时间范围，`variants` 按出现次数降序。主配方按 `dish-meta.json` 的 `reviewPolicy.mode` 选：`latest`（默认）取最近一次出现的那版并记 `primaryBasis: "latest"`；改成 `frequency` 才按出现次数取，并给多配方菜标 `needsReview: true` 进人工复核。单个菜可用 `dishes.<菜名>.primaryVariant` 钉住某个 `variantId`。人工字段（`aliases`、`substitute`、`primaryVariant`、`verified`）来自 `dish-meta.json`，重建不会覆盖。无论口径怎么变，历史配方都留在 `variants[]` 里，不删除。机器可读 Schema：[agent/schemas/dish-catalog.schema.json](agent/schemas/dish-catalog.schema.json)。
 
 ### ingredient-index.json / ingredient-aliases.json
 

@@ -128,9 +128,13 @@ Schema：[`agent/schemas/week-index.schema.json`](schemas/week-index.schema.json
 核心概念是**配方变体**：同名菜在不同周可能有不同食材，这些差异不再取并集，而是各占一个 `variantId`。
 
 - `variantId` = `菜名#` + `sha1(菜名 | 食材按 zh-CN 排序后以 / 分隔).slice(0,8)`，内容寻址，实现见 `scripts/lib/variant.mjs` 的 `variantIdFor`。食材写法不变，id 就不变；食材变了，id 自然变成另一个。
-- 一道菜记录里 `variants[]` 保留它出现过的全部配方，按 `count` 降序。
-- 顶层 `ingredients` / `riskAllergens` 是**主变体**（`variants[0]`，即出现次数最多的那版）的语义，**不是各变体的并集**。
-- 出现多配方（`variants.length > 1`）时，该菜自动带 `needsReview: true`，进人工复核清单。
+- 一道菜记录里 `variants[]` 保留它出现过的**全部**配方，历史配方永不删除，按 `count` 降序、并列时最近出现的在前。
+- 顶层 `ingredients` / `riskAllergens` 是**主配方**的语义，**不是各变体的并集**。主配方由 `primaryVariantId` 指向，选择口径由 `dish-meta.json` 的 `reviewPolicy.mode` 决定：
+  - `latest`（默认）：取**最近一次出现**的那版配方。园方换了做法、或本周给了新配方时，库里自动以新的为准。
+  - `frequency`：取**出现次数最多**的那版配方（旧口径），并保留 `needsReview: true` 等人工复核。
+  - 单条可用 `dish-meta.json` 的 `dishes.<菜名>.primaryVariant` 钉住某个 `variantId`，优先级最高，此时 `primaryBasis: "manual"`。
+- 无论口径如何，**历史配方都完整保留在 `variants[]` 与 `weeks/` 里**，不删除、不改写原表；换口径只影响顶层字段和溯源弹窗里「库内主配方」的标注。
+- 只有口径未定（`primaryBasis: "frequency"`）的多配方菜才带 `needsReview: true`；`latest` 口径下不再逐条标红。
 
 结构：
 
@@ -170,7 +174,8 @@ Schema：[`agent/schemas/week-index.schema.json`](schemas/week-index.schema.json
           "lastSeen": "2026-11-03"
         }
       ],
-      "needsReview": true
+      "primaryVariantId": "豆沙卷#ca30d511",
+      "primaryBasis": "latest"
     }
   }
 }
@@ -182,8 +187,8 @@ Schema：[`agent/schemas/week-index.schema.json`](schemas/week-index.schema.json
 
 1. 以规范化菜名为 key（去首尾空格、统一全半角、合并连续空白）。
 2. 统计该菜名下的每一个 `variantId`：合并同一 `variantId` 的出现次数（`count`）、取更早 `firstSeen` 与更晚 `lastSeen`、累加 `sourceImages`。
-3. `variants[]` 按 `count` 降序排，并列时取 `firstSeen` 更早的在前；`variants[0]` 即主变体，写进顶层 `ingredients` / `riskAllergens`。
-4. 同名菜出现第二种配方：不复用、不合并食材，新增一个变体条目，并给该菜标 `needsReview: true`。人工复核时决定是统一成一种配方、还是确认这就是两道同名不同的菜（后者应考虑在 `dish-meta.json` 里加别名拆开）。
+3. `variants[]` 按 `count` 降序排，并列时 `lastSeen` 更晚的在前。主配方按 `dish-meta.json` 的 `reviewPolicy.mode` 选：`latest` 取 `occurrences` 里最后一条的 `variantId`，`frequency` 取 `variants[0]`，人工钉住的 `primaryVariant` 最优先。选中的变体写进顶层 `ingredients` / `riskAllergens`，并记下 `primaryVariantId` 与 `primaryBasis`。
+4. 同名菜出现第二种配方：不复用、不合并食材，新增一个变体条目。默认口径 `latest` 下主配方自动切到最新这版、不标 `needsReview`；只有园方要求以出现次数为准（`reviewPolicy.mode: "frequency"`）时才标 `needsReview: true` 进人工复核，决定是统一成一种配方还是确认这就是两道同名不同的菜（后者应考虑在 `dish-meta.json` 里加别名拆开）。
 5. 新菜：创建完整记录，`variants` 至少一条，`occurrences` 至少一条。
 6. 重建必须幂等：同一批 `weeks/*.json` 连跑两次，`dish-catalog.json` 与 `ingredient-index.json` 零差异。
 7. `verified: true`（来自 `dish-meta.json`）的菜品只允许追加 occurrence / 变体，不允许脚本改写人工字段。
@@ -200,7 +205,7 @@ DeepSeek 提取出菜品后，先用 `variantIdFor(菜名, 食材)` 算出变体
 | --- | --- |
 | 菜名/别名不存在 | `NEW`：新菜，创建记录与首个变体，写入发生日期、图片 |
 | 菜名存在，`variantId` 已存在 | `REUSED_VARIANT`：直接复用该变体，只追加 occurrence 与 `count` |
-| 菜名存在，`variantId` 是新的 | `NEW_VARIANT`：新增变体条目，标 `needsReview: true`，进人工复核清单 |
+| 菜名存在，`variantId` 是新的 | `NEW_VARIANT`：新增变体条目，历史配方保留；`latest` 口径下主配方自动切到这一版，`frequency` 口径下才标 `needsReview: true` |
 | 菜名存在，同一 `variantId` 下食材细节有差异（如同一 `variantId` 的写法归并后新增/缺失食材） | `CHANGED_INGREDIENTS`：只允许发生在同一变体内；任何改变食材集合的改动都会改变 `variantId`，因此这类差异必须回查原图确认是不是识别错误 |
 | 变体归属有歧义、或疑似识别错（同菜名多配方且人工无法判定） | `CONFLICT`：不覆盖，阻断自动重建，交人工确认 |
 | 已 `verified` | 只允许追加 occurrence，不改食材/过敏原/替餐 |
@@ -213,7 +218,7 @@ DeepSeek 提取出菜品后，先用 `variantIdFor(菜名, 食材)` 算出变体
 
 #### 7.5.3 人工字段
 
-- `public/assets/data/dish-meta.json`：`{dishes: {菜名: {aliases: [], substitute?}}}`，人工维护的别名与替餐。重建 catalog 时合并进来，重建不会覆盖。Schema：[`agent/schemas/dish-meta.schema.json`](schemas/dish-meta.schema.json)。
+- `public/assets/data/dish-meta.json`：`{reviewPolicy: {mode: "latest" | "frequency"}, dishes: {菜名: {aliases: [], substitute?, primaryVariant?, verified?}}}`，人工维护的别名、替餐、主配方口径与确认标记。`reviewPolicy.mode` 决定同名多配方时顶层取哪一版（默认 `latest`＝最近一次出现）；`primaryVariant` 填 `variantId` 可单独钉住某道菜的主配方。重建 catalog 时合并进来，重建不会覆盖。Schema：[`agent/schemas/dish-meta.schema.json`](schemas/dish-meta.schema.json)。
 - `public/assets/data/ingredient-aliases.json`：`{note, groups: {规范名: [各写法]}}`。Schema：[`agent/schemas/ingredient-aliases.schema.json`](schemas/ingredient-aliases.schema.json)。
 
 ### 7.6 补剂配置
@@ -302,8 +307,8 @@ DeepSeek 识别 → Agent 合并 JSON / 图片 → git push
 - `sourceImage` 指向的本地文件存在。
 - 没有重复的 `date + mealPeriod`。
 - `index.json` 的 `weeks[]` 与 `weeks/` 目录一一对应，`dates`/`meals`/`dishes` 与实际周文件内容一致，`range`/`total` 与汇总一致。
-- `dish-catalog.json` 菜品名唯一，`occurrences` 与周食谱对应，每条 occurrence 的 `variantId` 必须存在于该菜的 `variants[]` 里，且 `variants[0]` 与顶层 `ingredients`/`riskAllergens` 相同（主变体语义）。
-- `dish-catalog.json` 中 `variants.length > 1` 的菜必须带 `needsReview: true`；人工复核清单里逐条给出处理结论。
+- `dish-catalog.json` 菜品名唯一，`occurrences` 与周食谱对应，每条 occurrence 的 `variantId` 必须存在于该菜的 `variants[]` 里，且 `primaryVariantId` 指向的变体与顶层 `ingredients`/`riskAllergens` 相同（主配方语义）。
+- `dish-catalog.json` 中 `primaryBasis: "frequency"` 且 `variants.length > 1` 的菜必须带 `needsReview: true`；`latest` 口径下不标。人工复核清单里逐条给出处理结论。
 - `ingredient-index.json` 的 `total` 与自身内容一致，`hits[].variantId` 存在于 catalog。
 - `substitute-library.json` 通过 [`agent/schemas/substitute-library.schema.json`](schemas/substitute-library.schema.json)，`replaces` 使用存在的过敏原 id，候选不得漏掉双重过敏原。
 - `settings.json` 中 `supplements` 为非空字符串数组，打印固定 7 天。
@@ -333,4 +338,4 @@ DeepSeek 识别 → Agent 合并 JSON / 图片 → git push
 - 有硬错误或低置信度未确认时，退出码非 0，不写入周文件。
 - 人工确认后使用 `--reviewed` 才允许合并。
 - `verified: true` 只能由人工确认步骤写入（落到 `dish-meta.json`），Agent 不得自动设置。
-- `needsReview: true` 的菜必须逐条复核：统一配方、或拆成两道菜（加别名），或确认保留多变体。
+- `needsReview: true` 的菜（仅 `frequency` 口径会出现）必须逐条复核：统一配方、或拆成两道菜（加别名），或确认保留多变体。多配方本身不必复核，历史配方本来就该并存。

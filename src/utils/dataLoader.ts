@@ -529,6 +529,16 @@ function parseDishCatalog(value: unknown): DishCatalog {
         : occurrences[occurrences.length - 1]?.date ?? firstSeen
 
     const variants = parseDishVariants(rawDish.variants)
+    const primaryVariantId =
+      typeof rawDish.primaryVariantId === 'string' && rawDish.primaryVariantId.trim()
+        ? rawDish.primaryVariantId.trim()
+        : undefined
+    const primaryBasis =
+      rawDish.primaryBasis === 'latest' ||
+      rawDish.primaryBasis === 'frequency' ||
+      rawDish.primaryBasis === 'manual'
+        ? rawDish.primaryBasis
+        : undefined
 
     dishes[name] = {
       name,
@@ -541,7 +551,9 @@ function parseDishCatalog(value: unknown): DishCatalog {
       occurrences,
       sourceImages,
       ...(variants.length > 0 ? { variants } : {}),
-      ...(rawDish.needsReview === true || variants.length > 1 ? { needsReview: true } : {}),
+      ...(primaryVariantId ? { primaryVariantId } : {}),
+      ...(primaryBasis ? { primaryBasis } : {}),
+      ...(rawDish.needsReview === true ? { needsReview: true } : {}),
       ...(typeof rawDish.verified === 'boolean' ? { verified: rawDish.verified } : {}),
     }
   }

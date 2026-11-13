@@ -1,4 +1,8 @@
 {
+  "reviewPolicy": {
+    "mode": "latest",
+    "note": "同名菜出现多种配方时，主配方取「最近一次出现」的那版；历史配方仍完整保留在 dish-catalog.json 的 variants[] 和 weeks/ 里，不删除、不改写原表。单条可用 dishes.菜名.primaryVariant 钉住某个 variantId 覆盖该策略。"
+  },
   "dishes": {
     "牛奶": { "aliases": [], "substitute": "米奶" },
     "纯牛奶": { "aliases": [], "substitute": "米奶" },

@@ -38,6 +38,23 @@ const variantNote = computed(() => {
   return `同名菜共 ${knowledge.variants.length} 种配方；本次为「${current.ingredients.join('、')}」，另有 ${others.join(' / ')}。`
 })
 
+/** 主配方的口径说明：库里以哪一版为准，以及它是不是最近一次。 */
+const primaryNote = computed(() => {
+  const knowledge = props.target?.knowledge
+  if (!knowledge?.variants || knowledge.variants.length < 2) return ''
+  const primary =
+    knowledge.variants.find((variant) => variant.variantId === knowledge.primaryVariantId) ??
+    knowledge.variants[0]
+  if (!primary) return ''
+  const basis =
+    knowledge.primaryBasis === 'manual'
+      ? '人工指定'
+      : knowledge.primaryBasis === 'frequency'
+        ? '出现次数最多'
+        : '最近一次出现'
+  return `库内主配方（${basis}）：${primary.ingredients.join('、')}${primary.lastSeen ? `，最近 ${primary.lastSeen}` : ''}`
+})
+
 const closeButton = ref<HTMLButtonElement | null>(null)
 
 watch(
@@ -116,6 +133,7 @@ watch(
                 </p>
                 <p v-if="variantNote" class="mt-2 rounded-lg bg-honey-50 px-2 py-1.5 text-xs leading-5 text-honey-700">
                   {{ variantNote }}
+                  <span v-if="primaryNote" class="mt-1 block text-honey-700/80">{{ primaryNote }}</span>
                 </p>
               </template>
               <p v-else class="mt-3 text-sm leading-6 text-ink-muted">

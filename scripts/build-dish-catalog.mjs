@@ -6,8 +6,9 @@ import { normalizeIngredients, sortByChinese, variantIdFor } from './lib/variant
  * 从 weeks/*.json（唯一事实源）全量重建两个派生文件：
  *
  * 1. dish-catalog.json —— 菜名 → 多种配方变体（variantId 内容寻址）
- *    顶层 ingredients / riskAllergens 取「主变体」（出现次数最多的那版），
- *    保证前端 TraceDialog 零改动；同名多配方时标 needsReview 供人工复核。
+ *    顶层 ingredients / riskAllergens 取「主配方」：默认最近一次出现的那版
+ *    （dish-meta.json reviewPolicy.mode，可切回 frequency），保证前端 TraceDialog 零改动；
+ *    历史配方全部保留在 variants[]，未定口径时才标 needsReview 供人工复核。
  * 2. ingredient-index.json —— 食材 → 命中记录（菜名 + 变体 + 日期 + 餐次）
  *
  * 全量重建，不继承旧文件：旧目录里的并集脏数据（豆沙卷、豆奶等）不会累积。
@@ -26,6 +27,14 @@ if (weeks.length === 0) {
 
 const meta = await readJson(metaPath).catch(() => ({ dishes: {} }))
 const aliasGroups = await readJson(aliasesPath).catch(() => ({ groups: {} }))
+
+/**
+ * 同名多配方的主配方口径，来自 dish-meta.json 顶层 reviewPolicy：
+ * - mode: 'latest'（默认）每次重建都取「最近一次出现」的那版作主配方；
+ *   'frequency' 退回旧口径（出现次数最多），并保留 needsReview 供人工复核。
+ * 无论哪种口径，variants[] 与 weeks/ 里的每次出现都原样保留。
+ */
+const reviewPolicy = { mode: meta.reviewPolicy?.mode === 'frequency' ? 'frequency' : 'latest' }
 
 /** 写法 → 规范名。未登记的写法就是自己的规范名。 */
 const canonicalOf = new Map()
@@ -120,22 +129,23 @@ for (const name of sortByChinese([...dishes.keys()])) {
   const record = dishes.get(name)
   const manual = meta.dishes?.[name] ?? {}
 
+  // 变体数组按出现次数降序；并列时取最近出现的在前（便于人工复核时第一眼看到新配方）。
   const variants = [...record.variants.values()]
     .map((variant) => {
-      const dates = variant.dates.map((item) => item.date).sort()
+      const variantDates = variant.dates.map((item) => item.date).sort()
       return {
         variantId: variant.variantId,
         ingredients: variant.ingredients,
         riskAllergens: variant.riskAllergens,
         count: variant.dates.length,
-        firstSeen: dates[0] ?? '',
-        lastSeen: dates[dates.length - 1] ?? '',
+        firstSeen: variantDates[0] ?? '',
+        lastSeen: variantDates[variantDates.length - 1] ?? '',
       }
     })
     .sort(
       (left, right) =>
         right.count - left.count ||
-        (left.firstSeen < right.firstSeen ? -1 : left.firstSeen > right.firstSeen ? 1 : 0),
+        (left.lastSeen > right.lastSeen ? -1 : left.lastSeen < right.lastSeen ? 1 : 0),
     )
 
   // occurrences 只在顶层存一份，带 variantId 指回配方；mealLabel 由前端按 mealPeriod 渲染。
@@ -158,7 +168,28 @@ for (const name of sortByChinese([...dishes.keys()])) {
     : []
 
   const dates = occurrences.map((item) => item.date)
-  const primary = variants[0]
+
+  // 主配方选择：dish-meta 里显式钉住的 > 复核策略（默认「以最新一次为准」）> 出现次数最多。
+  const variantById = new Map(variants.map((variant) => [variant.variantId, variant]))
+  const latestVariantId = occurrences.length
+    ? occurrences[occurrences.length - 1].variantId
+    : undefined
+  const manualPrimary =
+    typeof manual.primaryVariant === 'string' && variantById.has(manual.primaryVariant)
+      ? manual.primaryVariant
+      : undefined
+
+  let primaryBasis = 'frequency'
+  let primaryVariantId = variants[0]?.variantId
+  if (manualPrimary) {
+    primaryBasis = 'manual'
+    primaryVariantId = manualPrimary
+  } else if (reviewPolicy.mode === 'latest' && latestVariantId) {
+    primaryBasis = 'latest'
+    primaryVariantId = latestVariantId
+  }
+  const primary = primaryVariantId ? variantById.get(primaryVariantId) : undefined
+
   const manualSubstitute =
     typeof manual.substitute === 'string' && manual.substitute.trim()
       ? manual.substitute.trim()
@@ -167,7 +198,7 @@ for (const name of sortByChinese([...dishes.keys()])) {
   const entry = {
     name,
     aliases: Array.isArray(manual.aliases) ? manual.aliases : [],
-    // 主变体：出现次数最多，并列取最早出现的那版。
+    // 主配方：默认取最近一次出现的那版；历史配方全在 variants[] 里，不丢。
     ingredients: primary?.ingredients ?? [],
     riskAllergens: primary?.riskAllergens ?? [],
     substitute: manualSubstitute,
@@ -178,7 +209,10 @@ for (const name of sortByChinese([...dishes.keys()])) {
       ...new Set([...record.variants.values()].flatMap((variant) => variant.sourceImages)),
     ]),
     variants,
-    ...(variants.length > 1 ? { needsReview: true } : {}),
+    ...(primaryVariantId ? { primaryVariantId } : {}),
+    primaryBasis,
+    // 多配方但还没定口径时才需要人工复核；已按策略定过的不再重复提示。
+    ...(variants.length > 1 && primaryBasis === 'frequency' ? { needsReview: true } : {}),
     ...(typeof manual.verified === 'boolean' ? { verified: manual.verified } : {}),
   }
 
@@ -218,12 +252,20 @@ await writeJson(indexFilePath, {
   ingredients,
 })
 
+const multiVariantCount = Object.values(catalogDishes).filter(
+  (dish) => dish.variants.length > 1,
+).length
 const reviewCount = Object.values(catalogDishes).filter((dish) => dish.needsReview).length
 console.log(
   `[leleat] catalog: ${Object.keys(catalogDishes).length} dishes / ${
     Object.values(catalogDishes).reduce((total, dish) => total + dish.variants.length, 0)
-  } variants (${reviewCount} 同名多配方), ${Object.keys(ingredients).length} ingredients`,
+  } variants (${multiVariantCount} 同名多配方, ${reviewCount} 待复核), ${
+    Object.keys(ingredients).length
+  } ingredients`,
 )
+if (multiVariantCount > 0 && reviewCount === 0) {
+  console.log('[leleat] 主配方口径：以最近一次出现为准（dish-meta.json reviewPolicy.mode=latest）')
+}
 if (conflicts.length > 0) {
   console.warn('[leleat] 变体口径冲突，请检查 variantId 生成逻辑：')
   for (const conflict of conflicts) console.warn('  ', JSON.stringify(conflict))

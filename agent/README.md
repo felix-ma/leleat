@@ -49,3 +49,4 @@
 | 1.4 | 2026-11-06 | 渐进式披露：AGENTS.md 只留硬约束与导航，正文按 §1–§15 拆进 `agent/*.md`，编号不变 |
 | 1.5 | 2026-11-06 | 改完即发布：取消「默认只写工作区」，任务结束必须 commit + push，涉图/数据再 deploy |
 | 1.6 | 2026-11-13 | 存储改为周分片：`recipes.json` → `index.json` + `weeks/YYYY-Www.json`；菜品库改为变体口径（`variantId`/`variants[]`/`needsReview`），食材取并集改为多配方并存；新增 `ingredient-index.json`、`ingredient-aliases.json`、`dish-meta.json` 三份人工/派生数据与对应 Schema |
+| 1.7 | 2026-11-13 | 主配方口径改为「最近一次出现为准」：`dish-catalog.json` 顶层 `ingredients`/`riskAllergens` 由 `primaryVariantId` 指向，选择策略放进 `dish-meta.json` 的 `reviewPolicy.mode`（`latest` 默认 / `frequency` 旧口径），单条可用 `primaryVariant` 钉住；`needsReview` 收窄为「口径未定」，历史配方仍全量保留在 `variants[]`；溯源弹窗补「库内主配方」说明 |
