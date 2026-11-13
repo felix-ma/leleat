@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13T11:10:18.585Z",
+  "updatedAt": "2026-11-13T11:28:37.495Z",
   "dishes": {
     "鹌鹑蛋": {
       "name": "鹌鹑蛋",
@@ -39,7 +39,9 @@
           "firstSeen": "2026-10-19",
           "lastSeen": "2026-11-16"
         }
-      ]
+      ],
+      "primaryVariantId": "鹌鹑蛋#de1622e0",
+      "primaryBasis": "latest"
     },
     "霸王花瘦肉汤": {
       "name": "霸王花瘦肉汤",
@@ -74,7 +76,9 @@
           "firstSeen": "2026-10-13",
           "lastSeen": "2026-10-13"
         }
-      ]
+      ],
+      "primaryVariantId": "霸王花瘦肉汤#961746b2",
+      "primaryBasis": "latest"
     },
     "板栗焖鸡": {
       "name": "板栗焖鸡",
@@ -111,7 +115,9 @@
           "firstSeen": "2026-11-05",
           "lastSeen": "2026-11-05"
         }
-      ]
+      ],
+      "primaryVariantId": "板栗焖鸡#e2f98bc2",
+      "primaryBasis": "latest"
     },
     "煲仔饭": {
       "name": "煲仔饭",
@@ -166,7 +172,9 @@
           "firstSeen": "2026-10-23",
           "lastSeen": "2026-11-20"
         }
-      ]
+      ],
+      "primaryVariantId": "煲仔饭#2a630d63",
+      "primaryBasis": "latest"
     },
     "菠菜胡萝卜肉粥": {
       "name": "菠菜胡萝卜肉粥",
@@ -203,7 +211,9 @@
           "firstSeen": "2026-11-03",
           "lastSeen": "2026-11-03"
         }
-      ]
+      ],
+      "primaryVariantId": "菠菜胡萝卜肉粥#22966588",
+      "primaryBasis": "latest"
     },
     "菠菜猪肝瘦肉汤": {
       "name": "菠菜猪肝瘦肉汤",
@@ -238,7 +248,9 @@
           "firstSeen": "2026-11-12",
           "lastSeen": "2026-11-12"
         }
-      ]
+      ],
+      "primaryVariantId": "菠菜猪肝瘦肉汤#6c726a32",
+      "primaryBasis": "latest"
     },
     "彩蔬肉粥": {
       "name": "彩蔬肉粥",
@@ -275,7 +287,9 @@
           "firstSeen": "2026-11-09",
           "lastSeen": "2026-11-09"
         }
-      ]
+      ],
+      "primaryVariantId": "彩蔬肉粥#32f573da",
+      "primaryBasis": "latest"
     },
     "炒三丁": {
       "name": "炒三丁",
@@ -312,7 +326,9 @@
           "firstSeen": "2026-10-13",
           "lastSeen": "2026-10-13"
         }
-      ]
+      ],
+      "primaryVariantId": "炒三丁#2839d0ae",
+      "primaryBasis": "latest"
     },
     "橙子": {
       "name": "橙子",
@@ -343,7 +359,9 @@
           "firstSeen": "2026-11-04",
           "lastSeen": "2026-11-04"
         }
-      ]
+      ],
+      "primaryVariantId": "橙子#f45c2334",
+      "primaryBasis": "latest"
     },
     "虫草花红枣冬菇蒸鸡": {
       "name": "虫草花红枣冬菇蒸鸡",
@@ -382,7 +400,9 @@
           "firstSeen": "2026-11-09",
           "lastSeen": "2026-11-09"
         }
-      ]
+      ],
+      "primaryVariantId": "虫草花红枣冬菇蒸鸡#c46d8627",
+      "primaryBasis": "latest"
     },
     "虫草花蒸鸡": {
       "name": "虫草花蒸鸡",
@@ -419,7 +439,9 @@
           "firstSeen": "2026-10-19",
           "lastSeen": "2026-10-19"
         }
-      ]
+      ],
+      "primaryVariantId": "虫草花蒸鸡#75b46000",
+      "primaryBasis": "latest"
     },
     "纯牛奶": {
       "name": "纯牛奶",
@@ -527,7 +549,8 @@
           "lastSeen": "2026-11-13"
         }
       ],
-      "needsReview": true
+      "primaryVariantId": "纯牛奶#e9dd22df",
+      "primaryBasis": "latest"
     },
     "葱油肉拌面": {
       "name": "葱油肉拌面",
@@ -566,7 +589,9 @@
           "firstSeen": "2026-10-19",
           "lastSeen": "2026-10-19"
         }
-      ]
+      ],
+      "primaryVariantId": "葱油肉拌面#7c4cb013",
+      "primaryBasis": "latest"
     },
     "大骨白萝卜汤": {
       "name": "大骨白萝卜汤",
@@ -609,7 +634,9 @@
           "firstSeen": "2026-10-23",
           "lastSeen": "2026-11-20"
         }
-      ]
+      ],
+      "primaryVariantId": "大骨白萝卜汤#09afbe58",
+      "primaryBasis": "latest"
     },
     "大骨淮山汤": {
       "name": "大骨淮山汤",
@@ -652,7 +679,9 @@
           "firstSeen": "2026-10-22",
           "lastSeen": "2026-11-18"
         }
-      ]
+      ],
+      "primaryVariantId": "大骨淮山汤#3721238f",
+      "primaryBasis": "latest"
     },
     "冬瓜焖鸭": {
       "name": "冬瓜焖鸭",
@@ -689,7 +718,9 @@
           "firstSeen": "2026-11-03",
           "lastSeen": "2026-11-03"
         }
-      ]
+      ],
+      "primaryVariantId": "冬瓜焖鸭#87a46c75",
+      "primaryBasis": "latest"
     },
     "冬瓜薏米老鸭汤": {
       "name": "冬瓜薏米老鸭汤",
@@ -728,7 +759,9 @@
           "firstSeen": "2026-11-11",
           "lastSeen": "2026-11-11"
         }
-      ]
+      ],
+      "primaryVariantId": "冬瓜薏米老鸭汤#2961982e",
+      "primaryBasis": "latest"
     },
     "豆腐皮肉卷": {
       "name": "豆腐皮肉卷",
@@ -771,7 +804,9 @@
           "firstSeen": "2026-11-17",
           "lastSeen": "2026-11-17"
         }
-      ]
+      ],
+      "primaryVariantId": "豆腐皮肉卷#9f29646d",
+      "primaryBasis": "latest"
     },
     "豆腐蒸肉卷": {
       "name": "豆腐蒸肉卷",
@@ -814,7 +849,9 @@
           "firstSeen": "2026-10-20",
           "lastSeen": "2026-10-20"
         }
-      ]
+      ],
+      "primaryVariantId": "豆腐蒸肉卷#d8c5bde8",
+      "primaryBasis": "latest"
     },
     "豆奶": {
       "name": "豆奶",
@@ -865,7 +902,9 @@
           "firstSeen": "2026-10-15",
           "lastSeen": "2026-11-19"
         }
-      ]
+      ],
+      "primaryVariantId": "豆奶#99602800",
+      "primaryBasis": "latest"
     },
     "豆沙卷": {
       "name": "豆沙卷",
@@ -927,7 +966,8 @@
           "lastSeen": "2026-11-03"
         }
       ],
-      "needsReview": true
+      "primaryVariantId": "豆沙卷#ca30d511",
+      "primaryBasis": "latest"
     },
     "番茄肉酱意面": {
       "name": "番茄肉酱意面",
@@ -966,7 +1006,9 @@
           "firstSeen": "2026-10-16",
           "lastSeen": "2026-10-16"
         }
-      ]
+      ],
+      "primaryVariantId": "番茄肉酱意面#628777ff",
+      "primaryBasis": "latest"
     },
     "腐竹烧肉": {
       "name": "腐竹烧肉",
@@ -1003,7 +1045,9 @@
           "firstSeen": "2026-11-04",
           "lastSeen": "2026-11-04"
         }
-      ]
+      ],
+      "primaryVariantId": "腐竹烧肉#d63e72c3",
+      "primaryBasis": "latest"
     },
     "枸杞叶猪肝瘦肉丸子汤": {
       "name": "枸杞叶猪肝瘦肉丸子汤",
@@ -1040,7 +1084,9 @@
           "firstSeen": "2026-11-06",
           "lastSeen": "2026-11-06"
         }
-      ]
+      ],
+      "primaryVariantId": "枸杞叶猪肝瘦肉丸子汤#1a1e66f9",
+      "primaryBasis": "latest"
     },
     "广式糖水": {
       "name": "广式糖水",
@@ -1079,7 +1125,9 @@
           "firstSeen": "2026-10-20",
           "lastSeen": "2026-10-20"
         }
-      ]
+      ],
+      "primaryVariantId": "广式糖水#2eea6852",
+      "primaryBasis": "latest"
     },
     "哈密瓜": {
       "name": "哈密瓜",
@@ -1145,7 +1193,9 @@
           "firstSeen": "2026-10-14",
           "lastSeen": "2026-11-20"
         }
-      ]
+      ],
+      "primaryVariantId": "哈密瓜#c66fd365",
+      "primaryBasis": "latest"
     },
     "海带黄豆大骨汤": {
       "name": "海带黄豆大骨汤",
@@ -1194,7 +1244,9 @@
           "firstSeen": "2026-10-19",
           "lastSeen": "2026-11-16"
         }
-      ]
+      ],
+      "primaryVariantId": "海带黄豆大骨汤#0be5177a",
+      "primaryBasis": "latest"
     },
     "海底椰苹果肉汤": {
       "name": "海底椰苹果肉汤",
@@ -1233,7 +1285,9 @@
           "firstSeen": "2026-11-12",
           "lastSeen": "2026-11-12"
         }
-      ]
+      ],
+      "primaryVariantId": "海底椰苹果肉汤#adf66e62",
+      "primaryBasis": "latest"
     },
     "海鲜菇山药瘦肉汤": {
       "name": "海鲜菇山药瘦肉汤",
@@ -1272,7 +1326,9 @@
           "firstSeen": "2026-11-03",
           "lastSeen": "2026-11-03"
         }
-      ]
+      ],
+      "primaryVariantId": "海鲜菇山药瘦肉汤#76a7cb4b",
+      "primaryBasis": "latest"
     },
     "红豆莲子西米露": {
       "name": "红豆莲子西米露",
@@ -1311,7 +1367,9 @@
           "firstSeen": "2026-11-12",
           "lastSeen": "2026-11-12"
         }
-      ]
+      ],
+      "primaryVariantId": "红豆莲子西米露#a13f17d7",
+      "primaryBasis": "latest"
     },
     "红烧鸡腿": {
       "name": "红烧鸡腿",
@@ -1348,7 +1406,9 @@
           "firstSeen": "2026-11-16",
           "lastSeen": "2026-11-16"
         }
-      ]
+      ],
+      "primaryVariantId": "红烧鸡腿#bd93eae7",
+      "primaryBasis": "latest"
     },
     "红烧牛肉面": {
       "name": "红烧牛肉面",
@@ -1385,7 +1445,9 @@
           "firstSeen": "2026-11-06",
           "lastSeen": "2026-11-06"
         }
-      ]
+      ],
+      "primaryVariantId": "红烧牛肉面#300dd10d",
+      "primaryBasis": "latest"
     },
     "红烧肉炖土豆": {
       "name": "红烧肉炖土豆",
@@ -1420,7 +1482,9 @@
           "firstSeen": "2026-11-11",
           "lastSeen": "2026-11-11"
         }
-      ]
+      ],
+      "primaryVariantId": "红烧肉炖土豆#72eef317",
+      "primaryBasis": "latest"
     },
     "红烧肉酱豆腐": {
       "name": "红烧肉酱豆腐",
@@ -1459,7 +1523,9 @@
           "firstSeen": "2026-11-09",
           "lastSeen": "2026-11-09"
         }
-      ]
+      ],
+      "primaryVariantId": "红烧肉酱豆腐#25ce35bd",
+      "primaryBasis": "latest"
     },
     "红烧土豆": {
       "name": "红烧土豆",
@@ -1494,7 +1560,9 @@
           "firstSeen": "2026-10-19",
           "lastSeen": "2026-10-19"
         }
-      ]
+      ],
+      "primaryVariantId": "红烧土豆#fa15f9d7",
+      "primaryBasis": "latest"
     },
     "红糖馒头": {
       "name": "红糖馒头",
@@ -1555,7 +1623,8 @@
           "lastSeen": "2026-10-20"
         }
       ],
-      "needsReview": true
+      "primaryVariantId": "红糖馒头#cc914735",
+      "primaryBasis": "latest"
     },
     "红枣糕": {
       "name": "红枣糕",
@@ -1595,7 +1664,9 @@
           "firstSeen": "2026-10-13",
           "lastSeen": "2026-11-10"
         }
-      ]
+      ],
+      "primaryVariantId": "红枣糕#a94ef92b",
+      "primaryBasis": "latest"
     },
     "红枣小米粥": {
       "name": "红枣小米粥",
@@ -1632,7 +1703,9 @@
           "firstSeen": "2026-10-15",
           "lastSeen": "2026-10-15"
         }
-      ]
+      ],
+      "primaryVariantId": "红枣小米粥#f0d58a2d",
+      "primaryBasis": "latest"
     },
     "红枣银耳雪梨糖水": {
       "name": "红枣银耳雪梨糖水",
@@ -1671,7 +1744,9 @@
           "firstSeen": "2026-10-13",
           "lastSeen": "2026-10-13"
         }
-      ]
+      ],
+      "primaryVariantId": "红枣银耳雪梨糖水#0822a66d",
+      "primaryBasis": "latest"
     },
     "淮山玉米排骨汤": {
       "name": "淮山玉米排骨汤",
@@ -1708,7 +1783,9 @@
           "firstSeen": "2026-11-13",
           "lastSeen": "2026-11-13"
         }
-      ]
+      ],
+      "primaryVariantId": "淮山玉米排骨汤#327f51a8",
+      "primaryBasis": "latest"
     },
     "黄豆焖排骨": {
       "name": "黄豆焖排骨",
@@ -1745,7 +1822,9 @@
           "firstSeen": "2026-11-10",
           "lastSeen": "2026-11-10"
         }
-      ]
+      ],
+      "primaryVariantId": "黄豆焖排骨#90b36f2a",
+      "primaryBasis": "latest"
     },
     "黄金米饭": {
       "name": "黄金米饭",
@@ -1780,7 +1859,9 @@
           "firstSeen": "2026-11-12",
           "lastSeen": "2026-11-12"
         }
-      ]
+      ],
+      "primaryVariantId": "黄金米饭#6ae67204",
+      "primaryBasis": "latest"
     },
     "火龙果": {
       "name": "火龙果",
@@ -1811,7 +1892,9 @@
           "firstSeen": "2026-10-15",
           "lastSeen": "2026-10-15"
         }
-      ]
+      ],
+      "primaryVariantId": "火龙果#f09e2019",
+      "primaryBasis": "latest"
     },
     "火腿炒豆角粒": {
       "name": "火腿炒豆角粒",
@@ -1846,7 +1929,9 @@
           "firstSeen": "2026-11-12",
           "lastSeen": "2026-11-12"
         }
-      ]
+      ],
+      "primaryVariantId": "火腿炒豆角粒#fe06708e",
+      "primaryBasis": "latest"
     },
     "鸡蛋": {
       "name": "鸡蛋",
@@ -1881,7 +1966,9 @@
           "firstSeen": "2026-11-09",
           "lastSeen": "2026-11-09"
         }
-      ]
+      ],
+      "primaryVariantId": "鸡蛋#131842b3",
+      "primaryBasis": "latest"
     },
     "鸡丝汤面": {
       "name": "鸡丝汤面",
@@ -1922,7 +2009,9 @@
           "firstSeen": "2026-11-13",
           "lastSeen": "2026-11-13"
         }
-      ]
+      ],
+      "primaryVariantId": "鸡丝汤面#aa0b718b",
+      "primaryBasis": "latest"
     },
     "茄汁牛肉意面": {
       "name": "茄汁牛肉意面",
@@ -1961,7 +2050,9 @@
           "firstSeen": "2026-11-13",
           "lastSeen": "2026-11-13"
         }
-      ]
+      ],
+      "primaryVariantId": "茄汁牛肉意面#1b3fac80",
+      "primaryBasis": "latest"
     },
     "酱香肉沫蒸米粉": {
       "name": "酱香肉沫蒸米粉",
@@ -2000,7 +2091,9 @@
           "firstSeen": "2026-11-05",
           "lastSeen": "2026-11-05"
         }
-      ]
+      ],
+      "primaryVariantId": "酱香肉沫蒸米粉#17684f53",
+      "primaryBasis": "latest"
     },
     "金银米饭": {
       "name": "金银米饭",
@@ -2035,7 +2128,9 @@
           "firstSeen": "2026-10-13",
           "lastSeen": "2026-10-13"
         }
-      ]
+      ],
+      "primaryVariantId": "金银米饭#2f23a221",
+      "primaryBasis": "latest"
     },
     "橘子": {
       "name": "橘子",
@@ -2091,7 +2186,9 @@
           "firstSeen": "2026-10-19",
           "lastSeen": "2026-11-20"
         }
-      ]
+      ],
+      "primaryVariantId": "橘子#a86c33e4",
+      "primaryBasis": "latest"
     },
     "菌菇虫草花鸡汤": {
       "name": "菌菇虫草花鸡汤",
@@ -2130,7 +2227,9 @@
           "firstSeen": "2026-10-15",
           "lastSeen": "2026-10-15"
         }
-      ]
+      ],
+      "primaryVariantId": "菌菇虫草花鸡汤#68ac0203",
+      "primaryBasis": "latest"
     },
     "可乐鸡腿": {
       "name": "可乐鸡腿",
@@ -2167,7 +2266,9 @@
           "firstSeen": "2026-10-14",
           "lastSeen": "2026-10-14"
         }
-      ]
+      ],
+      "primaryVariantId": "可乐鸡腿#f9d87fab",
+      "primaryBasis": "latest"
     },
     "老南瓜淮山瘦肉粥": {
       "name": "老南瓜淮山瘦肉粥",
@@ -2204,7 +2305,9 @@
           "firstSeen": "2026-10-14",
           "lastSeen": "2026-10-14"
         }
-      ]
+      ],
+      "primaryVariantId": "老南瓜淮山瘦肉粥#fd8c9620",
+      "primaryBasis": "latest"
     },
     "梨子": {
       "name": "梨子",
@@ -2260,7 +2363,9 @@
           "firstSeen": "2026-10-14",
           "lastSeen": "2026-11-18"
         }
-      ]
+      ],
+      "primaryVariantId": "梨子#cf47c891",
+      "primaryBasis": "latest"
     },
     "莲藕红枣瘦肉汤": {
       "name": "莲藕红枣瘦肉汤",
@@ -2297,7 +2402,9 @@
           "firstSeen": "2026-11-04",
           "lastSeen": "2026-11-04"
         }
-      ]
+      ],
+      "primaryVariantId": "莲藕红枣瘦肉汤#36d54c63",
+      "primaryBasis": "latest"
     },
     "卤豆干": {
       "name": "卤豆干",
@@ -2328,7 +2435,9 @@
           "firstSeen": "2026-11-06",
           "lastSeen": "2026-11-06"
         }
-      ]
+      ],
+      "primaryVariantId": "卤豆干#d076df9e",
+      "primaryBasis": "latest"
     },
     "卤花生": {
       "name": "卤花生",
@@ -2386,7 +2495,8 @@
           "lastSeen": "2026-10-12"
         }
       ],
-      "needsReview": true
+      "primaryVariantId": "卤花生#8658a974",
+      "primaryBasis": "latest"
     },
     "卤鸡腿": {
       "name": "卤鸡腿",
@@ -2421,7 +2531,9 @@
           "firstSeen": "2026-11-06",
           "lastSeen": "2026-11-06"
         }
-      ]
+      ],
+      "primaryVariantId": "卤鸡腿#aafdaa23",
+      "primaryBasis": "latest"
     },
     "卤香干": {
       "name": "卤香干",
@@ -2456,7 +2568,9 @@
           "firstSeen": "2026-10-16",
           "lastSeen": "2026-10-16"
         }
-      ]
+      ],
+      "primaryVariantId": "卤香干#81e4251e",
+      "primaryBasis": "latest"
     },
     "罗宋汤": {
       "name": "罗宋汤",
@@ -2495,7 +2609,9 @@
           "firstSeen": "2026-10-16",
           "lastSeen": "2026-10-16"
         }
-      ]
+      ],
+      "primaryVariantId": "罗宋汤#7b638b2c",
+      "primaryBasis": "latest"
     },
     "萝卜焖牛腩": {
       "name": "萝卜焖牛腩",
@@ -2536,7 +2652,9 @@
           "firstSeen": "2026-10-21",
           "lastSeen": "2026-11-19"
         }
-      ]
+      ],
+      "primaryVariantId": "萝卜焖牛腩#76e9174d",
+      "primaryBasis": "latest"
     },
     "米饭": {
       "name": "米饭",
@@ -2629,7 +2747,9 @@
           "firstSeen": "2026-10-12",
           "lastSeen": "2026-11-19"
         }
-      ]
+      ],
+      "primaryVariantId": "米饭#1ef23f79",
+      "primaryBasis": "latest"
     },
     "蜜橘": {
       "name": "蜜橘",
@@ -2660,7 +2780,9 @@
           "firstSeen": "2026-11-10",
           "lastSeen": "2026-11-10"
         }
-      ]
+      ],
+      "primaryVariantId": "蜜橘#a6225b8f",
+      "primaryBasis": "latest"
     },
     "蘑菇烩牛肉": {
       "name": "蘑菇烩牛肉",
@@ -2697,7 +2819,9 @@
           "firstSeen": "2026-10-12",
           "lastSeen": "2026-10-12"
         }
-      ]
+      ],
+      "primaryVariantId": "蘑菇烩牛肉#607d9301",
+      "primaryBasis": "latest"
     },
     "木瓜花生瘦肉汤": {
       "name": "木瓜花生瘦肉汤",
@@ -2736,7 +2860,9 @@
           "firstSeen": "2026-11-09",
           "lastSeen": "2026-11-09"
         }
-      ]
+      ],
+      "primaryVariantId": "木瓜花生瘦肉汤#1c943226",
+      "primaryBasis": "latest"
     },
     "奶香馒头": {
       "name": "奶香馒头",
@@ -2775,7 +2901,9 @@
           "firstSeen": "2026-10-15",
           "lastSeen": "2026-10-15"
         }
-      ]
+      ],
+      "primaryVariantId": "奶香馒头#29ab5460",
+      "primaryBasis": "latest"
     },
     "奶香小馒头": {
       "name": "奶香小馒头",
@@ -2814,7 +2942,9 @@
           "firstSeen": "2026-11-11",
           "lastSeen": "2026-11-11"
         }
-      ]
+      ],
+      "primaryVariantId": "奶香小馒头#34b334b5",
+      "primaryBasis": "latest"
     },
     "牛奶": {
       "name": "牛奶",
@@ -2854,7 +2984,9 @@
           "firstSeen": "2026-11-06",
           "lastSeen": "2026-11-09"
         }
-      ]
+      ],
+      "primaryVariantId": "牛奶#3cd16acb",
+      "primaryBasis": "latest"
     },
     "排骨蒸南瓜": {
       "name": "排骨蒸南瓜",
@@ -2891,7 +3023,9 @@
           "firstSeen": "2026-11-02",
           "lastSeen": "2026-11-02"
         }
-      ]
+      ],
+      "primaryVariantId": "排骨蒸南瓜#b4e5f763",
+      "primaryBasis": "latest"
     },
     "皮蛋瘦肉粥": {
       "name": "皮蛋瘦肉粥",
@@ -2937,7 +3071,9 @@
           "firstSeen": "2026-10-20",
           "lastSeen": "2026-11-17"
         }
-      ]
+      ],
+      "primaryVariantId": "皮蛋瘦肉粥#418fd043",
+      "primaryBasis": "latest"
     },
     "苹果": {
       "name": "苹果",
@@ -2973,7 +3109,9 @@
           "firstSeen": "2026-10-12",
           "lastSeen": "2026-10-15"
         }
-      ]
+      ],
+      "primaryVariantId": "苹果#56bb2ff5",
+      "primaryBasis": "latest"
     },
     "葡萄干": {
       "name": "葡萄干",
@@ -3009,7 +3147,9 @@
           "firstSeen": "2026-10-20",
           "lastSeen": "2026-11-05"
         }
-      ]
+      ],
+      "primaryVariantId": "葡萄干#2cdf189b",
+      "primaryBasis": "latest"
     },
     "青菜瘦肉炒面": {
       "name": "青菜瘦肉炒面",
@@ -3046,7 +3186,9 @@
           "firstSeen": "2026-10-14",
           "lastSeen": "2026-10-14"
         }
-      ]
+      ],
+      "primaryVariantId": "青菜瘦肉炒面#6808ffa6",
+      "primaryBasis": "latest"
     },
     "肉炒三丁": {
       "name": "肉炒三丁",
@@ -3083,7 +3225,9 @@
           "firstSeen": "2026-11-19",
           "lastSeen": "2026-11-19"
         }
-      ]
+      ],
+      "primaryVariantId": "肉炒三丁#d39c32ac",
+      "primaryBasis": "latest"
     },
     "肉炒小瓜丝": {
       "name": "肉炒小瓜丝",
@@ -3130,7 +3274,9 @@
           "firstSeen": "2026-10-12",
           "lastSeen": "2026-11-17"
         }
-      ]
+      ],
+      "primaryVariantId": "肉炒小瓜丝#8124a277",
+      "primaryBasis": "latest"
     },
     "肉焖土豆": {
       "name": "肉焖土豆",
@@ -3167,7 +3313,9 @@
           "firstSeen": "2026-11-16",
           "lastSeen": "2026-11-16"
         }
-      ]
+      ],
+      "primaryVariantId": "肉焖土豆#d4e5b9b6",
+      "primaryBasis": "latest"
     },
     "肉沫焖萝卜": {
       "name": "肉沫焖萝卜",
@@ -3204,7 +3352,9 @@
           "firstSeen": "2026-11-10",
           "lastSeen": "2026-11-10"
         }
-      ]
+      ],
+      "primaryVariantId": "肉沫焖萝卜#f9a8da30",
+      "primaryBasis": "latest"
     },
     "肉沫青菜蝴蝶粉": {
       "name": "肉沫青菜蝴蝶粉",
@@ -3241,7 +3391,9 @@
           "firstSeen": "2026-10-19",
           "lastSeen": "2026-10-19"
         }
-      ]
+      ],
+      "primaryVariantId": "肉沫青菜蝴蝶粉#54f5d612",
+      "primaryBasis": "latest"
     },
     "肉沫青菜汤面": {
       "name": "肉沫青菜汤面",
@@ -3278,7 +3430,9 @@
           "firstSeen": "2026-11-16",
           "lastSeen": "2026-11-16"
         }
-      ]
+      ],
+      "primaryVariantId": "肉沫青菜汤面#649a0910",
+      "primaryBasis": "latest"
     },
     "肉沫时菜": {
       "name": "肉沫时菜",
@@ -3355,7 +3509,9 @@
           "firstSeen": "2026-10-12",
           "lastSeen": "2026-11-12"
         }
-      ]
+      ],
+      "primaryVariantId": "肉沫时菜#12a883c7",
+      "primaryBasis": "latest"
     },
     "肉沫时蔬": {
       "name": "肉沫时蔬",
@@ -3390,7 +3546,9 @@
           "firstSeen": "2026-11-02",
           "lastSeen": "2026-11-02"
         }
-      ]
+      ],
+      "primaryVariantId": "肉沫时蔬#4436f2d0",
+      "primaryBasis": "latest"
     },
     "肉沫蒸滑蛋": {
       "name": "肉沫蒸滑蛋",
@@ -3431,7 +3589,9 @@
           "firstSeen": "2026-11-03",
           "lastSeen": "2026-11-03"
         }
-      ]
+      ],
+      "primaryVariantId": "肉沫蒸滑蛋#3e9449ba",
+      "primaryBasis": "latest"
     },
     "肉沫蒸水蛋": {
       "name": "肉沫蒸水蛋",
@@ -3478,7 +3638,9 @@
           "firstSeen": "2026-10-22",
           "lastSeen": "2026-11-18"
         }
-      ]
+      ],
+      "primaryVariantId": "肉沫蒸水蛋#0a3dc46e",
+      "primaryBasis": "latest"
     },
     "三丝炒米粉": {
       "name": "三丝炒米粉",
@@ -3521,7 +3683,9 @@
           "firstSeen": "2026-11-12",
           "lastSeen": "2026-11-12"
         }
-      ]
+      ],
+      "primaryVariantId": "三丝炒米粉#478b5b9a",
+      "primaryBasis": "latest"
     },
     "三鲜螺纹粉": {
       "name": "三鲜螺纹粉",
@@ -3558,7 +3722,9 @@
           "firstSeen": "2026-11-02",
           "lastSeen": "2026-11-02"
         }
-      ]
+      ],
+      "primaryVariantId": "三鲜螺纹粉#ac2bb0aa",
+      "primaryBasis": "latest"
     },
     "三鲜通心粉": {
       "name": "三鲜通心粉",
@@ -3599,7 +3765,9 @@
           "firstSeen": "2026-11-10",
           "lastSeen": "2026-11-10"
         }
-      ]
+      ],
+      "primaryVariantId": "三鲜通心粉#31857c14",
+      "primaryBasis": "latest"
     },
     "山药百合大骨汤": {
       "name": "山药百合大骨汤",
@@ -3636,7 +3804,9 @@
           "firstSeen": "2026-10-12",
           "lastSeen": "2026-10-12"
         }
-      ]
+      ],
+      "primaryVariantId": "山药百合大骨汤#cde0797e",
+      "primaryBasis": "latest"
     },
     "山楂": {
       "name": "山楂",
@@ -3667,7 +3837,9 @@
           "firstSeen": "2026-11-17",
           "lastSeen": "2026-11-17"
         }
-      ]
+      ],
+      "primaryVariantId": "山楂#05d85e7e",
+      "primaryBasis": "latest"
     },
     "山楂片": {
       "name": "山楂片",
@@ -3698,7 +3870,9 @@
           "firstSeen": "2026-11-12",
           "lastSeen": "2026-11-12"
         }
-      ]
+      ],
+      "primaryVariantId": "山楂片#7947ceda",
+      "primaryBasis": "latest"
     },
     "山楂条": {
       "name": "山楂条",
@@ -3729,13 +3903,16 @@
           "firstSeen": "2026-10-13",
           "lastSeen": "2026-10-13"
         }
-      ]
+      ],
+      "primaryVariantId": "山楂条#2162070f",
+      "primaryBasis": "latest"
     },
     "烧麦": {
       "name": "烧麦",
       "aliases": [],
       "ingredients": [
         "红萝卜",
+        "火腿",
         "面粉",
         "瘦肉",
         "玉米粒"
@@ -3759,19 +3936,6 @@
       "sourceImages": [],
       "variants": [
         {
-          "variantId": "烧麦#a73f517d",
-          "ingredients": [
-            "红萝卜",
-            "面粉",
-            "瘦肉",
-            "玉米粒"
-          ],
-          "riskAllergens": [],
-          "count": 1,
-          "firstSeen": "2026-10-12",
-          "lastSeen": "2026-10-12"
-        },
-        {
           "variantId": "烧麦#63829aa7",
           "ingredients": [
             "红萝卜",
@@ -3784,9 +3948,23 @@
           "count": 1,
           "firstSeen": "2026-11-09",
           "lastSeen": "2026-11-09"
+        },
+        {
+          "variantId": "烧麦#a73f517d",
+          "ingredients": [
+            "红萝卜",
+            "面粉",
+            "瘦肉",
+            "玉米粒"
+          ],
+          "riskAllergens": [],
+          "count": 1,
+          "firstSeen": "2026-10-12",
+          "lastSeen": "2026-10-12"
         }
       ],
-      "needsReview": true
+      "primaryVariantId": "烧麦#63829aa7",
+      "primaryBasis": "latest"
     },
     "圣女果": {
       "name": "圣女果",
@@ -3832,7 +4010,9 @@
           "firstSeen": "2026-10-22",
           "lastSeen": "2026-11-19"
         }
-      ]
+      ],
+      "primaryVariantId": "圣女果#4dc59075",
+      "primaryBasis": "latest"
     },
     "时菜炒肉": {
       "name": "时菜炒肉",
@@ -3867,7 +4047,9 @@
           "firstSeen": "2026-11-04",
           "lastSeen": "2026-11-04"
         }
-      ]
+      ],
+      "primaryVariantId": "时菜炒肉#19bf96a7",
+      "primaryBasis": "latest"
     },
     "时蔬炒肉": {
       "name": "时蔬炒肉",
@@ -3908,7 +4090,9 @@
           "firstSeen": "2026-11-03",
           "lastSeen": "2026-11-05"
         }
-      ]
+      ],
+      "primaryVariantId": "时蔬炒肉#5ea8e2d5",
+      "primaryBasis": "latest"
     },
     "手工蒸饺": {
       "name": "手工蒸饺",
@@ -3950,7 +4134,9 @@
           "firstSeen": "2026-10-21",
           "lastSeen": "2026-11-19"
         }
-      ]
+      ],
+      "primaryVariantId": "手工蒸饺#f9646bdc",
+      "primaryBasis": "latest"
     },
     "瘦肉包": {
       "name": "瘦肉包",
@@ -4009,7 +4195,8 @@
           "lastSeen": "2026-11-04"
         }
       ],
-      "needsReview": true
+      "primaryVariantId": "瘦肉包#94ede045",
+      "primaryBasis": "latest"
     },
     "瘦肉炒时菜": {
       "name": "瘦肉炒时菜",
@@ -4050,7 +4237,9 @@
           "firstSeen": "2026-10-19",
           "lastSeen": "2026-11-16"
         }
-      ]
+      ],
+      "primaryVariantId": "瘦肉炒时菜#1100c601",
+      "primaryBasis": "latest"
     },
     "瘦肉炒时蔬": {
       "name": "瘦肉炒时蔬",
@@ -4091,7 +4280,9 @@
           "firstSeen": "2026-10-20",
           "lastSeen": "2026-11-17"
         }
-      ]
+      ],
+      "primaryVariantId": "瘦肉炒时蔬#f6078ed6",
+      "primaryBasis": "latest"
     },
     "瘦肉菌菠菜菇汤": {
       "name": "瘦肉菌菠菜菇汤",
@@ -4128,7 +4319,9 @@
           "firstSeen": "2026-10-21",
           "lastSeen": "2026-10-21"
         }
-      ]
+      ],
+      "primaryVariantId": "瘦肉菌菠菜菇汤#54679956",
+      "primaryBasis": "latest"
     },
     "瘦肉菌菇菠菜汤": {
       "name": "瘦肉菌菇菠菜汤",
@@ -4165,7 +4358,9 @@
           "firstSeen": "2026-11-19",
           "lastSeen": "2026-11-19"
         }
-      ]
+      ],
+      "primaryVariantId": "瘦肉菌菇菠菜汤#7f427341",
+      "primaryBasis": "latest"
     },
     "瘦肉蒲瓜": {
       "name": "瘦肉蒲瓜",
@@ -4200,7 +4395,9 @@
           "firstSeen": "2026-10-21",
           "lastSeen": "2026-10-21"
         }
-      ]
+      ],
+      "primaryVariantId": "瘦肉蒲瓜#e53143fd",
+      "primaryBasis": "latest"
     },
     "瘦肉青菜鸡蛋炒面": {
       "name": "瘦肉青菜鸡蛋炒面",
@@ -4241,7 +4438,9 @@
           "firstSeen": "2026-11-02",
           "lastSeen": "2026-11-02"
         }
-      ]
+      ],
+      "primaryVariantId": "瘦肉青菜鸡蛋炒面#f5b454b8",
+      "primaryBasis": "latest"
     },
     "瘦肉时蔬": {
       "name": "瘦肉时蔬",
@@ -4294,7 +4493,9 @@
           "firstSeen": "2026-10-21",
           "lastSeen": "2026-11-19"
         }
-      ]
+      ],
+      "primaryVariantId": "瘦肉时蔬#46f94cb5",
+      "primaryBasis": "latest"
     },
     "瘦肉莴笋": {
       "name": "瘦肉莴笋",
@@ -4329,7 +4530,9 @@
           "firstSeen": "2026-10-14",
           "lastSeen": "2026-10-14"
         }
-      ]
+      ],
+      "primaryVariantId": "瘦肉莴笋#df11b48e",
+      "primaryBasis": "latest"
     },
     "蔬菜胡萝卜小米肉粥": {
       "name": "蔬菜胡萝卜小米肉粥",
@@ -4373,7 +4576,9 @@
           "firstSeen": "2026-10-22",
           "lastSeen": "2026-11-18"
         }
-      ]
+      ],
+      "primaryVariantId": "蔬菜胡萝卜小米肉粥#1e025855",
+      "primaryBasis": "latest"
     },
     "水晶米饭": {
       "name": "水晶米饭",
@@ -4412,7 +4617,9 @@
           "firstSeen": "2026-11-09",
           "lastSeen": "2026-11-11"
         }
-      ]
+      ],
+      "primaryVariantId": "水晶米饭#4add1d38",
+      "primaryBasis": "latest"
     },
     "水煮鹌鹑蛋": {
       "name": "水煮鹌鹑蛋",
@@ -4447,7 +4654,9 @@
           "firstSeen": "2026-11-02",
           "lastSeen": "2026-11-02"
         }
-      ]
+      ],
+      "primaryVariantId": "水煮鹌鹑蛋#0dc2df26",
+      "primaryBasis": "latest"
     },
     "水煮蛋": {
       "name": "水煮蛋",
@@ -4482,7 +4691,9 @@
           "firstSeen": "2026-10-14",
           "lastSeen": "2026-10-14"
         }
-      ]
+      ],
+      "primaryVariantId": "水煮蛋#2f01daba",
+      "primaryBasis": "latest"
     },
     "丝瓜豆腐鱼汤": {
       "name": "丝瓜豆腐鱼汤",
@@ -4521,7 +4732,9 @@
           "firstSeen": "2026-10-14",
           "lastSeen": "2026-10-14"
         }
-      ]
+      ],
+      "primaryVariantId": "丝瓜豆腐鱼汤#99d15a0e",
+      "primaryBasis": "latest"
     },
     "酸牛奶": {
       "name": "酸牛奶",
@@ -4589,7 +4802,8 @@
           "lastSeen": "2026-11-05"
         }
       ],
-      "needsReview": true
+      "primaryVariantId": "酸牛奶#791d0ae0",
+      "primaryBasis": "latest"
     },
     "汤米粉": {
       "name": "汤米粉",
@@ -4626,7 +4840,9 @@
           "firstSeen": "2026-11-17",
           "lastSeen": "2026-11-17"
         }
-      ]
+      ],
+      "primaryVariantId": "汤米粉#0e630ea4",
+      "primaryBasis": "latest"
     },
     "五彩肉丁": {
       "name": "五彩肉丁",
@@ -4667,7 +4883,9 @@
           "firstSeen": "2026-11-02",
           "lastSeen": "2026-11-02"
         }
-      ]
+      ],
+      "primaryVariantId": "五彩肉丁#7102109f",
+      "primaryBasis": "latest"
     },
     "五彩瘦肉面": {
       "name": "五彩瘦肉面",
@@ -4709,7 +4927,9 @@
           "firstSeen": "2026-10-23",
           "lastSeen": "2026-11-20"
         }
-      ]
+      ],
+      "primaryVariantId": "五彩瘦肉面#76683816",
+      "primaryBasis": "latest"
     },
     "五彩瘦肉汤面": {
       "name": "五彩瘦肉汤面",
@@ -4746,7 +4966,9 @@
           "firstSeen": "2026-10-16",
           "lastSeen": "2026-10-16"
         }
-      ]
+      ],
+      "primaryVariantId": "五彩瘦肉汤面#65157db5",
+      "primaryBasis": "latest"
     },
     "五香花生": {
       "name": "五香花生",
@@ -4777,7 +4999,9 @@
           "firstSeen": "2026-11-04",
           "lastSeen": "2026-11-04"
         }
-      ]
+      ],
+      "primaryVariantId": "五香花生#76f2f67b",
+      "primaryBasis": "latest"
     },
     "西红柿口蘑瘦肉汤米粉": {
       "name": "西红柿口蘑瘦肉汤米粉",
@@ -4816,7 +5040,9 @@
           "firstSeen": "2026-10-13",
           "lastSeen": "2026-10-13"
         }
-      ]
+      ],
+      "primaryVariantId": "西红柿口蘑瘦肉汤米粉#8fd88859",
+      "primaryBasis": "latest"
     },
     "西红柿瘦肉汤": {
       "name": "西红柿瘦肉汤",
@@ -4854,7 +5080,9 @@
           "firstSeen": "2026-10-21",
           "lastSeen": "2026-11-19"
         }
-      ]
+      ],
+      "primaryVariantId": "西红柿瘦肉汤#0551e0d3",
+      "primaryBasis": "latest"
     },
     "西葫芦炒肉": {
       "name": "西葫芦炒肉",
@@ -4891,7 +5119,9 @@
           "firstSeen": "2026-10-15",
           "lastSeen": "2026-10-15"
         }
-      ]
+      ],
+      "primaryVariantId": "西葫芦炒肉#603fed87",
+      "primaryBasis": "latest"
     },
     "西兰花炒肉": {
       "name": "西兰花炒肉",
@@ -4926,7 +5156,9 @@
           "firstSeen": "2026-11-13",
           "lastSeen": "2026-11-13"
         }
-      ]
+      ],
+      "primaryVariantId": "西兰花炒肉#12f1d222",
+      "primaryBasis": "latest"
     },
     "鲜肉鸟巢蒸蛋": {
       "name": "鲜肉鸟巢蒸蛋",
@@ -4969,7 +5201,9 @@
           "firstSeen": "2026-10-13",
           "lastSeen": "2026-10-13"
         }
-      ]
+      ],
+      "primaryVariantId": "鲜肉鸟巢蒸蛋#e1f81b3f",
+      "primaryBasis": "latest"
     },
     "鲜虾西兰花": {
       "name": "鲜虾西兰花",
@@ -5004,7 +5238,9 @@
           "firstSeen": "2026-10-16",
           "lastSeen": "2026-10-16"
         }
-      ]
+      ],
+      "primaryVariantId": "鲜虾西兰花#2849ddc4",
+      "primaryBasis": "latest"
     },
     "香菇腐竹焖鸭肉": {
       "name": "香菇腐竹焖鸭肉",
@@ -5047,7 +5283,9 @@
           "firstSeen": "2026-10-22",
           "lastSeen": "2026-11-18"
         }
-      ]
+      ],
+      "primaryVariantId": "香菇腐竹焖鸭肉#1bd24365",
+      "primaryBasis": "latest"
     },
     "香菇瘦肉虾粥": {
       "name": "香菇瘦肉虾粥",
@@ -5086,7 +5324,9 @@
           "firstSeen": "2026-11-11",
           "lastSeen": "2026-11-11"
         }
-      ]
+      ],
+      "primaryVariantId": "香菇瘦肉虾粥#952c0ed5",
+      "primaryBasis": "latest"
     },
     "香蕉": {
       "name": "香蕉",
@@ -5157,7 +5397,9 @@
           "firstSeen": "2026-10-12",
           "lastSeen": "2026-11-19"
         }
-      ]
+      ],
+      "primaryVariantId": "香蕉#aa1ce0b5",
+      "primaryBasis": "latest"
     },
     "香梨": {
       "name": "香梨",
@@ -5193,7 +5435,9 @@
           "firstSeen": "2026-11-09",
           "lastSeen": "2026-11-11"
         }
-      ]
+      ],
+      "primaryVariantId": "香梨#da944306",
+      "primaryBasis": "latest"
     },
     "香米饭": {
       "name": "香米饭",
@@ -5238,7 +5482,9 @@
           "firstSeen": "2026-11-02",
           "lastSeen": "2026-11-05"
         }
-      ]
+      ],
+      "primaryVariantId": "香米饭#f98a68fa",
+      "primaryBasis": "latest"
     },
     "小葱瘦肉卷": {
       "name": "小葱瘦肉卷",
@@ -5278,7 +5524,9 @@
           "firstSeen": "2026-10-16",
           "lastSeen": "2026-11-13"
         }
-      ]
+      ],
+      "primaryVariantId": "小葱瘦肉卷#873849f0",
+      "primaryBasis": "latest"
     },
     "小瓜炒肉": {
       "name": "小瓜炒肉",
@@ -5313,7 +5561,9 @@
           "firstSeen": "2026-11-05",
           "lastSeen": "2026-11-05"
         }
-      ]
+      ],
+      "primaryVariantId": "小瓜炒肉#73251a09",
+      "primaryBasis": "latest"
     },
     "小米苹果粥": {
       "name": "小米苹果粥",
@@ -5352,7 +5602,9 @@
           "firstSeen": "2026-11-04",
           "lastSeen": "2026-11-04"
         }
-      ]
+      ],
+      "primaryVariantId": "小米苹果粥#cc1a6f6d",
+      "primaryBasis": "latest"
     },
     "雪梨西米露": {
       "name": "雪梨西米露",
@@ -5391,7 +5643,9 @@
           "firstSeen": "2026-11-05",
           "lastSeen": "2026-11-05"
         }
-      ]
+      ],
+      "primaryVariantId": "雪梨西米露#7c8e00eb",
+      "primaryBasis": "latest"
     },
     "盐水毛豆": {
       "name": "盐水毛豆",
@@ -5422,7 +5676,9 @@
           "firstSeen": "2026-11-03",
           "lastSeen": "2026-11-03"
         }
-      ]
+      ],
+      "primaryVariantId": "盐水毛豆#5adb0d5f",
+      "primaryBasis": "latest"
     },
     "燕麦香米饭": {
       "name": "燕麦香米饭",
@@ -5457,7 +5713,9 @@
           "firstSeen": "2026-11-03",
           "lastSeen": "2026-11-03"
         }
-      ]
+      ],
+      "primaryVariantId": "燕麦香米饭#2ba9b4c5",
+      "primaryBasis": "latest"
     },
     "扬州炒饭": {
       "name": "扬州炒饭",
@@ -5504,7 +5762,9 @@
           "firstSeen": "2026-11-06",
           "lastSeen": "2026-11-06"
         }
-      ]
+      ],
+      "primaryVariantId": "扬州炒饭#ab8f0018",
+      "primaryBasis": "latest"
     },
     "腰果玉米炒肉丁": {
       "name": "腰果玉米炒肉丁",
@@ -5543,13 +5803,14 @@
           "firstSeen": "2026-11-11",
           "lastSeen": "2026-11-11"
         }
-      ]
+      ],
+      "primaryVariantId": "腰果玉米炒肉丁#00c7871b",
+      "primaryBasis": "latest"
     },
     "油焖大虾": {
       "name": "油焖大虾",
       "aliases": [],
       "ingredients": [
-        "葱",
         "鲜虾"
       ],
       "riskAllergens": [],
@@ -5580,15 +5841,14 @@
       ],
       "variants": [
         {
-          "variantId": "油焖大虾#b2c6cfc7",
+          "variantId": "油焖大虾#e494d7f9",
           "ingredients": [
-            "葱",
             "鲜虾"
           ],
           "riskAllergens": [],
           "count": 1,
-          "firstSeen": "2026-10-23",
-          "lastSeen": "2026-10-23"
+          "firstSeen": "2026-11-20",
+          "lastSeen": "2026-11-20"
         },
         {
           "variantId": "油焖大虾#aced3fb2",
@@ -5602,17 +5862,19 @@
           "lastSeen": "2026-11-04"
         },
         {
-          "variantId": "油焖大虾#e494d7f9",
+          "variantId": "油焖大虾#b2c6cfc7",
           "ingredients": [
+            "葱",
             "鲜虾"
           ],
           "riskAllergens": [],
           "count": 1,
-          "firstSeen": "2026-11-20",
-          "lastSeen": "2026-11-20"
+          "firstSeen": "2026-10-23",
+          "lastSeen": "2026-10-23"
         }
       ],
-      "needsReview": true
+      "primaryVariantId": "油焖大虾#e494d7f9",
+      "primaryBasis": "latest"
     },
     "鱼头萝卜丝汤": {
       "name": "鱼头萝卜丝汤",
@@ -5649,7 +5911,9 @@
           "firstSeen": "2026-11-05",
           "lastSeen": "2026-11-05"
         }
-      ]
+      ],
+      "primaryVariantId": "鱼头萝卜丝汤#cbbb3b02",
+      "primaryBasis": "latest"
     },
     "玉米棒": {
       "name": "玉米棒",
@@ -5695,7 +5959,9 @@
           "firstSeen": "2026-10-13",
           "lastSeen": "2026-11-17"
         }
-      ]
+      ],
+      "primaryVariantId": "玉米棒#4da3ef37",
+      "primaryBasis": "latest"
     },
     "蒸贝贝南瓜": {
       "name": "蒸贝贝南瓜",
@@ -5731,7 +5997,9 @@
           "firstSeen": "2026-10-23",
           "lastSeen": "2026-11-10"
         }
-      ]
+      ],
+      "primaryVariantId": "蒸贝贝南瓜#a53a5d0f",
+      "primaryBasis": "latest"
     },
     "蒸红薯": {
       "name": "蒸红薯",
@@ -5772,7 +6040,9 @@
           "firstSeen": "2026-11-05",
           "lastSeen": "2026-11-20"
         }
-      ]
+      ],
+      "primaryVariantId": "蒸红薯#be825371",
+      "primaryBasis": "latest"
     },
     "蒸米粉": {
       "name": "蒸米粉",
@@ -5814,7 +6084,9 @@
           "firstSeen": "2026-10-21",
           "lastSeen": "2026-11-19"
         }
-      ]
+      ],
+      "primaryVariantId": "蒸米粉#386754ae",
+      "primaryBasis": "latest"
     },
     "竹蔗雪梨红枣瘦肉汤": {
       "name": "竹蔗雪梨红枣瘦肉汤",
@@ -5853,7 +6125,9 @@
           "firstSeen": "2026-11-10",
           "lastSeen": "2026-11-10"
         }
-      ]
+      ],
+      "primaryVariantId": "竹蔗雪梨红枣瘦肉汤#5ec5eb44",
+      "primaryBasis": "latest"
     },
     "紫菜鸡蛋汤": {
       "name": "紫菜鸡蛋汤",
@@ -5919,7 +6193,8 @@
           "lastSeen": "2026-11-05"
         }
       ],
-      "needsReview": true
+      "primaryVariantId": "紫菜鸡蛋汤#d66de9ea",
+      "primaryBasis": "latest"
     },
     "紫菜瘦肉云吞面": {
       "name": "紫菜瘦肉云吞面",
@@ -5960,7 +6235,9 @@
           "firstSeen": "2026-10-12",
           "lastSeen": "2026-10-12"
         }
-      ]
+      ],
+      "primaryVariantId": "紫菜瘦肉云吞面#acf16ae0",
+      "primaryBasis": "latest"
     },
     "紫薯饭": {
       "name": "紫薯饭",
@@ -5995,13 +6272,16 @@
           "firstSeen": "2026-11-10",
           "lastSeen": "2026-11-10"
         }
-      ]
+      ],
+      "primaryVariantId": "紫薯饭#c87df192",
+      "primaryBasis": "latest"
     },
     "自制肉丸": {
       "name": "自制肉丸",
       "aliases": [],
       "ingredients": [
-        "白萝卜",
+        "红萝卜",
+        "莲藕",
         "瘦肉",
         "小葱"
       ],
@@ -6027,18 +6307,6 @@
       ],
       "variants": [
         {
-          "variantId": "自制肉丸#a2365c1a",
-          "ingredients": [
-            "白萝卜",
-            "瘦肉",
-            "小葱"
-          ],
-          "riskAllergens": [],
-          "count": 1,
-          "firstSeen": "2026-10-15",
-          "lastSeen": "2026-10-15"
-        },
-        {
           "variantId": "自制肉丸#10aa4712",
           "ingredients": [
             "红萝卜",
@@ -6050,9 +6318,22 @@
           "count": 1,
           "firstSeen": "2026-11-12",
           "lastSeen": "2026-11-12"
+        },
+        {
+          "variantId": "自制肉丸#a2365c1a",
+          "ingredients": [
+            "白萝卜",
+            "瘦肉",
+            "小葱"
+          ],
+          "riskAllergens": [],
+          "count": 1,
+          "firstSeen": "2026-10-15",
+          "lastSeen": "2026-10-15"
         }
       ],
-      "needsReview": true
+      "primaryVariantId": "自制肉丸#10aa4712",
+      "primaryBasis": "latest"
     }
   }
 }
