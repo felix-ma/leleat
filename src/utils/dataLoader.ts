@@ -4,25 +4,31 @@ import {
   type Allergen,
   type AppSettings,
   type DataBundle,
+  type DataIndex,
   type DishCatalog,
   type DishCategory,
   type DishKnowledge,
   type DishOccurrence,
+  type DishVariant,
+  type IngredientIndex,
+  type IngredientRecord,
   type MealPeriod,
   type RecipeEntry,
   type SubstituteLibrary,
   type SubstituteRecipe,
   type SubstitutesMap,
+  type WeekIndexEntry,
 } from '../types'
 import { withBase } from './assets'
 import { isIsoWeek, isoWeekForDate, parseIsoDate } from './date'
 
-const RECIPES_ERROR = '食谱数据加载失败，请稍后重试或确认仓库资源。'
+const INDEX_ERROR = '周清单 index.json 加载失败，请稍后重试或确认仓库资源。'
+const WEEK_ERROR = '周食谱文件加载失败，请稍后重试或确认仓库资源。'
 const ALLERGENS_ERROR = '过敏原配置加载失败，请稍后重试或确认仓库资源。'
 const SUBSTITUTES_ERROR = '替餐配置加载失败，请稍后重试或确认仓库资源。'
 const DEFAULT_SUPPLEMENTS = ['AD', 'VD', '五维口服液', '益生菌']
 
-type DataSection = 'recipes' | 'allergens' | 'substitutes'
+type DataSection = 'index' | 'week' | 'allergens' | 'substitutes'
 
 export class DataLoadError extends Error {
   readonly section: DataSection
@@ -130,6 +136,9 @@ function parseDish(value: unknown, recipeIndex: number, dishIndex: number): Reci
     ingredients,
     riskAllergens,
     substitute: typeof value.substitute === 'string' ? value.substitute.trim() || null : null,
+    ...(typeof value.variantId === 'string' && value.variantId.trim()
+      ? { variantId: value.variantId.trim() }
+      : {}),
     ...(value.calorie !== undefined ? { calorie: value.calorie as number | string } : {}),
     ...(typeof value.noteForKindergarten === 'string'
       ? { noteForKindergarten: value.noteForKindergarten }
@@ -219,42 +228,117 @@ function parseRecipeEntry(value: unknown, index: number): RecipeEntry | null {
   }
 }
 
-function parseRecipesDocument(value: unknown): { recipes: RecipeEntry[]; updatedAt?: string } {
-  let rawRecipes: unknown[]
-  let rawUpdatedAt: unknown
+function parseUpdatedAt(value: unknown, fileName: string): string | undefined {
+  if (value === undefined) return undefined
+  if (typeof value === 'string' && !Number.isNaN(new Date(value).getTime())) return value
+  warn(`${fileName} 的 updatedAt 无效，已忽略。`)
+  return undefined
+}
 
-  if (Array.isArray(value)) {
-    rawRecipes = value
-  } else if (isRecord(value) && Array.isArray(value.recipes)) {
-    rawRecipes = value.recipes
-    rawUpdatedAt = value.updatedAt
-  } else {
-    throw new DataLoadError(
-      'recipes',
-      '食谱数据格式异常，请确认 recipes.json 为数组或包含 recipes 数组的对象。',
-    )
+/** 解析 index.json：周清单是前端入口，前端据此生成周选项，不必加载周文件本身。 */
+function parseDataIndex(value: unknown): DataIndex {
+  if (!isRecord(value) || !Array.isArray(value.weeks)) {
+    throw new DataLoadError('index', '周清单格式异常，请确认 index.json 包含 weeks 数组。')
+  }
+
+  const weeks: WeekIndexEntry[] = []
+  value.weeks.forEach((item, index) => {
+    if (!isRecord(item)) {
+      warn(`index.json weeks[${index}] 不是对象，已跳过。`)
+      return
+    }
+    const { week, startDate, endDate, file, dates } = item
+    if (typeof week !== 'string' || !isIsoWeek(week)) {
+      warn(`index.json weeks[${index}].week 无效，已跳过。`)
+      return
+    }
+    if (typeof startDate !== 'string' || !parseIsoDate(startDate)) {
+      warn(`index.json weeks[${index}].startDate 无效，已跳过。`)
+      return
+    }
+    if (typeof endDate !== 'string' || !parseIsoDate(endDate)) {
+      warn(`index.json weeks[${index}].endDate 无效，已跳过。`)
+      return
+    }
+    if (typeof file !== 'string' || !file.trim()) {
+      warn(`index.json weeks[${index}].file 无效，已跳过。`)
+      return
+    }
+    const cleanDates = parseStringArray(dates) ?? []
+    if (cleanDates.length === 0) {
+      warn(`index.json weeks[${index}].dates 为空，已跳过。`)
+      return
+    }
+
+    weeks.push({
+      week,
+      startDate,
+      endDate,
+      file: file.trim(),
+      dates: cleanDates,
+      meals: typeof item.meals === 'number' ? item.meals : 0,
+      dishes: typeof item.dishes === 'number' ? item.dishes : 0,
+    })
+  })
+
+  if (weeks.length === 0) {
+    throw new DataLoadError('index', '周清单里没有有效的周，请确认 index.json 内容。')
+  }
+
+  weeks.sort((a, b) => a.startDate.localeCompare(b.startDate))
+
+  const range = isRecord(value.range) ? value.range : {}
+  const total = isRecord(value.total) ? value.total : {}
+  const firstDate = weeks[0].startDate
+  const lastDate = weeks[weeks.length - 1].endDate
+
+  const updatedAt = parseUpdatedAt(value.updatedAt, 'index.json')
+
+  return {
+    weeks,
+    range: {
+      startDate:
+        typeof range.startDate === 'string' && parseIsoDate(range.startDate)
+          ? range.startDate
+          : firstDate,
+      endDate:
+        typeof range.endDate === 'string' && parseIsoDate(range.endDate) ? range.endDate : lastDate,
+    },
+    total: {
+      weeks: typeof total.weeks === 'number' ? total.weeks : weeks.length,
+      dates: typeof total.dates === 'number' ? total.dates : weeks.reduce((n, w) => n + w.dates.length, 0),
+      meals: typeof total.meals === 'number' ? total.meals : 0,
+      dishes: typeof total.dishes === 'number' ? total.dishes : 0,
+    },
+    ...(updatedAt ? { updatedAt } : {}),
+  }
+}
+
+/** 解析单周文件 weeks/YYYY-Www.json。 */
+function parseWeekDocument(value: unknown, expectedWeek: string): RecipeEntry[] {
+  if (!isRecord(value) || !Array.isArray(value.recipes)) {
+    throw new DataLoadError('week', `${expectedWeek} 的周食谱格式异常，请确认包含 recipes 数组。`)
+  }
+  if (typeof value.week === 'string' && value.week !== expectedWeek) {
+    warn(`${expectedWeek} 文件里的 week 字段是 ${value.week}，与文件名不一致。`)
   }
 
   const recipes: RecipeEntry[] = []
-  rawRecipes.forEach((item, index) => {
+  value.recipes.forEach((item, index) => {
     const parsed = parseRecipeEntry(item, index)
-    if (parsed) recipes.push(parsed)
+    if (!parsed) return
+    if (parsed.week !== expectedWeek) {
+      warn(`${expectedWeek} 文件里出现了 ${parsed.week} 的食谱（${parsed.date}），已跳过。`)
+      return
+    }
+    recipes.push(parsed)
   })
 
-  if (rawRecipes.length > 0 && recipes.length === 0) {
-    console.error('[leleat] recipes.json 中没有通过校验的食谱条目。')
+  if (value.recipes.length > 0 && recipes.length === 0) {
+    console.error(`[leleat] ${expectedWeek} 的周食谱里没有通过校验的条目。`)
   }
 
-  let updatedAt: string | undefined
-  if (rawUpdatedAt !== undefined) {
-    if (typeof rawUpdatedAt === 'string' && !Number.isNaN(new Date(rawUpdatedAt).getTime())) {
-      updatedAt = rawUpdatedAt
-    } else {
-      warn('recipes.json 的 updatedAt 无效，已忽略。')
-    }
-  }
-
-  return { recipes, updatedAt }
+  return recipes
 }
 
 function parseAllergens(value: unknown): Allergen[] {
@@ -360,7 +444,6 @@ function parseDishOccurrences(value: unknown): DishOccurrence[] {
   return value.flatMap((item) => {
     if (!isRecord(item)) return []
     if (typeof item.date !== 'string' || !parseIsoDate(item.date)) return []
-    if (typeof item.week !== 'string' || !isIsoWeek(item.week)) return []
     if (
       typeof item.mealPeriod !== 'string' ||
       !MEAL_PERIODS.includes(item.mealPeriod as MealPeriod)
@@ -371,12 +454,38 @@ function parseDishOccurrences(value: unknown): DishOccurrence[] {
     return [
       {
         date: item.date,
-        week: item.week,
         mealPeriod: item.mealPeriod as MealPeriod,
-        mealLabel:
-          typeof item.mealLabel === 'string' && item.mealLabel.trim()
-            ? item.mealLabel.trim()
-            : item.mealPeriod,
+        ...(typeof item.variantId === 'string' && item.variantId.trim()
+          ? { variantId: item.variantId.trim() }
+          : {}),
+      },
+    ]
+  })
+}
+
+/** 解析同名菜下的配方变体；缺 variantId 或食材无效的变体丢弃。 */
+function parseDishVariants(value: unknown): DishVariant[] {
+  if (!Array.isArray(value)) return []
+
+  return value.flatMap((item) => {
+    if (!isRecord(item)) return []
+    if (typeof item.variantId !== 'string' || !item.variantId.trim()) return []
+    const ingredients = parseStringArray(item.ingredients)
+    if (!ingredients || ingredients.length === 0) return []
+
+    const firstSeen =
+      typeof item.firstSeen === 'string' && parseIsoDate(item.firstSeen) ? item.firstSeen : ''
+    const lastSeen =
+      typeof item.lastSeen === 'string' && parseIsoDate(item.lastSeen) ? item.lastSeen : firstSeen
+
+    return [
+      {
+        variantId: item.variantId.trim(),
+        ingredients,
+        riskAllergens: parseStringArray(item.riskAllergens) ?? [],
+        count: typeof item.count === 'number' && item.count > 0 ? item.count : 1,
+        firstSeen,
+        lastSeen,
       },
     ]
   })
@@ -419,6 +528,8 @@ function parseDishCatalog(value: unknown): DishCatalog {
         ? rawDish.lastSeen
         : occurrences[occurrences.length - 1]?.date ?? firstSeen
 
+    const variants = parseDishVariants(rawDish.variants)
+
     dishes[name] = {
       name,
       aliases,
@@ -429,6 +540,8 @@ function parseDishCatalog(value: unknown): DishCatalog {
       lastSeen,
       occurrences,
       sourceImages,
+      ...(variants.length > 0 ? { variants } : {}),
+      ...(rawDish.needsReview === true || variants.length > 1 ? { needsReview: true } : {}),
       ...(typeof rawDish.verified === 'boolean' ? { verified: rawDish.verified } : {}),
     }
   }
@@ -520,16 +633,109 @@ function warnUnknownAllergens(recipes: RecipeEntry[], allergens: Allergen[]): vo
   }
 }
 
+function parseIngredientIndex(value: unknown): IngredientIndex | null {
+  if (!isRecord(value) || !isRecord(value.ingredients)) return null
+
+  const ingredients: Record<string, IngredientRecord> = {}
+  for (const [rawKey, rawRecord] of Object.entries(value.ingredients)) {
+    if (!isRecord(rawRecord)) continue
+    const name = rawKey.trim()
+    if (!name) continue
+
+    const hits = Array.isArray(rawRecord.hits)
+      ? rawRecord.hits.flatMap((hit) => {
+          if (!isRecord(hit)) return []
+          if (typeof hit.dish !== 'string' || !hit.dish.trim()) return []
+          if (typeof hit.date !== 'string' || !parseIsoDate(hit.date)) return []
+          if (
+            typeof hit.mealPeriod !== 'string' ||
+            !MEAL_PERIODS.includes(hit.mealPeriod as MealPeriod)
+          ) {
+            return []
+          }
+          return [
+            {
+              ...(typeof hit.form === 'string' && hit.form.trim() ? { form: hit.form.trim() } : {}),
+              dish: hit.dish.trim(),
+              variantId: typeof hit.variantId === 'string' ? hit.variantId.trim() : '',
+              date: hit.date,
+              mealPeriod: hit.mealPeriod as MealPeriod,
+            },
+          ]
+        })
+      : []
+
+    const forms = parseStringArray(rawRecord.forms) ?? [name]
+    const dishes = parseStringArray(rawRecord.dishes) ?? []
+    const dates = hits.map((hit) => hit.date).sort()
+
+    ingredients[name] = {
+      forms,
+      dishCount: typeof rawRecord.dishCount === 'number' ? rawRecord.dishCount : dishes.length,
+      hitCount: typeof rawRecord.hitCount === 'number' ? rawRecord.hitCount : hits.length,
+      firstSeen:
+        typeof rawRecord.firstSeen === 'string' && parseIsoDate(rawRecord.firstSeen)
+          ? rawRecord.firstSeen
+          : dates[0] ?? '',
+      lastSeen:
+        typeof rawRecord.lastSeen === 'string' && parseIsoDate(rawRecord.lastSeen)
+          ? rawRecord.lastSeen
+          : dates[dates.length - 1] ?? '',
+      dishes,
+      hits,
+    }
+  }
+
+  const total = isRecord(value.total) ? value.total : {}
+  const sumHits = Object.values(ingredients).reduce((n, record) => n + record.hitCount, 0)
+  const updatedAt = parseUpdatedAt(value.updatedAt, 'ingredient-index.json')
+
+  return {
+    ...(typeof value.note === 'string' ? { note: value.note } : {}),
+    total: {
+      ingredients: Object.keys(ingredients).length,
+      hits: typeof total.hits === 'number' ? total.hits : sumHits,
+      dishes: typeof total.dishes === 'number' ? total.dishes : 0,
+      variants: typeof total.variants === 'number' ? total.variants : 0,
+    },
+    ingredients,
+    ...(updatedAt ? { updatedAt } : {}),
+  }
+}
+
+/** 已加载过的周食谱，按周号缓存，避免同一周重复请求。 */
+const weekCache = new Map<string, RecipeEntry[]>()
+/** 正在进行的周请求，避免同一周被并发请求两次（切周很快时会碰到）。 */
+const weekInFlight = new Map<string, Promise<RecipeEntry[]>>()
+
+let ingredientIndexPromise: Promise<IngredientIndex | null> | null = null
+
+/**
+ * 按需加载食材索引（ingredient-index.json，约 150 KB）。
+ * 只在需要「按食材反查菜谱/日期」时才调用，不进首屏。
+ */
+export function loadIngredientIndex(): Promise<IngredientIndex | null> {
+  if (!ingredientIndexPromise) {
+    ingredientIndexPromise = fetchOptionalJson('ingredient-index.json').then((raw) => {
+      const parsed = parseIngredientIndex(raw)
+      if (!parsed) warn('ingredient-index.json 不可用，按食材统计功能将不可用。')
+      return parsed
+    })
+  }
+  return ingredientIndexPromise
+}
+
+/** 读取整个静态数据包：只取 index.json 与公共配置，不包含任何一周的食谱。 */
 export async function loadStaticData(): Promise<DataBundle> {
   const [
-    rawRecipes,
+    rawIndex,
     rawAllergens,
     rawSubstitutes,
     rawSubstituteLibrary,
     rawSettings,
     rawDishCatalog,
   ] = await Promise.all([
-    fetchJson('recipes.json', 'recipes', RECIPES_ERROR),
+    fetchJson('index.json', 'index', INDEX_ERROR),
     fetchJson('allergens.json', 'allergens', ALLERGENS_ERROR),
     fetchJson('substitutes.json', 'substitutes', SUBSTITUTES_ERROR),
     fetchOptionalJson('substitute-library.json'),
@@ -537,22 +743,55 @@ export async function loadStaticData(): Promise<DataBundle> {
     fetchOptionalJson('dish-catalog.json'),
   ])
 
-  const { recipes, updatedAt } = parseRecipesDocument(rawRecipes)
-  const allergens = parseAllergens(rawAllergens)
-  const substitutes = parseSubstitutes(rawSubstitutes)
-  const substituteLibrary = parseSubstituteLibrary(rawSubstituteLibrary)
-  const settings = parseSettings(rawSettings)
-  const dishCatalog = parseDishCatalog(rawDishCatalog)
-
-  warnUnknownAllergens(recipes, allergens)
+  const index = parseDataIndex(rawIndex)
+  const updatedAt = parseUpdatedAt(isRecord(rawIndex) ? rawIndex.updatedAt : undefined, 'index.json')
 
   return {
-    recipes,
-    allergens,
-    substitutes,
-    substituteLibrary,
-    settings,
-    dishCatalog,
-    updatedAt,
+    index,
+    allergens: parseAllergens(rawAllergens),
+    substitutes: parseSubstitutes(rawSubstitutes),
+    substituteLibrary: parseSubstituteLibrary(rawSubstituteLibrary),
+    settings: parseSettings(rawSettings),
+    dishCatalog: parseDishCatalog(rawDishCatalog),
+    ...(updatedAt ? { updatedAt } : {}),
   }
+}
+
+/** 按需加载单周食谱（weeks/YYYY-Www.json），结果按周缓存，并发请求合并。 */
+export function loadWeek(week: string): Promise<RecipeEntry[]> {
+  const cached = weekCache.get(week)
+  if (cached) return Promise.resolve(cached)
+
+  if (!isIsoWeek(week)) {
+    return Promise.reject(new DataLoadError('week', `周号 ${week} 不合法。`))
+  }
+
+  const pending = weekInFlight.get(week)
+  if (pending) return pending
+
+  const task = fetchJson(`weeks/${week}.json`, 'week', `${week} ${WEEK_ERROR}`)
+    .then((raw) => {
+      const recipes = parseWeekDocument(raw, week)
+      weekCache.set(week, recipes)
+      return recipes
+    })
+    .finally(() => {
+      weekInFlight.delete(week)
+    })
+
+  weekInFlight.set(week, task)
+  return task
+}
+
+/** 批量加载多周，用于导出「跨周自定义区间」。 */
+export async function loadWeeks(weeks: string[]): Promise<RecipeEntry[]> {
+  const unique = [...new Set(weeks)]
+  const loaded = await Promise.all(unique.map((week) => loadWeek(week)))
+  return loaded.flat()
+}
+
+/** 清空周缓存（测试或强制刷新用）。 */
+export function clearWeekCache(): void {
+  weekCache.clear()
+  weekInFlight.clear()
 }

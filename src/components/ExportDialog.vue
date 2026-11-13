@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type {
   Allergen,
+  DataIndex,
   RecipeEntry,
   SubstituteLibrary,
   SubstitutesMap,
@@ -12,7 +13,8 @@ defineProps<{
   open: boolean
   selectedWeek: string
   selectedWeekOption: WeekOption | null
-  recipes: RecipeEntry[]
+  weekRecipes: RecipeEntry[]
+  index: DataIndex
   allergens: Allergen[]
   substitutes: SubstitutesMap
   substituteLibrary: SubstituteLibrary
@@ -76,7 +78,8 @@ function printCurrentWeek(): void {
           <ExportPanel
             :selected-week="selectedWeek"
             :selected-week-option="selectedWeekOption"
-            :recipes="recipes"
+            :week-recipes="weekRecipes"
+            :index="index"
             :allergens="allergens"
             :substitutes="substitutes"
             :substitute-library="substituteLibrary"

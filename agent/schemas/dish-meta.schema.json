@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://leleat.local/schemas/dish-meta.schema.json",
+  "title": "Leleat 菜品人工字段（dish-meta.json）",
+  "description": "public/assets/data/dish-meta.json：人工维护的菜品字段，只有别名、替餐和人工确认标记。scripts/build-dish-catalog.mjs 重建 dish-catalog.json 时会把这些字段合并进去，重建不会覆盖它们。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["dishes"],
+  "properties": {
+    "dishes": {
+      "description": "key 为规范菜名，值是该菜的人工字段。",
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/dishMeta"
+      }
+    }
+  },
+  "$defs": {
+    "dishMeta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["aliases"],
+      "properties": {
+        "aliases": {
+          "description": "同一道菜的其他写法，识别时归并到 key 这个规范名。",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "substitute": {
+          "description": "过敏替餐菜名；null 或不写表示没有人工指定的替餐。",
+          "type": ["string", "null"]
+        },
+        "verified": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

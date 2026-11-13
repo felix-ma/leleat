@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://leleat.local/schemas/week-index.schema.json",
+  "title": "Leleat 周清单入口（index.json）",
+  "description": "public/assets/data/index.json 的结构：前端启动只读它就能渲染周选项与数据范围，周食谱正文按需从 file 指向的 weeks/YYYY-Www.json 加载。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["weeks", "range", "total"],
+  "properties": {
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "weeks": {
+      "description": "按周起始日升序排列的周清单。",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/weekEntry"
+      }
+    },
+    "range": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["startDate", "endDate"],
+      "properties": {
+        "startDate": {
+          "$ref": "#/$defs/date"
+        },
+        "endDate": {
+          "$ref": "#/$defs/date"
+        }
+      }
+    },
+    "total": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["weeks", "dates", "meals", "dishes"],
+      "properties": {
+        "weeks": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "dates": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "meals": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "dishes": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  },
+  "$defs": {
+    "weekEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["week", "startDate", "endDate", "file", "dates", "meals", "dishes"],
+      "properties": {
+        "week": {
+          "$ref": "#/$defs/week"
+        },
+        "startDate": {
+          "$ref": "#/$defs/date"
+        },
+        "endDate": {
+          "$ref": "#/$defs/date"
+        },
+        "file": {
+          "description": "相对 public/assets/data/ 的周文件路径。",
+          "type": "string",
+          "pattern": "^weeks/\\d{4}-W(0[1-9]|[1-4][0-9]|5[0-3])\\.json$"
+        },
+        "dates": {
+          "description": "本周实际有食谱的日期，升序，只含工作日。",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/date"
+          }
+        },
+        "meals": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "dishes": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "week": {
+      "type": "string",
+      "pattern": "^\\d{4}-W(0[1-9]|[1-4][0-9]|5[0-3])$"
+    },
+    "date": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    }
+  }
+}

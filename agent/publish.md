@@ -40,8 +40,11 @@ git show origin/gh-pages:index.html | grep -o 'index-[A-Za-z0-9_-]*\.js'   # 与
 - 工作区没有与本次任务无关的未提交改动；有则先问用户。
 - 校验和构建通过。
 - 只 stage：
-  - `public/assets/data/recipes.json`
+  - `public/assets/data/index.json`
+  - `public/assets/data/weeks/*.json`（本次涉及的周文件）
   - `public/assets/data/dish-catalog.json`
+  - `public/assets/data/ingredient-index.json`
+  - `public/assets/data/dish-meta.json` / `public/assets/data/ingredient-aliases.json`（人工字段有变化时）
   - `public/assets/data/substitute-library.json`（替餐库变化时）
   - `public/assets/data/settings.json`（仅补剂或学校信息变化时）
   - `public/assets/images/*`
@@ -78,29 +81,32 @@ python agent/recognize_menu.py \
   --prompt agent/prompts/extract-week-menu.md \
   --schema agent/schemas/week-menu.schema.json
 
-# 2. 投影为 recipes 候选
+# 2. 投影为周食谱候选（单周）
 python agent/project_recipes.py \
   --extraction .agent-out/2026-W43/extraction.json \
   --allergens public/assets/data/allergens.json \
   --substitutes public/assets/data/substitutes.json \
-  --out .agent-out/2026-W43/recipes.patch.json
+  --out .agent-out/2026-W43/2026-W43.patch.json
 
-# 3. 合并，先 dry-run
+# 3. 合并进周文件，先 dry-run
 python agent/merge_recipes.py \
-  --current public/assets/data/recipes.json \
-  --patch .agent-out/2026-W43/recipes.patch.json \
+  --index public/assets/data/index.json \
+  --week-file public/assets/data/weeks/2026-W43.json \
+  --patch .agent-out/2026-W43/2026-W43.patch.json \
   --dry-run
 
 # 4. 人工复核后正式写入并提交推送
 python agent/merge_recipes.py \
-  --current public/assets/data/recipes.json \
-  --patch .agent-out/2026-W43/recipes.patch.json \
+  --index public/assets/data/index.json \
+  --week-file public/assets/data/weeks/2026-W43.json \
+  --patch .agent-out/2026-W43/2026-W43.patch.json \
   --reviewed
 
-# 5. 增量合并菜品知识库（或直接运行 npm run catalog）
+# 5. 重建菜品知识库与食材索引（或直接运行 npm run catalog）
 python agent/merge_catalog.py \
-  --recipes public/assets/data/recipes.json \
-  --catalog public/assets/data/dish-catalog.json
+  --weeks public/assets/data/weeks \
+  --catalog public/assets/data/dish-catalog.json \
+  --ingredient-index public/assets/data/ingredient-index.json
 
 # 6. 提交并推送（默认动作，不是可选项）
 python agent/publish.py

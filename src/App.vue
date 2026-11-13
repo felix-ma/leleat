@@ -17,9 +17,10 @@ import {
   type MenuDay,
   type MenuDish,
   type MenuMeal,
+  type RecipeEntry,
 } from './types'
 import { resolveAssetUrl } from './utils/assets'
-import { DataLoadError, loadStaticData } from './utils/dataLoader'
+import { DataLoadError, loadWeek, loadStaticData } from './utils/dataLoader'
 import {
   addDays,
   formatDayLong,
@@ -33,7 +34,7 @@ import {
   weekDates,
   weekdayLabel,
 } from './utils/date'
-import { buildMenuDays, createWeekOptions, getWeekEntries } from './utils/menu'
+import { buildMenuDays, createWeekOptionsFromIndex, datesFromIndex } from './utils/menu'
 
 const RECIPES_FALLBACK_ERROR = '食谱数据加载失败，请稍后重试或确认仓库资源。'
 
@@ -42,6 +43,10 @@ type ViewMode = 'day' | 'week'
 const data = ref<DataBundle | null>(null)
 const loading = ref(true)
 const error = ref('')
+/** 当前周的食谱，按需从 weeks/YYYY-Www.json 加载。 */
+const weekRecipes = ref<RecipeEntry[]>([])
+const weekLoading = ref(false)
+const weekError = ref('')
 const today = todayIsoDate()
 /** 幼儿园放学时间：16 点以后默认看下一天。 */
 const SCHOOL_DAY_END_HOUR = 16
@@ -56,15 +61,14 @@ const weekDatesList = computed(() => weekDates(selectedDate.value))
 const weekRangeLabel = computed(() =>
   formatWeekRange(weekDatesList.value[0] ?? '', weekDatesList.value[6] ?? ''),
 )
-const weekOptions = computed(() => (data.value ? createWeekOptions(data.value.recipes) : []))
+const weekOptions = computed(() =>
+  data.value ? createWeekOptionsFromIndex(data.value.index.weeks) : [],
+)
 const selectedWeekOption = computed(
   () => weekOptions.value.find((option) => option.week === selectedWeek.value) ?? null,
 )
 
-const weekEntries = computed(() => {
-  if (!data.value || !selectedWeek.value) return []
-  return getWeekEntries(data.value.recipes, selectedWeek.value)
-})
+const weekEntries = computed(() => weekRecipes.value)
 
 const weekDays = computed<MenuDay[]>(() => {
   if (!data.value) return []
@@ -109,11 +113,7 @@ const weekRiskCount = computed(() =>
 const weekMealCount = computed(() =>
   weekDays.value.reduce((total, menuDay) => total + menuDay.meals.length, 0),
 )
-const availableDates = computed(() =>
-  data.value
-    ? [...new Set(data.value.recipes.map((recipe) => recipe.date))].sort()
-    : [],
-)
+const availableDates = computed(() => (data.value ? datesFromIndex(data.value.index.weeks) : []))
 const defaultDate = computed(() => resolveDefaultDate(availableDates.value))
 const todayWeek = computed(() => isoWeekForDate(today) ?? '')
 /** 当前是否停在真实的今天 / 本周。 */
@@ -208,10 +208,10 @@ async function loadPageData(): Promise<void> {
     const bundle = await loadStaticData()
     data.value = bundle
 
-    const dates = [...new Set(bundle.recipes.map((recipe) => recipe.date))].sort()
     // 每次进入都按当前时间决定默认日期，不再沿用上次记住的日子。
-    selectedDate.value = resolveDefaultDate(dates)
+    selectedDate.value = resolveDefaultDate(datesFromIndex(bundle.index.weeks))
     viewMode.value = 'week'
+    await loadSelectedWeek()
   } catch (caught) {
     console.error('[leleat] 数据加载失败', caught)
     error.value = caught instanceof DataLoadError ? caught.message : RECIPES_FALLBACK_ERROR
@@ -219,6 +219,46 @@ async function loadPageData(): Promise<void> {
     loading.value = false
   }
 }
+
+/** 加载当前周的食谱文件；同一周已在内存时不重复请求（loader 内部也有缓存）。 */
+async function loadSelectedWeek(): Promise<void> {
+  const week = selectedWeek.value
+  if (!week) {
+    weekRecipes.value = []
+    return
+  }
+
+  if (weekEntries.value.length > 0 && weekRecipes.value[0]?.week === week) return
+
+  // 该周不在 index.json 里（放假、还没导入）就当作没有食谱，不要报错。
+  const known = data.value?.index.weeks.some((entry) => entry.week === week) ?? false
+  if (!known) {
+    weekRecipes.value = []
+    weekError.value = ''
+    weekLoading.value = false
+    return
+  }
+
+  weekLoading.value = true
+  weekError.value = ''
+  try {
+    const recipes = await loadWeek(week)
+    // 加载期间用户可能又切了周，只有仍然选中这一周时才写入。
+    if (selectedWeek.value === week) weekRecipes.value = recipes
+  } catch (caught) {
+    console.error('[leleat] 周食谱加载失败', caught)
+    if (selectedWeek.value === week) {
+      weekRecipes.value = []
+      weekError.value = caught instanceof DataLoadError ? caught.message : RECIPES_FALLBACK_ERROR
+    }
+  } finally {
+    weekLoading.value = false
+  }
+}
+
+watch(selectedWeek, () => {
+  void loadSelectedWeek()
+})
 
 function setViewMode(mode: ViewMode): void {
   if (mode === viewMode.value) return
@@ -392,6 +432,22 @@ onBeforeUnmount(() => {
       </div>
 
       <template v-else-if="data">
+        <div
+          v-if="weekError"
+          class="mb-4 flex flex-col gap-3 rounded-2xl border border-honey-200 bg-honey-50 px-4 py-3 text-sm text-honey-800 sm:flex-row sm:items-center sm:justify-between"
+          role="alert"
+        >
+          <span>{{ weekError }}</span>
+          <button type="button" class="btn btn-ghost shrink-0" @click="loadSelectedWeek">重试</button>
+        </div>
+        <div
+          v-else-if="weekLoading && weekDays.length === 0"
+          class="animate-pulse rounded-2xl bg-white/55 p-6 text-sm text-ink-faint"
+          aria-busy="true"
+        >
+          正在加载 {{ selectedWeek }} 的食谱…
+        </div>
+
         <section class="rounded-2xl border border-ink/[0.07] bg-white/55 p-4 sm:p-5">
           <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div>
@@ -546,7 +602,7 @@ onBeforeUnmount(() => {
         </div>
 
         <div v-if="weekOptions.length === 0" class="mt-6 rounded-2xl border border-honey-100 bg-honey-50/70 px-4 py-3 text-sm text-honey-700">
-          食谱库还是空的。请让本地 Agent 写入 recipes.json 后再刷新。
+          食谱库还是空的。请让本地 Agent 写入 weeks/ 后再刷新。
         </div>
       </template>
     </main>
@@ -580,7 +636,8 @@ onBeforeUnmount(() => {
     :open="exportOpen"
     :selected-week="selectedWeek"
     :selected-week-option="selectedWeekOption"
-    :recipes="data.recipes"
+    :week-recipes="weekRecipes"
+    :index="data.index"
     :allergens="data.allergens"
     :substitutes="data.substitutes"
     :substitute-library="data.substituteLibrary"

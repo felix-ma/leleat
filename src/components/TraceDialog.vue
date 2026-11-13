@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { nextTick, ref, watch } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import type { DishTraceTarget, ImagePreview } from '../types'
 import { formatMonthDay } from '../utils/date'
 import RiskBadge from './RiskBadge.vue'
@@ -12,6 +12,31 @@ const emit = defineEmits<{
   close: []
   preview: [image: ImagePreview]
 }>()
+
+/**
+ * 同名菜有多种配方时，说明这道菜用的是哪一版、全库还有几版。
+ * 用当前这道菜的食材与「最近一次出现」的变体比对，不一致就提示配方不同。
+ */
+const variantNote = computed(() => {
+  const knowledge = props.target?.knowledge
+  if (!knowledge?.variants || knowledge.variants.length < 2) return ''
+  const dish = props.target?.dish
+  if (!dish) return ''
+
+  const current = dish.variantId
+    ? knowledge.variants.find((variant) => variant.variantId === dish.variantId)
+    : knowledge.variants.find(
+        (variant) =>
+          variant.variantId.includes(dish.name) ||
+          variant.ingredients.join('/') === dish.ingredients.join('/'),
+      )
+  const others = knowledge.variants
+    .filter((variant) => variant.variantId !== current?.variantId)
+    .map((variant) => variant.ingredients.join('、'))
+
+  if (!current) return `这道菜有 ${knowledge.variants.length} 种配方记录，本次配方与历史记录不同。`
+  return `同名菜共 ${knowledge.variants.length} 种配方；本次为「${current.ingredients.join('、')}」，另有 ${others.join(' / ')}。`
+})
 
 const closeButton = ref<HTMLButtonElement | null>(null)
 
@@ -88,6 +113,9 @@ watch(
                 </p>
                 <p v-if="target.knowledge.aliases.length > 0" class="mt-2 text-xs text-ink-faint">
                   别名：{{ target.knowledge.aliases.join('、') }}
+                </p>
+                <p v-if="variantNote" class="mt-2 rounded-lg bg-honey-50 px-2 py-1.5 text-xs leading-5 text-honey-700">
+                  {{ variantNote }}
                 </p>
               </template>
               <p v-else class="mt-3 text-sm leading-6 text-ink-muted">

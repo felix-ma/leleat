@@ -2,25 +2,25 @@
 import { computed, ref, watch } from 'vue'
 import type {
   Allergen,
+  DataIndex,
   ExportRow,
   RecipeEntry,
   SubstituteLibrary,
   SubstitutesMap,
   WeekOption,
 } from '../types'
-import {
-  buildExportRows,
-  buildMenuDays,
-  filterEntriesByDateRange,
-  getWeekEntries,
-} from '../utils/menu'
+import { buildExportRows, buildMenuDays, filterEntriesByDateRange } from '../utils/menu'
 import { formatWeekNumber, formatWeekRange, parseIsoDate } from '../utils/date'
 import { exportCsv } from '../utils/exportCsv'
+import { loadWeeks } from '../utils/dataLoader'
 
 const props = defineProps<{
   selectedWeek: string
   selectedWeekOption: WeekOption | null
-  recipes: RecipeEntry[]
+  /** 当前周已加载的食谱（App 负责按需加载）。 */
+  weekRecipes: RecipeEntry[]
+  /** 周清单，用于取数据范围与自定义区间的周号。 */
+  index: DataIndex
   allergens: Allergen[]
   substitutes: SubstitutesMap
   substituteLibrary: SubstituteLibrary
@@ -37,16 +37,10 @@ const customEnd = ref(props.selectedWeekOption?.endDate ?? '')
 const isExportingDocx = ref(false)
 const status = ref<{ tone: 'success' | 'error'; message: string } | null>(null)
 
-const dataBounds = computed(() => {
-  const dates = props.recipes
-    .map((recipe) => recipe.date)
-    .filter((date) => parseIsoDate(date) !== null)
-    .sort()
-  return {
-    start: dates[0] ?? '',
-    end: dates[dates.length - 1] ?? '',
-  }
-})
+const dataBounds = computed(() => ({
+  start: props.index.range.startDate,
+  end: props.index.range.endDate,
+}))
 
 const rangeError = computed(() => {
   if (rangeMode.value === 'week') return ''
@@ -63,12 +57,15 @@ const rangeError = computed(() => {
   return ''
 })
 
+/** 自定义区间涉及的周食谱（按需加载后缓存在这里）。 */
+const customWeekRecipes = ref<RecipeEntry[]>([])
+const customLoading = ref(false)
+
+/** 当前导出范围对应的食谱条目：周模式直接复用 App 已加载的周，自定义模式取已加载的多周。 */
 const rangeEntries = computed<RecipeEntry[]>(() => {
-  if (rangeMode.value === 'week') {
-    return getWeekEntries(props.recipes, props.selectedWeek)
-  }
+  if (rangeMode.value === 'week') return props.weekRecipes
   if (rangeError.value) return []
-  return filterEntriesByDateRange(props.recipes, customStart.value, customEnd.value)
+  return filterEntriesByDateRange(customWeekRecipes.value, customStart.value, customEnd.value)
 })
 
 const rows = computed<ExportRow[]>(() =>
@@ -119,7 +116,9 @@ const title = computed(() =>
   rangeMode.value === 'week' ? '乐乐 · 本周食谱与替餐' : '乐乐 · 食谱与替餐',
 )
 
-const exportDisabled = computed(() => Boolean(rangeError.value) || isExportingDocx.value)
+const exportDisabled = computed(
+  () => Boolean(rangeError.value) || isExportingDocx.value || customLoading.value,
+)
 
 watch(
   () => props.selectedWeekOption,
@@ -134,6 +133,45 @@ watch([rangeMode, customStart, customEnd], () => {
   status.value = null
 })
 
+/** 与给定区间有交集的周号列表（来自 index.json，不依赖已加载的食谱）。 */
+function weeksInRange(start: string, end: string): string[] {
+  if (!parseIsoDate(start) || !parseIsoDate(end)) return []
+  return props.index.weeks
+    .filter((entry) => entry.startDate <= end && entry.endDate >= start)
+    .map((entry) => entry.week)
+}
+
+/** 自定义区间跨周时才按需加载对应的周文件。 */
+watch(
+  [rangeMode, customStart, customEnd],
+  async ([mode, start, end]) => {
+    if (mode !== 'custom' || !start || !end || start > end) return
+    const weeks = weeksInRange(start, end)
+    if (weeks.length === 0) {
+      customWeekRecipes.value = []
+      return
+    }
+    if (
+      customWeekRecipes.value.length > 0 &&
+      weeks.every((week) => customWeekRecipes.value.some((entry) => entry.week === week))
+    ) {
+      return
+    }
+
+    customLoading.value = true
+    try {
+      customWeekRecipes.value = await loadWeeks(weeks)
+    } catch (error) {
+      console.error('[leleat] 自定义区间的周食谱加载失败', error)
+      customWeekRecipes.value = []
+      status.value = { tone: 'error', message: '所选区间的食谱加载失败，请重试。' }
+    } finally {
+      customLoading.value = false
+    }
+  },
+  { immediate: true },
+)
+
 function selectMode(mode: RangeMode): void {
   rangeMode.value = mode
   if (mode === 'custom' && (!customStart.value || !customEnd.value)) {
@@ -144,6 +182,7 @@ function selectMode(mode: RangeMode): void {
 
 function summaryText(): string {
   if (rangeError.value) return rangeError.value
+  if (customLoading.value) return '正在加载所选区间的周食谱…'
   if (rows.value.length === 0) return '该范围没有需要替餐的菜品，DOCX 仍会导出整周食谱。'
   return `DOCX 为横向周表，红色标出这 ${rows.value.length} 道风险菜品。`
 }

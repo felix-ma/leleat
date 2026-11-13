@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://leleat.local/schemas/ingredient-aliases.schema.json",
+  "title": "Leleat 食材同物异写合并表（ingredient-aliases.json）",
+  "description": "public/assets/data/ingredient-aliases.json：人工维护的食材同物异写合并表。key 为规范名，values 为该食材在各周出现过的写法；只在确认是同一食材的不同写法时才添加，口径模糊的大类先不并。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["groups"],
+  "properties": {
+    "note": {
+      "type": "string"
+    },
+    "groups": {
+      "description": "key 为规范食材名，值是该食材的全部写法（含规范名自身，至少一项）。",
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

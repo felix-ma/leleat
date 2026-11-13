@@ -65,6 +65,11 @@ export interface Dish {
   ingredients: string[]
   riskAllergens: string[]
   substitute: string | null
+  /**
+   * 配方变体 id，形如 `菜名#a1b2c3d4`，由「菜名 + 排序后的食材」内容寻址生成。
+   * 同名菜在不同周可能有不同配方，variantId 是区分它们的稳定键。
+   */
+  variantId?: string
   /** 预留字段，v0.1 不展示。 */
   calorie?: number | string
   noteForKindergarten?: string
@@ -85,17 +90,49 @@ export interface RecipeEntry {
   verified?: boolean
 }
 
-/** recipes.json 同时兼容裸数组与带 updatedAt 的对象格式。 */
-export interface RecipesDocument {
+/** 单周食谱文件 weeks/YYYY-Www.json 的结构。 */
+export interface WeekDocument {
+  week: string
+  startDate: string
+  endDate: string
   updatedAt?: string
   recipes: RecipeEntry[]
 }
 
+/** index.json 里的一条周记录，前端据此生成周选项，不必加载周文件本身。 */
+export interface WeekIndexEntry {
+  week: string
+  startDate: string
+  endDate: string
+  file: string
+  dates: string[]
+  meals: number
+  dishes: number
+}
+
+/** index.json：周清单与数据范围，是前端的入口文件。 */
+export interface DataIndex {
+  updatedAt?: string
+  weeks: WeekIndexEntry[]
+  range: { startDate: string; endDate: string }
+  total: { weeks: number; dates: number; meals: number; dishes: number }
+}
+
 export interface DishOccurrence {
   date: string
-  week: string
   mealPeriod: MealPeriod
-  mealLabel: string
+  /** 指回当次命中的配方变体。 */
+  variantId?: string
+}
+
+/** 同一菜名下的一种配方。同名菜在不同周配方不同时会有多个变体。 */
+export interface DishVariant {
+  variantId: string
+  ingredients: string[]
+  riskAllergens: string[]
+  count: number
+  firstSeen: string
+  lastSeen: string
 }
 
 export interface DishKnowledge {
@@ -108,6 +145,10 @@ export interface DishKnowledge {
   lastSeen: string
   occurrences: DishOccurrence[]
   sourceImages: string[]
+  /** 该菜名下的全部配方变体（按出现次数降序）。 */
+  variants?: DishVariant[]
+  /** 同名菜存在多种配方，等人工复核是否要统一或加别名。 */
+  needsReview?: boolean
   verified?: boolean
 }
 
@@ -123,13 +164,41 @@ export interface AppSettings {
 }
 
 export interface DataBundle {
-  recipes: RecipeEntry[]
+  /** 周清单，前端的入口；周食谱自身按需加载。 */
+  index: DataIndex
   allergens: Allergen[]
   substitutes: SubstitutesMap
   substituteLibrary: SubstituteLibrary
   settings: AppSettings
   dishCatalog: DishCatalog
   updatedAt?: string
+}
+
+export interface IngredientHit {
+  /** 只在写法与规范名不同时出现。 */
+  form?: string
+  dish: string
+  variantId: string
+  date: string
+  mealPeriod: MealPeriod
+}
+
+export interface IngredientRecord {
+  forms: string[]
+  dishCount: number
+  hitCount: number
+  firstSeen: string
+  lastSeen: string
+  dishes: string[]
+  hits: IngredientHit[]
+}
+
+/** 食材索引：按规范食材名聚合，可反查命中的菜名、配方与日期。 */
+export interface IngredientIndex {
+  updatedAt?: string
+  note?: string
+  total: { ingredients: number; hits: number; dishes: number; variants: number }
+  ingredients: Record<string, IngredientRecord>
 }
 
 export interface WeekOption {

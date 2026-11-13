@@ -9,7 +9,7 @@
 1. 从一张周表图片中提取 5 个工作日、每天 4 个餐次、每个餐次的菜品和食材克重。
 2. 生成可校验的中间结果，保留原始文字、置信度和低置信警告。
 3. 根据 `allergens.json` 做确定性过敏原标记；通过动态替餐库和已确认的菜品专属替餐生成建议。
-4. 安全地合并进 `public/assets/data/recipes.json`，并增量维护 `dish-catalog.json`，保护人工确认过的字段。
+4. 安全地合并进 `public/assets/data/weeks/YYYY-Www.json`（并同步 `index.json` 的周清单），再重建 `dish-catalog.json` 与 `ingredient-index.json`，保护人工确认过的字段。
 5. 产出可追溯的 Git 提交并推送到 `origin main`（见 §11）。
 
 ### 非目标
@@ -69,7 +69,7 @@
   → 替餐匹配
   → 中间 JSON + review.md
   → 人工复核（低于阈值时阻断）
-  → 投影为 recipes.json
+  → 投影为 weeks/YYYY-Www.json（含 variantId），并更新 index.json
   → 合并、校验、diff
   → git commit + push
 ```

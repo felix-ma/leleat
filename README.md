@@ -47,7 +47,8 @@ http://localhost:5173/leleat/
 npm run typecheck   # TypeScript / Vue 类型检查
 npm run build       # 类型检查 + 生成 dist/
 npm run preview     # 预览构建结果，http://localhost:4173/leleat/
-npm run catalog     # 从 recipes.json 重新生成/合并菜品知识库
+npm run split       # 一次性迁移：把旧的单体 recipes.json 拆成 index.json + weeks/
+npm run catalog     # 从 weeks/*.json 重建菜品知识库与食材索引
 npm run deploy      # 构建并发布 gh-pages 分支
 ```
 
@@ -153,15 +154,19 @@ npm run check-docx -- docs/samples/leleat-2026-W45-sample.docx   # 实测导出�
 | SQLite | 不作运行时主库 | GitHub Pages 没有后端；浏览器不能安全写回 Git；SQLite 可作为本地 Agent 的索引缓存，但最终发布 JSON |
 | JSON | **采用** | 可直接 fetch、Git diff 清晰、可人工审查、可版本追溯、无后端依赖 |
 
-因此运行时知识库是仓库内的 JSON：
+因此运行时知识库是仓库内的 JSON，按「周分片 + 索引 + 人工表」组织：
 
-- `recipes.json`：按日期和餐次固化的周食谱（增量追加/合并）
-- `dish-catalog.json`：按菜名归一化的菜品知识库（食材、过敏原、替餐、出现历史）
+- `index.json`：周清单入口（周号、起止日、文件路径、日期、餐次数、菜品数、范围与总计）。前端启动只读它
+- `weeks/YYYY-Www.json`：一周一个文件装该周全部「日期 × 餐次」食谱。前端按需加载
+- `dish-catalog.json`：按菜名归一化的菜品知识库，同名菜的不同配方各占一个 `variantId`，`variants[]` 全量保留
+- `ingredient-index.json`：食材反查索引（规范名 → 写法、命中菜名/变体/日期）
+- `ingredient-aliases.json`：人工维护的食材同物异写合并表
+- `dish-meta.json`：人工维护的菜品字段（别名、替餐、verified）
 - `substitute-library.json`：动态替餐配方库（替换过敏原、适用菜品、营养标签、确认状态）
 - `settings.json`：幼儿园信息和补剂项
 - `allergens.json` / `substitutes.json`：风险词库与旧版替餐回退
 
-前端只读这些 JSON。Agent 在本地维护并 Git 提交，不在浏览器里写回。
+前端只读这些 JSON，不做识别也不写回。Agent 在本地维护并 Git 提交。
 
 ## 目录
 
@@ -171,14 +176,20 @@ leleat/
 │   └── assets/
 │       ├── images/                 # 食谱原图 / 日列裁剪图
 │       └── data/
-│           ├── recipes.json        # 周食谱
-│           ├── dish-catalog.json   # 菜品知识库
+│           ├── index.json          # 周清单入口（前端启动只读这个）
+│           ├── weeks/              # 一周一个文件：2026-W42.json …
+│           ├── dish-catalog.json   # 菜品知识库（按变体）
+│           ├── ingredient-index.json   # 食材反查索引
+│           ├── ingredient-aliases.json # 人工同物异写合并表
+│           ├── dish-meta.json      # 人工字段：别名、替餐、verified
 │           ├── substitute-library.json # 动态替餐库
 │           ├── settings.json       # 学校信息、7 天补剂项
 │           ├── allergens.json
 │           └── substitutes.json    # 旧版全局回退
 ├── scripts/
-│   └── build-dish-catalog.mjs      # 从食谱生成/合并菜品库
+│   ├── split-recipes.mjs           # 一次性迁移：单体 recipes.json → index.json + weeks/
+│   ├── build-dish-catalog.mjs      # 从 weeks/*.json 重建菜品库与食材索引
+│   └── lib/                        # variant / data-files / date 公共库
 ├── src/
 │   ├── components/
 │   │   ├── DayView.vue
@@ -210,7 +221,12 @@ leleat/
 │   ├── publish.md
 │   ├── acceptance.md
 │   ├── schemas/week-menu.schema.json
+│   ├── schemas/week-index.schema.json
+│   ├── schemas/week-file.schema.json
 │   ├── schemas/dish-catalog.schema.json
+│   ├── schemas/ingredient-index.schema.json
+│   ├── schemas/ingredient-aliases.schema.json
+│   ├── schemas/dish-meta.schema.json
 │   ├── schemas/substitute-library.schema.json
 │   └── prompts/extract-week-menu.md
 ├── docs/samples/leleat-2026-W45-sample.docx
@@ -237,23 +253,61 @@ leleat/
 
 补剂固定打印周一至周日 7 天，每项一行；食谱只取周一至周五。
 
-### recipes.json
+### index.json
 
-支持裸数组或带 `updatedAt` 的对象格式：
+周清单入口。前端启动只读这一个文件就能渲染周选项与数据范围，不必先下载全部周文件：
 
 ```json
 {
-  "updatedAt": "2026-11-05T09:20:00+08:00",
+  "updatedAt": "2026-11-13T17:01:53+08:00",
+  "weeks": [
+    {
+      "week": "2026-W42",
+      "startDate": "2026-10-12",
+      "endDate": "2026-10-18",
+      "file": "weeks/2026-W42.json",
+      "dates": ["2026-10-12", "2026-10-13", "2026-10-14", "2026-10-15", "2026-10-16"],
+      "meals": 20,
+      "dishes": 53
+    }
+  ],
+  "range": { "startDate": "2026-10-12", "endDate": "2026-11-20" },
+  "total": { "weeks": 5, "dates": 25, "meals": 100, "dishes": 263 }
+}
+```
+
+周条目字段：
+
+| 字段 | 说明 |
+| --- | --- |
+| `week` | ISO 周，如 `2026-W42` |
+| `startDate` / `endDate` | 该周周一 / 周日 |
+| `file` | 相对 `assets/data/` 的周文件路径 |
+| `dates` | 本周实际有食谱的日期（工作日） |
+| `meals` / `dishes` | 该周餐次数 / 菜品数，用于概览与校验 |
+
+Schema：[week-index.schema.json](agent/schemas/week-index.schema.json)。
+
+### weeks/YYYY-Www.json
+
+一周一个文件，结构：
+
+```json
+{
+  "week": "2026-W42",
+  "startDate": "2026-10-12",
+  "endDate": "2026-10-18",
+  "updatedAt": "2026-11-13T17:01:53+08:00",
   "recipes": []
 }
 ```
 
-每条记录字段：
+`recipes` 每条记录字段：
 
 | 字段 | 说明 |
 | --- | --- |
 | `date` | `YYYY-MM-DD`，与 `week` 对应 |
-| `week` | ISO 周，如 `2026-W45` |
+| `week` | ISO 周，如 `2026-W42` |
 | `mealPeriod` | `breakfast` / `morningSnack` / `lunch` / `afternoonTea` / `dinner` |
 | `mealLabel` | 展示名称，如早餐、早点、午餐、午点 |
 | `dishes` | 菜品数组 |
@@ -268,43 +322,115 @@ leleat/
 | `ingredients` | 识别食材字符串数组 |
 | `riskAllergens` | 过敏原 id，对应 `allergens.json` |
 | `substitute` | 菜品专属替餐；`null` 时使用全局替餐表 |
+| `variantId` | 配方变体 id，`菜名#8位hex`，由菜名与排序后食材内容寻址生成 |
 | `calorie` / `noteForKindergarten` / `verified` | 预留字段 |
+
+Schema：[week-file.schema.json](agent/schemas/week-file.schema.json)。
 
 ### dish-catalog.json
 
+同名菜的不同配方各占一个 `variantId`，`variants[]` 全量保留；顶层 `ingredients` / `riskAllergens` 是**主变体**（出现次数最多的那版）的语义，不是并集：
+
 ```json
 {
-  "updatedAt": "2026-11-05T09:20:00+08:00",
+  "updatedAt": "2026-11-13T10:51:46.923Z",
   "dishes": {
-    "番茄炖牛腩": {
-      "name": "番茄炖牛腩",
+    "豆沙卷": {
+      "name": "豆沙卷",
       "aliases": [],
-      "ingredients": ["番茄", "牛腩"],
-      "riskAllergens": [],
+      "ingredients": ["豆沙", "面粉", "奶粉"],
+      "riskAllergens": ["milk"],
       "substitute": null,
-      "firstSeen": "2026-11-02",
-      "lastSeen": "2026-11-02",
+      "firstSeen": "2026-10-23",
+      "lastSeen": "2026-11-20",
       "occurrences": [
+        { "date": "2026-10-23", "mealPeriod": "afternoonTea", "variantId": "豆沙卷#ca30d511" },
+        { "date": "2026-11-03", "mealPeriod": "afternoonTea", "variantId": "豆沙卷#b1f878fd" }
+      ],
+      "sourceImages": [],
+      "variants": [
         {
-          "date": "2026-11-02",
-          "week": "2026-W45",
-          "mealPeriod": "lunch",
-          "mealLabel": "午餐"
+          "variantId": "豆沙卷#ca30d511",
+          "ingredients": ["豆沙", "面粉", "奶粉"],
+          "riskAllergens": ["milk"],
+          "count": 2,
+          "firstSeen": "2026-10-23",
+          "lastSeen": "2026-11-20"
+        },
+        {
+          "variantId": "豆沙卷#b1f878fd",
+          "ingredients": ["白糖", "红豆", "面粉"],
+          "riskAllergens": [],
+          "count": 1,
+          "firstSeen": "2026-11-03",
+          "lastSeen": "2026-11-03"
         }
       ],
-      "sourceImages": []
+      "needsReview": true
     }
   }
 }
 ```
 
-生成/合并：
+生成/重建：
 
 ```bash
 npm run catalog
 ```
 
-脚本会保留已有的 `aliases`、`substitute`、`verified`，对同名菜追加 occurrence，不覆盖人工字段。机器可读 Schema：[agent/schemas/dish-catalog.schema.json](agent/schemas/dish-catalog.schema.json)。
+脚本从 `weeks/*.json` 全量重建 catalog 与 `ingredient-index.json`：同一 `variantId` 合并计数与时间范围，`variants` 按出现次数降序；出现多种配方的菜自动标 `needsReview: true`，进人工复核清单。人工字段（`aliases`、`substitute`、`verified`）来自 `dish-meta.json`，重建不会覆盖。机器可读 Schema：[agent/schemas/dish-catalog.schema.json](agent/schemas/dish-catalog.schema.json)。
+
+### ingredient-index.json / ingredient-aliases.json
+
+```json
+{
+  "updatedAt": "2026-11-13T10:51:46.923Z",
+  "note": "食材索引：按规范食材名聚合；hits 指回菜名与变体，form 只在写法与规范名不同时出现。",
+  "total": { "ingredients": 134, "hits": 610, "dishes": 145, "variants": 156 },
+  "ingredients": {
+    "鹌鹑蛋": {
+      "forms": ["鹌鹑蛋"],
+      "dishCount": 3,
+      "hitCount": 4,
+      "firstSeen": "2026-10-13",
+      "lastSeen": "2026-11-16",
+      "dishes": ["鹌鹑蛋", "水煮鹌鹑蛋", "鲜肉鸟巢蒸蛋"],
+      "hits": [
+        { "dish": "鹌鹑蛋", "variantId": "鹌鹑蛋#de1622e0", "date": "2026-10-19", "mealPeriod": "breakfast" }
+      ]
+    }
+  }
+}
+```
+
+同物异写由人工表 `ingredient-aliases.json` 归并（key 为规范名，values 为各写法，至少含规范名自身）：
+
+```json
+{
+  "note": "人工维护的同物异写合并表。",
+  "groups": {
+    "牛奶": ["牛奶", "纯牛奶"],
+    "胡萝卜": ["胡萝卜", "红萝卜"],
+    "山楂": ["山楂", "山楂条", "山楂片"]
+  }
+}
+```
+
+Schema：[ingredient-index.schema.json](agent/schemas/ingredient-index.schema.json)、[ingredient-aliases.schema.json](agent/schemas/ingredient-aliases.schema.json)。
+
+### dish-meta.json
+
+人工维护的菜品字段，重建 catalog 时合并进来：
+
+```json
+{
+  "dishes": {
+    "纯牛奶": { "aliases": [], "substitute": "米奶" }
+  }
+}
+```
+
+Schema：[dish-meta.schema.json](agent/schemas/dish-meta.schema.json)。
 
 ### substitute-library.json
 
@@ -355,14 +481,19 @@ npm run catalog
 
 ## Agent 识别与知识库规范
 
-前端不做识别。仓库外 Agent 直接调用 DeepSeek 多模态模型识别周表，不使用 OCR，并按 [AGENTS.md](AGENTS.md) 与其 [agent/](agent/README.md) 明细规范增量维护 `recipes.json`、`dish-catalog.json` 与 `substitute-library.json`。
+前端不做识别。仓库外 Agent 直接调用 DeepSeek 多模态模型识别周表，不使用 OCR，并按 [AGENTS.md](AGENTS.md) 与其 [agent/](agent/README.md) 明细规范维护 `weeks/*.json`、`index.json`、`dish-catalog.json` 与 `substitute-library.json`。
+
+**前端只读**：启动时只加载 `index.json` 建周选项，选中哪周才按 `file` 字段按需加载 `weeks/YYYY-Www.json`，不下载全部周数据。菜品知识库与食材索引也只在需要的视图里拉取。
 
 - 周表识别 Schema：[week-menu.schema.json](agent/schemas/week-menu.schema.json)
+- 周清单 Schema：[week-index.schema.json](agent/schemas/week-index.schema.json)
+- 周文件 Schema：[week-file.schema.json](agent/schemas/week-file.schema.json)
 - 菜品库 Schema：[dish-catalog.schema.json](agent/schemas/dish-catalog.schema.json)
+- 食材索引 Schema：[ingredient-index.schema.json](agent/schemas/ingredient-index.schema.json)
 - 替餐库 Schema：[substitute-library.schema.json](agent/schemas/substitute-library.schema.json)
 - DeepSeek 视觉抽取 Prompt：[extract-week-menu.md](agent/prompts/extract-week-menu.md)
 
-核心原则：图片只进 Agent，前端只读 JSON；识别结果先与菜品/食材库比对，新菜追加、旧菜复用、冲突进人工复核。知识库可持续追加，但合并必须幂等并保护人工确认字段。
+核心原则：图片只进 Agent，前端只读 JSON；识别结果先算 `variantId` 再与菜品/食材库比对，新菜追加、同变体复用、新配方标 `needsReview` 进人工复核。重建必须幂等并保护人工确认字段。
 
 ## 本地存储
 
@@ -395,6 +526,8 @@ Word **不在管理端预生成，也不是模板占位符替换**。流程是�
 ## 错误边界
 
 - 食谱、过敏原或替餐 JSON 拉取失败：页面显示错误与重新加载按钮
+- `index.json` 拉取失败：无法建周选项，整页显示错误与重新加载按钮
+- 单个周文件拉取失败：只影响该周，切到其他周仍可用
 - `settings.json` / `dish-catalog.json` 缺失或损坏：使用内置补剂默认值和空知识库，不阻塞食谱展示
 - `substitute-library.json` 缺失或损坏：回退旧版 `substitutes.json` 全局映射
 - 单条食谱字段不合法、日期与 ISO 周不一致：控制台警告并跳过该条
@@ -403,7 +536,7 @@ Word **不在管理端预生成，也不是模板占位符替换**。流程是�
 
 ## 示例数据
 
-仓库内置三张真实周表对应的数据：`2026-W42`（10/12–10/16）、`2026-W43`（10/19–10/23）、`2026-W45`（11/2–11/6），共 60 条餐次记录、159 条菜品出现记录。菜品名、食材和每日餐次逐项来自这三张原图；原图保存在 `public/assets/images/*-week-menu.jpg`，每日裁图保存在 `public/assets/images/YYYYMMDD-menu.jpg`。
+仓库内置五张真实周表对应的数据：`2026-W42`（10/12–10/16）、`2026-W43`（10/19–10/23）、`2026-W45`（11/2–11/6）、`2026-W46`（11/9–11/13）、`2026-W47`（11/16–11/20），共 25 天、100 条餐次记录、263 条菜品出现记录、145 道菜（156 个配方变体）。数据入口是 `public/assets/data/index.json`，每周正文在 `public/assets/data/weeks/` 下。菜品名、食材和每日餐次逐项来自这些原图；原图保存在 `public/assets/images/*-week-menu.jpg`，每日裁图保存在 `public/assets/images/YYYYMMDD-menu.jpg`。
 
 过敏原标记按 `allergens.json` 的当前关键词从原图食材中确定性匹配；`substitute` 只写入已确认的替餐（当前周来自你提供的 DOCX），其余交给动态替餐库。
 

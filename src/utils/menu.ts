@@ -13,6 +13,7 @@ import {
   type SubstituteRecipe,
   type SubstituteSource,
   type SubstitutesMap,
+  type WeekIndexEntry,
   type WeekOption,
 } from '../types'
 import { resolveAssetUrl } from './assets'
@@ -27,25 +28,33 @@ import {
   weekdayLabel,
 } from './date'
 
-export function createWeekOptions(recipes: RecipeEntry[]): WeekOption[] {
-  const weeks = [...new Set(recipes.map((entry) => entry.week))]
-    .filter((week) => isoWeekStart(week) !== null)
-    .sort()
+/**
+ * 由 index.json 的周清单生成周选项。
+ * 前端不再把全部食谱装进内存，周选项只依赖周清单，不必加载周文件。
+ */
+export function createWeekOptionsFromIndex(weeks: WeekIndexEntry[]): WeekOption[] {
+  return [...weeks]
+    .filter((entry) => isoWeekStart(entry.week) !== null)
+    .sort((a, b) => a.startDate.localeCompare(b.startDate))
+    .map((entry) => {
+      const start = isoWeekStart(entry.week)
+      const end = isoWeekEnd(entry.week)
+      const startDate = start ? toIsoDate(start) : entry.startDate
+      const endDate = end ? toIsoDate(end) : entry.endDate
 
-  return weeks.map((week) => {
-    const start = isoWeekStart(week)
-    const end = isoWeekEnd(week)
-    const startDate = start ? toIsoDate(start) : ''
-    const endDate = end ? toIsoDate(end) : ''
+      return {
+        week: entry.week,
+        startDate,
+        endDate,
+        label: formatWeekRange(startDate, endDate),
+        shortLabel: formatWeekRangeShort(startDate, endDate),
+      }
+    })
+}
 
-    return {
-      week,
-      startDate,
-      endDate,
-      label: formatWeekRange(startDate, endDate),
-      shortLabel: formatWeekRangeShort(startDate, endDate),
-    }
-  })
+/** 由周清单展开出全部有食谱的日期（升序），用于默认日期与日期选择器。 */
+export function datesFromIndex(weeks: WeekIndexEntry[]): string[] {
+  return [...new Set(weeks.flatMap((entry) => entry.dates))].sort()
 }
 
 export function getWeekEntries(recipes: RecipeEntry[], week: string): RecipeEntry[] {

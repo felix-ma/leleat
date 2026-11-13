@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://leleat.local/schemas/ingredient-index.schema.json",
+  "title": "Leleat 食材索引",
+  "description": "public/assets/data/ingredient-index.json：按规范食材名聚合的反查索引，由 scripts/build-dish-catalog.mjs 与 dish-catalog.json 一并重建。hits 指回菜名、变体与日期；form 只在写法与规范名不同时出现。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["total", "ingredients"],
+  "properties": {
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "note": {
+      "type": "string"
+    },
+    "total": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ingredients", "hits", "dishes", "variants"],
+      "properties": {
+        "ingredients": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "hits": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "dishes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "variants": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "ingredients": {
+      "description": "key 为规范食材名，值是该食材的聚合记录。",
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/record"
+      }
+    }
+  },
+  "$defs": {
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "forms",
+        "dishCount",
+        "hitCount",
+        "firstSeen",
+        "lastSeen",
+        "dishes",
+        "hits"
+      ],
+      "properties": {
+        "forms": {
+          "description": "该食材在各周出现过的一种或多种写法（已按 ingredient-aliases.json 归并）。",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "dishCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "hitCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "firstSeen": {
+          "$ref": "#/$defs/date"
+        },
+        "lastSeen": {
+          "$ref": "#/$defs/date"
+        },
+        "dishes": {
+          "description": "命中该食材的菜名去重列表。",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "hits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/hit"
+          }
+        }
+      }
+    },
+    "hit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dish", "variantId", "date", "mealPeriod"],
+      "properties": {
+        "form": {
+          "description": "只在写法与规范名不同时出现。",
+          "type": "string",
+          "minLength": 1
+        },
+        "dish": {
+          "type": "string",
+          "minLength": 1
+        },
+        "variantId": {
+          "$ref": "#/$defs/variantId"
+        },
+        "date": {
+          "$ref": "#/$defs/date"
+        },
+        "mealPeriod": {
+          "enum": ["breakfast", "morningSnack", "lunch", "afternoonTea", "dinner"]
+        }
+      }
+    },
+    "variantId": {
+      "description": "菜名#sha1(菜名|食材按 zh-CN 排序后 / 分隔) 前 8 位，内容寻址。",
+      "type": "string",
+      "pattern": "^.+#[0-9a-f]{8}$"
+    },
+    "date": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    }
+  }
+}

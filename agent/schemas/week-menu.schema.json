@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://leleat.local/schemas/week-menu.schema.json",
   "title": "Leleat 周表食谱识别中间结果",
-  "description": "本地 Agent 从「一周带量食谱及营养分析表」图片抽取后的标准中间格式。该文件不进入前端运行时，仅用于人工复核和生成 recipes.json。",
+  "description": "本地 Agent 从「一周带量食谱及营养分析表」图片抽取后的标准中间格式。该文件不进入前端运行时，仅用于人工复核；复核通过后按周投影为 public/assets/data/weeks/YYYY-Www.json，再重建 dish-catalog.json。",
   "type": "object",
   "additionalProperties": false,
   "required": ["schemaVersion", "source", "days", "warnings"],

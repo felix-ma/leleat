@@ -17,7 +17,7 @@ public/assets/images/
 └── ...
 ```
 
-- 整周裁图 `YYYYMMDD-week-menu.jpg`（YYYYMMDD = 周一），单日裁图 `YYYYMMDD-menu.jpg`。两者都是**已裁掉顶部条带**的版本，真正的原图只留在 `/tmp`。文件名必须稳定——`recipes.json` 的 `sourceImage` 只引用单日裁图，发布后不再改名。
+- 整周裁图 `YYYYMMDD-week-menu.jpg`（YYYYMMDD = 周一），单日裁图 `YYYYMMDD-menu.jpg`。两者都是**已裁掉顶部条带**的版本，真正的原图只留在 `/tmp`。文件名必须稳定——`weeks/YYYY-Www.json` 里的 `sourceImage` 只引用单日裁图，发布后不再改名。
 - 日列裁剪比整周图更适合前端缩略图和大图查看。
 - `sourceImage` 挂在每天的午餐条目上，避免同一张图在每个餐次重复显示；只保存整周图时，只在周一午餐挂一次。
 - 图片压缩：最长边不超过 1600px，JPEG 质量 78–85；单张尽量小于 1.5MB。
