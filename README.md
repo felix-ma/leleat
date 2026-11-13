@@ -494,7 +494,7 @@ Schema：[dish-meta.schema.json](agent/schemas/dish-meta.schema.json)。
 - 替餐库 Schema：[substitute-library.schema.json](agent/schemas/substitute-library.schema.json)
 - DeepSeek 视觉抽取 Prompt：[extract-week-menu.md](agent/prompts/extract-week-menu.md)
 
-核心原则：图片只进 Agent，前端只读 JSON；识别结果先算 `variantId` 再与菜品/食材库比对，新菜追加、同变体复用、新配方标 `needsReview` 进人工复核。重建必须幂等并保护人工确认字段。
+核心原则：图片只进 Agent，前端只读 JSON；识别结果先算 `variantId` 再与菜品/食材库比对，新菜追加、同变体复用、新配方作为新变体追加并保留历史（默认口径下主配方自动切到最新这版，不标 `needsReview`）。重建必须幂等并保护人工确认字段。
 
 ## 本地存储
 
