@@ -1,0 +1,12 @@
+{
+  "dishes": {
+    "牛奶": { "aliases": [], "substitute": "米奶" },
+    "纯牛奶": { "aliases": [], "substitute": "米奶" },
+    "豆奶": { "aliases": [], "substitute": "米奶" },
+    "酸牛奶": { "aliases": [], "substitute": "米奶" },
+    "肉沫蒸滑蛋": { "aliases": [], "substitute": "肉末蒸豆腐" },
+    "瘦肉青菜鸡蛋炒面": { "aliases": [], "substitute": "瘦肉青菜炒面" },
+    "水煮鹌鹑蛋": { "aliases": [], "substitute": "蒸红薯" },
+    "扬州炒饭": { "aliases": [], "substitute": "什锦炒饭" }
+  }
+}
