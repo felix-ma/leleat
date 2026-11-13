@@ -2838,7 +2838,7 @@
         {
           "name": "纯牛奶",
           "ingredients": [
-            "纯牛奶"
+            "牛奶"
           ],
           "riskAllergens": [
             "milk"
@@ -3000,7 +3000,7 @@
         {
           "name": "纯牛奶",
           "ingredients": [
-            "纯牛奶"
+            "牛奶"
           ],
           "riskAllergens": [
             "milk"
@@ -3368,7 +3368,7 @@
         {
           "name": "纯牛奶",
           "ingredients": [
-            "纯牛奶"
+            "牛奶"
           ],
           "riskAllergens": [
             "milk"
