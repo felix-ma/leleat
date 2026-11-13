@@ -193,6 +193,13 @@ Schema：[`agent/schemas/week-index.schema.json`](schemas/week-index.schema.json
 6. 重建必须幂等：同一批 `weeks/*.json` 连跑两次，`dish-catalog.json` 与 `ingredient-index.json` 零差异。
 7. `verified: true`（来自 `dish-meta.json`）的菜品只允许追加 occurrence / 变体，不允许脚本改写人工字段。
 
+**菜名别名归并（同一道菜的多种写法）**：`香米饭 / 水晶米饭 / 金银米饭 / 黄金米饭 / 燕麦香米饭` 这类只是写法不同、其实是同一道菜时，在 `dish-meta.json` 里登记 `菜名: {aliases: [其它写法]}`，脚本会把这些写法在主配方、变体池、`occurrences`、食材索引里全部归并到规范名下，`catalog` 只出一条记录（例如「米饭」19 次、「山楂」3 次、「鹌鹑蛋」3 次）。
+
+- `weeks/*.json` 里的 `dish.name` 永远保持原表写法，不因归并改写；归并只发生在派生层。
+- `variantId` 由「规范菜名 + 排序后食材」算出，所以**加完别名必须依次跑 `npm run sync-variants` 和 `npm run catalog`**：前者重算周文件里派生的 `variantId`（只改这一个字段），后者重建 catalog 与食材索引。漏跑 `sync-variants` 会让前端按 `dish.variantId` 回查不到变体。
+- 别名只用于「确实是同一道菜」的写法差异（同物异名、简称、错别字）。食材实质不同的菜（如 `炒三丁` 与 `肉炒三丁` 土豆/瘦肉 → 青瓜/鸡胸肉）加别名后仍会保留为两个变体，历史配方不会被合并掉。
+- 口径模糊的大类（青菜、米面等）暂不归并，宁可贵一点也不要错并。
+
 同一 `variantId` 下食材或过敏原不一致，说明哈希口径被破坏（脚本会打 `变体口径冲突` 警告），按 bug 处理，不要改数据糊过去。
 
 前端用知识库显示“已收录、第 N 次出现、首次/最近日期”，并按 `variantId` 显示该次命中的配方。Schema：[`agent/schemas/dish-catalog.schema.json`](schemas/dish-catalog.schema.json)。重跑命令：`npm run catalog`。

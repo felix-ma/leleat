@@ -48,6 +48,7 @@ npm run typecheck   # TypeScript / Vue 类型检查
 npm run build       # 类型检查 + 生成 dist/
 npm run preview     # 预览构建结果，http://localhost:4173/leleat/
 npm run split       # 一次性迁移：把旧的单体 recipes.json 拆成 index.json + weeks/
+npm run sync-variants  # 改了 dish-meta.json 的菜名别名后，重算周文件里的 variantId
 npm run catalog     # 从 weeks/*.json 重建菜品知识库与食材索引
 npm run deploy      # 构建并发布 gh-pages 分支
 ```
@@ -189,6 +190,7 @@ leleat/
 ├── scripts/
 │   ├── split-recipes.mjs           # 一次性迁移：单体 recipes.json → index.json + weeks/
 │   ├── build-dish-catalog.mjs      # 从 weeks/*.json 重建菜品库与食材索引
+│   ├── sync-variant-ids.mjs        # 按菜名别名重算 weeks/ 里派生的 variantId
 │   └── lib/                        # variant / data-files / date 公共库
 ├── src/
 │   ├── components/
@@ -376,6 +378,7 @@ Schema：[week-file.schema.json](agent/schemas/week-file.schema.json)。
 生成/重建：
 
 ```bash
+npm run sync-variants   # 仅在改过 dish-meta.json 的菜名别名后需要
 npm run catalog
 ```
 
@@ -425,11 +428,17 @@ Schema：[ingredient-index.schema.json](agent/schemas/ingredient-index.schema.js
 
 ```json
 {
+  "reviewPolicy": { "mode": "latest" },
   "dishes": {
-    "纯牛奶": { "aliases": [], "substitute": "米奶" }
+    "米饭": { "aliases": ["香米饭", "水晶米饭", "金银米饭", "黄金米饭", "燕麦香米饭"] },
+    "纯牛奶": { "aliases": ["牛奶"], "substitute": "米奶" }
   }
 }
 ```
+
+`aliases` 是「同一道菜的其它写法」：登记后主配方、变体池、出现记录与食材索引都归并到规范菜名，`catalog` 只出一条（米饭 19 次、山楂 3 次、鹌鹑蛋 3 次）。`weeks/*.json` 里的 `dish.name` 保持原表写法不变，归并只发生在派生层。
+
+因为 `variantId = sha1(规范菜名 | 排序后食材)`，**加完别名要依次跑 `npm run sync-variants` 与 `npm run catalog`**，否则周文件里旧的 `variantId` 对不上变体。
 
 Schema：[dish-meta.schema.json](agent/schemas/dish-meta.schema.json)。
 

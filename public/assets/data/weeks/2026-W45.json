@@ -31,7 +31,7 @@
             "egg"
           ],
           "substitute": "蒸红薯",
-          "variantId": "水煮鹌鹑蛋#0dc2df26"
+          "variantId": "鹌鹑蛋#de1622e0"
         }
       ]
     },
@@ -119,7 +119,7 @@
           ],
           "riskAllergens": [],
           "substitute": null,
-          "variantId": "香米饭#f98a68fa"
+          "variantId": "米饭#1ef23f79"
         }
       ],
       "sourceImage": "assets/images/20261102-menu.jpg"
@@ -272,7 +272,7 @@
           ],
           "riskAllergens": [],
           "substitute": null,
-          "variantId": "燕麦香米饭#2ba9b4c5"
+          "variantId": "米饭#8cf249a6"
         }
       ],
       "sourceImage": "assets/images/20261103-menu.jpg"
@@ -417,7 +417,7 @@
           ],
           "riskAllergens": [],
           "substitute": null,
-          "variantId": "香米饭#f98a68fa"
+          "variantId": "米饭#1ef23f79"
         }
       ],
       "sourceImage": "assets/images/20261104-menu.jpg"
@@ -568,7 +568,7 @@
           ],
           "riskAllergens": [],
           "substitute": null,
-          "variantId": "香米饭#f98a68fa"
+          "variantId": "米饭#1ef23f79"
         }
       ],
       "sourceImage": "assets/images/20261105-menu.jpg"
@@ -732,7 +732,7 @@
             "milk"
           ],
           "substitute": "米奶",
-          "variantId": "牛奶#3cd16acb"
+          "variantId": "纯牛奶#e9dd22df"
         }
       ]
     }

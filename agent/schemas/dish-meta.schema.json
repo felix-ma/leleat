@@ -37,7 +37,7 @@
       "required": ["aliases"],
       "properties": {
         "aliases": {
-          "description": "同一道菜的其他写法，识别时归并到 key 这个规范名。",
+          "description": "同一道菜的其它写法（如 香米饭/水晶米饭 → 米饭）。它们的识别记录在主配方、变体、食材索引里都归并到 key 这个规范名；weeks/ 里的 dish.name 保持原表写法不变。因为 variantId 由「规范菜名 + 排序后食材」算出，改动 aliases 后需要跑 npm run sync-variants 重算周文件里的 variantId，再 npm run catalog。",
           "type": "array",
           "items": {
             "type": "string",

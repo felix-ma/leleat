@@ -11,6 +11,7 @@
     "preview": "vite preview",
     "split": "node scripts/split-recipes.mjs",
     "catalog": "node scripts/build-dish-catalog.mjs",
+    "sync-variants": "node scripts/sync-variant-ids.mjs",
     "deploy": "npm run build && gh-pages -d dist --dotfiles",
     "measure-docx": "node scripts/measure-docx-height.mjs",
     "check-docx": "node scripts/check-docx.mjs"

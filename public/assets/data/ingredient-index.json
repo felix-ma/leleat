@@ -1,24 +1,23 @@
 {
-  "updatedAt": "2026-11-13T11:28:37.495Z",
+  "updatedAt": "2026-11-13T17:01:53+08:00",
   "note": "食材索引：按规范食材名聚合；hits 指回菜名与变体，form 只在写法与规范名不同时出现。",
   "total": {
     "ingredients": 134,
     "hits": 610,
-    "dishes": 145,
-    "variants": 156
+    "dishes": 135,
+    "variants": 151
   },
   "ingredients": {
     "鹌鹑蛋": {
       "forms": [
         "鹌鹑蛋"
       ],
-      "dishCount": 3,
+      "dishCount": 2,
       "hitCount": 4,
       "firstSeen": "2026-10-13",
       "lastSeen": "2026-11-16",
       "dishes": [
         "鹌鹑蛋",
-        "水煮鹌鹑蛋",
         "鲜肉鸟巢蒸蛋"
       ],
       "hits": [
@@ -35,8 +34,8 @@
           "mealPeriod": "breakfast"
         },
         {
-          "dish": "水煮鹌鹑蛋",
-          "variantId": "水煮鹌鹑蛋#0dc2df26",
+          "dish": "鹌鹑蛋",
+          "variantId": "鹌鹑蛋#de1622e0",
           "date": "2026-11-02",
           "mealPeriod": "breakfast"
         },
@@ -598,7 +597,7 @@
       "forms": [
         "大米"
       ],
-      "dishCount": 17,
+      "dishCount": 12,
       "hitCount": 33,
       "firstSeen": "2026-10-12",
       "lastSeen": "2026-11-20",
@@ -607,17 +606,12 @@
         "菠菜胡萝卜肉粥",
         "彩蔬肉粥",
         "红枣小米粥",
-        "黄金米饭",
-        "金银米饭",
         "老南瓜淮山瘦肉粥",
         "米饭",
         "皮蛋瘦肉粥",
         "蔬菜胡萝卜小米肉粥",
-        "水晶米饭",
         "香菇瘦肉虾粥",
-        "香米饭",
         "小米苹果粥",
-        "燕麦香米饭",
         "扬州炒饭",
         "紫薯饭"
       ],
@@ -629,8 +623,8 @@
           "mealPeriod": "lunch"
         },
         {
-          "dish": "金银米饭",
-          "variantId": "金银米饭#2f23a221",
+          "dish": "米饭",
+          "variantId": "米饭#d22190b1",
           "date": "2026-10-13",
           "mealPeriod": "lunch"
         },
@@ -701,8 +695,8 @@
           "mealPeriod": "lunch"
         },
         {
-          "dish": "香米饭",
-          "variantId": "香米饭#f98a68fa",
+          "dish": "米饭",
+          "variantId": "米饭#1ef23f79",
           "date": "2026-11-02",
           "mealPeriod": "lunch"
         },
@@ -713,14 +707,14 @@
           "mealPeriod": "breakfast"
         },
         {
-          "dish": "燕麦香米饭",
-          "variantId": "燕麦香米饭#2ba9b4c5",
+          "dish": "米饭",
+          "variantId": "米饭#8cf249a6",
           "date": "2026-11-03",
           "mealPeriod": "lunch"
         },
         {
-          "dish": "香米饭",
-          "variantId": "香米饭#f98a68fa",
+          "dish": "米饭",
+          "variantId": "米饭#1ef23f79",
           "date": "2026-11-04",
           "mealPeriod": "lunch"
         },
@@ -731,8 +725,8 @@
           "mealPeriod": "afternoonTea"
         },
         {
-          "dish": "香米饭",
-          "variantId": "香米饭#f98a68fa",
+          "dish": "米饭",
+          "variantId": "米饭#1ef23f79",
           "date": "2026-11-05",
           "mealPeriod": "lunch"
         },
@@ -749,8 +743,8 @@
           "mealPeriod": "breakfast"
         },
         {
-          "dish": "水晶米饭",
-          "variantId": "水晶米饭#4add1d38",
+          "dish": "米饭",
+          "variantId": "米饭#1ef23f79",
           "date": "2026-11-09",
           "mealPeriod": "lunch"
         },
@@ -761,8 +755,8 @@
           "mealPeriod": "lunch"
         },
         {
-          "dish": "水晶米饭",
-          "variantId": "水晶米饭#4add1d38",
+          "dish": "米饭",
+          "variantId": "米饭#1ef23f79",
           "date": "2026-11-11",
           "mealPeriod": "lunch"
         },
@@ -773,8 +767,8 @@
           "mealPeriod": "afternoonTea"
         },
         {
-          "dish": "黄金米饭",
-          "variantId": "黄金米饭#6ae67204",
+          "dish": "米饭",
+          "variantId": "米饭#d22190b1",
           "date": "2026-11-12",
           "mealPeriod": "lunch"
         },
@@ -1683,7 +1677,7 @@
         "红萝卜",
         "胡萝卜"
       ],
-      "dishCount": 32,
+      "dishCount": 31,
       "hitCount": 37,
       "firstSeen": "2026-10-12",
       "lastSeen": "2026-11-20",
@@ -1704,7 +1698,6 @@
         "罗宋汤",
         "蘑菇烩牛肉",
         "青菜瘦肉炒面",
-        "肉炒三丁",
         "肉焖土豆",
         "肉沫青菜蝴蝶粉",
         "肉沫青菜汤面",
@@ -1946,8 +1939,8 @@
           "mealPeriod": "afternoonTea"
         },
         {
-          "dish": "肉炒三丁",
-          "variantId": "肉炒三丁#d39c32ac",
+          "dish": "炒三丁",
+          "variantId": "炒三丁#428bfe40",
           "date": "2026-11-19",
           "mealPeriod": "lunch"
         },
@@ -2436,8 +2429,8 @@
       "firstSeen": "2026-11-11",
       "lastSeen": "2026-11-19",
       "dishes": [
+        "炒三丁",
         "鸡丝汤面",
-        "肉炒三丁",
         "腰果玉米炒肉丁"
       ],
       "hits": [
@@ -2454,8 +2447,8 @@
           "mealPeriod": "breakfast"
         },
         {
-          "dish": "肉炒三丁",
-          "variantId": "肉炒三丁#d39c32ac",
+          "dish": "炒三丁",
+          "variantId": "炒三丁#428bfe40",
           "date": "2026-11-19",
           "mealPeriod": "lunch"
         }
@@ -3149,13 +3142,12 @@
         "纯牛奶",
         "牛奶"
       ],
-      "dishCount": 3,
+      "dishCount": 2,
       "hitCount": 16,
       "firstSeen": "2026-10-12",
       "lastSeen": "2026-11-20",
       "dishes": [
         "纯牛奶",
-        "牛奶",
         "酸牛奶"
       ],
       "hits": [
@@ -3215,14 +3207,14 @@
           "mealPeriod": "morningSnack"
         },
         {
-          "dish": "牛奶",
-          "variantId": "牛奶#3cd16acb",
+          "dish": "纯牛奶",
+          "variantId": "纯牛奶#e9dd22df",
           "date": "2026-11-06",
           "mealPeriod": "afternoonTea"
         },
         {
-          "dish": "牛奶",
-          "variantId": "牛奶#3cd16acb",
+          "dish": "纯牛奶",
+          "variantId": "纯牛奶#e9dd22df",
           "date": "2026-11-09",
           "mealPeriod": "afternoonTea"
         },
@@ -3564,8 +3556,8 @@
       "firstSeen": "2026-11-02",
       "lastSeen": "2026-11-19",
       "dishes": [
+        "炒三丁",
         "酱香肉沫蒸米粉",
-        "肉炒三丁",
         "五彩肉丁"
       ],
       "hits": [
@@ -3582,8 +3574,8 @@
           "mealPeriod": "breakfast"
         },
         {
-          "dish": "肉炒三丁",
-          "variantId": "肉炒三丁#d39c32ac",
+          "dish": "炒三丁",
+          "variantId": "炒三丁#428bfe40",
           "date": "2026-11-19",
           "mealPeriod": "lunch"
         }
@@ -3642,27 +3634,25 @@
         "山楂片",
         "山楂条"
       ],
-      "dishCount": 3,
+      "dishCount": 1,
       "hitCount": 3,
       "firstSeen": "2026-10-13",
       "lastSeen": "2026-11-17",
       "dishes": [
-        "山楂",
-        "山楂片",
-        "山楂条"
+        "山楂"
       ],
       "hits": [
         {
           "form": "山楂条",
-          "dish": "山楂条",
-          "variantId": "山楂条#2162070f",
+          "dish": "山楂",
+          "variantId": "山楂#f01ee899",
           "date": "2026-10-13",
           "mealPeriod": "morningSnack"
         },
         {
           "form": "山楂片",
-          "dish": "山楂片",
-          "variantId": "山楂片#7947ceda",
+          "dish": "山楂",
+          "variantId": "山楂#007e9df1",
           "date": "2026-11-12",
           "mealPeriod": "morningSnack"
         },
@@ -5387,21 +5377,20 @@
       "forms": [
         "小米"
       ],
-      "dishCount": 5,
+      "dishCount": 4,
       "hitCount": 6,
       "firstSeen": "2026-10-13",
       "lastSeen": "2026-11-18",
       "dishes": [
         "红枣小米粥",
-        "黄金米饭",
-        "金银米饭",
+        "米饭",
         "蔬菜胡萝卜小米肉粥",
         "小米苹果粥"
       ],
       "hits": [
         {
-          "dish": "金银米饭",
-          "variantId": "金银米饭#2f23a221",
+          "dish": "米饭",
+          "variantId": "米饭#d22190b1",
           "date": "2026-10-13",
           "mealPeriod": "lunch"
         },
@@ -5424,8 +5413,8 @@
           "mealPeriod": "afternoonTea"
         },
         {
-          "dish": "黄金米饭",
-          "variantId": "黄金米饭#6ae67204",
+          "dish": "米饭",
+          "variantId": "米饭#d22190b1",
           "date": "2026-11-12",
           "mealPeriod": "lunch"
         },
@@ -5526,12 +5515,12 @@
       "firstSeen": "2026-11-03",
       "lastSeen": "2026-11-03",
       "dishes": [
-        "燕麦香米饭"
+        "米饭"
       ],
       "hits": [
         {
-          "dish": "燕麦香米饭",
-          "variantId": "燕麦香米饭#2ba9b4c5",
+          "dish": "米饭",
+          "variantId": "米饭#8cf249a6",
           "date": "2026-11-03",
           "mealPeriod": "lunch"
         }

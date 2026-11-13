@@ -43,6 +43,7 @@ export async function readWeeks() {
       week,
       startDate: document.startDate ?? '',
       endDate: document.endDate ?? '',
+      updatedAt: document.updatedAt,
       recipes: Array.isArray(document.recipes) ? document.recipes : [],
     })
   }

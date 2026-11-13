@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, watch } from 'vue'
-import type { DishTraceTarget, ImagePreview } from '../types'
+import type { DishTraceTarget, ImagePreview, IngredientIndex, IngredientRecord } from '../types'
 import { formatMonthDay } from '../utils/date'
+import { loadIngredientIndex } from '../utils/dataLoader'
 import RiskBadge from './RiskBadge.vue'
 
 const props = defineProps<{
@@ -57,10 +58,63 @@ const primaryNote = computed(() => {
 
 const closeButton = ref<HTMLButtonElement | null>(null)
 
+/**
+ * 食材反查：点开某道菜时懒加载 ingredient-index.json（首屏不加载），
+ * 给每个食材标注全库命中次数，可展开看命中的菜名与日期。
+ */
+const ingredientIndex = ref<IngredientIndex | null>(null)
+const ingredientIndexPending = ref(false)
+const activeIngredient = ref<string | null>(null)
+
+/** 食材写法 → 索引里的规范食材记录（forms 含该写法即可）。 */
+const ingredientLookup = computed(() => {
+  const lookup = new Map<string, IngredientRecord>()
+  const index = ingredientIndex.value
+  if (!index) return lookup
+  for (const [canonical, record] of Object.entries(index.ingredients)) {
+    lookup.set(canonical, record)
+    for (const form of record.forms ?? []) lookup.set(form, record)
+  }
+  return lookup
+})
+
+function recordFor(ingredient: string): IngredientRecord | null {
+  return ingredientLookup.value.get(ingredient) ?? null
+}
+
+function hitCountLabel(ingredient: string): string {
+  const record = recordFor(ingredient)
+  if (!record) return ''
+  const dishCount = new Set(record.hits.map((hit) => hit.dish)).size
+  return `${record.hits.length} 次 · ${dishCount} 道菜`
+}
+
+const activeIngredientRecord = computed(() =>
+  activeIngredient.value ? recordFor(activeIngredient.value) : null,
+)
+
+const activeIngredientHits = computed(() => {
+  const record = activeIngredientRecord.value
+  if (!record) return []
+  return [...record.hits]
+    .sort((left, right) => (left.date < right.date ? 1 : left.date > right.date ? -1 : 0))
+    .slice(0, 12)
+})
+
+function toggleIngredient(ingredient: string): void {
+  activeIngredient.value = activeIngredient.value === ingredient ? null : ingredient
+}
+
 watch(
   () => props.target,
   async (target) => {
     if (!target) return
+    activeIngredient.value = null
+    if (!ingredientIndex.value && !ingredientIndexPending.value) {
+      ingredientIndexPending.value = true
+      ingredientIndex.value = await loadIngredientIndex()
+      ingredientIndexPending.value = false
+    }
     await nextTick()
     closeButton.value?.focus()
   },
@@ -108,10 +162,27 @@ watch(
             <section class="detail-block">
               <p class="eyebrow">Ingredients · 识别食材</p>
               <div class="mt-3 flex flex-wrap gap-1.5">
-                <span v-for="ingredient in target.dish.ingredients" :key="ingredient" class="ingredient-pill">
+                <button
+                  v-for="ingredient in target.dish.ingredients"
+                  :key="ingredient"
+                  type="button"
+                  class="ingredient-pill transition hover:bg-ink/10"
+                  :class="activeIngredient === ingredient ? 'bg-ink/10 text-ink' : ''"
+                  @click="toggleIngredient(ingredient)"
+                >
                   {{ ingredient }}
-                </span>
+                  <span v-if="recordFor(ingredient)" class="ml-1 text-[0.65rem] text-ink-faint">
+                    {{ recordFor(ingredient)?.hits.length }}次
+                  </span>
+                </button>
               </div>
+              <p v-if="activeIngredientRecord" class="mt-2 rounded-lg bg-ink/[0.04] px-2 py-1.5 text-[0.7rem] leading-5 text-ink-muted">
+                <span class="font-semibold text-ink">{{ activeIngredient }}</span>
+                ·全库 {{ hitCountLabel(activeIngredient ?? '') }}
+                <span v-for="hit in activeIngredientHits" :key="`${hit.dish}-${hit.date}-${hit.mealPeriod}`" class="mt-1 block">
+                  {{ formatMonthDay(hit.date) }} · {{ hit.dish }}<span v-if="hit.form && hit.form !== activeIngredient">（{{ hit.form }}）</span>
+                </span>
+              </p>
               <p class="mt-3 text-[0.7rem] leading-5 text-ink-faint">
                 来自该周食谱的识别记录，未展示未登记的隐藏配料。
               </p>

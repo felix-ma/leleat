@@ -46,6 +46,20 @@ for (const [canonical, forms] of Object.entries(aliasGroups.groups ?? {})) {
 }
 const canonicalName = (ingredient) => canonicalOf.get(ingredient) ?? ingredient
 
+/**
+ * 菜名写法 → 规范菜名。人工在 dish-meta.json 的 aliases 里登记「同一道菜的其它写法」
+ * （如 香米饭/水晶米饭 → 米饭），catalog 只按规范名聚合成一条。
+ * weeks/ 里的 dish.name 保持原表写法不变，因此这里只做派生层的归并。
+ */
+const dishCanonicalOf = new Map()
+for (const [canonical, manual] of Object.entries(meta.dishes ?? {})) {
+  for (const alias of Array.isArray(manual.aliases) ? manual.aliases : []) {
+    const key = String(alias).trim()
+    if (key) dishCanonicalOf.set(key, canonical)
+  }
+}
+const canonicalDishName = (name) => dishCanonicalOf.get(name) ?? name
+
 const dishes = new Map()
 const ingredientHits = new Map()
 const conflicts = []
@@ -56,16 +70,19 @@ for (const week of weeks) {
     for (const dish of entry.dishes ?? []) {
       const name = String(dish.name ?? '').trim()
       if (!name) continue
+      const canonicalDish = canonicalDishName(name)
 
       const ingredients = normalizeIngredients(dish.ingredients ?? [])
       if (ingredients.length === 0) continue
 
-      const variantId = dish.variantId ?? variantIdFor(name, ingredients)
+      // 变体仍按「规范菜名 + 排序后食材」内容寻址：别名归并后，
+      // 香米饭/水晶米饭/米饭 的 [大米] 会并成同一条变体，而不是各算一版。
+      const variantId = variantIdFor(canonicalDish, ingredients)
       const riskAllergens = [...new Set(dish.riskAllergens ?? [])].sort()
       const sourceImage = typeof entry.sourceImage === 'string' ? entry.sourceImage : ''
 
-      if (!dishes.has(name)) dishes.set(name, { name, variants: new Map() })
-      const record = dishes.get(name)
+      if (!dishes.has(canonicalDish)) dishes.set(canonicalDish, { name: canonicalDish, variants: new Map() })
+      const record = dishes.get(canonicalDish)
       if (!record.variants.has(variantId)) {
         record.variants.set(variantId, {
           variantId,
@@ -113,7 +130,7 @@ for (const week of weeks) {
         ingredientHits.get(canonical).push({
           // form 只在写法与规范名不同时落盘，避免重复。
           ...(ingredient === canonical ? {} : { form: ingredient }),
-          dish: name,
+          dish: canonicalDish,
           variantId,
           date: entry.date,
           mealPeriod: entry.mealPeriod,
