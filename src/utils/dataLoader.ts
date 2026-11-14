@@ -26,7 +26,7 @@ const INDEX_ERROR = '周清单 index.json 加载失败，请稍后重试或确�
 const WEEK_ERROR = '周食谱文件加载失败，请稍后重试或确认仓库资源。'
 const ALLERGENS_ERROR = '过敏原配置加载失败，请稍后重试或确认仓库资源。'
 const SUBSTITUTES_ERROR = '替餐配置加载失败，请稍后重试或确认仓库资源。'
-const DEFAULT_SUPPLEMENTS = ['AD', 'VD', '五维口服液', '益生菌']
+const DEFAULT_SUPPLEMENTS = ['AD', 'VD', '益生菌', '钙', '补脾口服液']
 
 type DataSection = 'index' | 'week' | 'allergens' | 'substitutes'
 
