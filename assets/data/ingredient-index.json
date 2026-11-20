@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-11-13T17:01:53+08:00",
+  "updatedAt": "2026-11-20T12:09:31+08:00",
   "note": "食材索引：按规范食材名聚合；hits 指回菜名与变体，form 只在写法与规范名不同时出现。",
   "total": {
-    "ingredients": 134,
-    "hits": 610,
-    "dishes": 135,
-    "variants": 151
+    "ingredients": 149,
+    "hits": 741,
+    "dishes": 161,
+    "variants": 179
   },
   "ingredients": {
     "鹌鹑蛋": {
@@ -51,13 +51,14 @@
       "forms": [
         "八角"
       ],
-      "dishCount": 3,
-      "hitCount": 3,
+      "dishCount": 4,
+      "hitCount": 4,
       "firstSeen": "2026-10-12",
-      "lastSeen": "2026-11-16",
+      "lastSeen": "2026-11-23",
       "dishes": [
         "红烧鸡腿",
         "卤花生",
+        "卤肉",
         "卤香干"
       ],
       "hits": [
@@ -78,6 +79,12 @@
           "variantId": "红烧鸡腿#bd93eae7",
           "date": "2026-11-16",
           "mealPeriod": "lunch"
+        },
+        {
+          "dish": "卤肉",
+          "variantId": "卤肉#c6d3bff5",
+          "date": "2026-11-23",
+          "mealPeriod": "lunch"
         }
       ]
     },
@@ -97,6 +104,26 @@
           "dish": "霸王花瘦肉汤",
           "variantId": "霸王花瘦肉汤#961746b2",
           "date": "2026-10-13",
+          "mealPeriod": "lunch"
+        }
+      ]
+    },
+    "白花菜": {
+      "forms": [
+        "白花菜"
+      ],
+      "dishCount": 1,
+      "hitCount": 1,
+      "firstSeen": "2026-11-27",
+      "lastSeen": "2026-11-27",
+      "dishes": [
+        "双花炒鱼丸"
+      ],
+      "hits": [
+        {
+          "dish": "双花炒鱼丸",
+          "variantId": "双花炒鱼丸#15a7b053",
+          "date": "2026-11-27",
           "mealPeriod": "lunch"
         }
       ]
@@ -165,17 +192,20 @@
       "forms": [
         "白糖"
       ],
-      "dishCount": 7,
-      "hitCount": 8,
+      "dishCount": 10,
+      "hitCount": 12,
       "firstSeen": "2026-10-13",
-      "lastSeen": "2026-11-11",
+      "lastSeen": "2026-11-27",
       "dishes": [
+        "八宝粥",
         "豆沙卷",
         "红枣糕",
         "红枣小米粥",
         "红枣银耳雪梨糖水",
         "奶香馒头",
         "奶香小馒头",
+        "南瓜饼",
+        "三杯鸭",
         "小米苹果粥"
       ],
       "hits": [
@@ -226,6 +256,30 @@
           "variantId": "奶香小馒头#34b334b5",
           "date": "2026-11-11",
           "mealPeriod": "breakfast"
+        },
+        {
+          "dish": "奶香小馒头",
+          "variantId": "奶香小馒头#34b334b5",
+          "date": "2026-11-23",
+          "mealPeriod": "afternoonTea"
+        },
+        {
+          "dish": "三杯鸭",
+          "variantId": "三杯鸭#fa89d198",
+          "date": "2026-11-25",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "八宝粥",
+          "variantId": "八宝粥#ca2fce98",
+          "date": "2026-11-26",
+          "mealPeriod": "afternoonTea"
+        },
+        {
+          "dish": "南瓜饼",
+          "variantId": "南瓜饼#7e7c63d5",
+          "date": "2026-11-27",
+          "mealPeriod": "afternoonTea"
         }
       ]
     },
@@ -245,6 +299,26 @@
           "dish": "雪梨西米露",
           "variantId": "雪梨西米露#7c8e00eb",
           "date": "2026-11-05",
+          "mealPeriod": "afternoonTea"
+        }
+      ]
+    },
+    "白芝麻": {
+      "forms": [
+        "白芝麻"
+      ],
+      "dishCount": 1,
+      "hitCount": 1,
+      "firstSeen": "2026-11-27",
+      "lastSeen": "2026-11-27",
+      "dishes": [
+        "南瓜饼"
+      ],
+      "hits": [
+        {
+          "dish": "南瓜饼",
+          "variantId": "南瓜饼#7e7c63d5",
+          "date": "2026-11-27",
           "mealPeriod": "afternoonTea"
         }
       ]
@@ -273,11 +347,12 @@
       "forms": [
         "板栗"
       ],
-      "dishCount": 1,
-      "hitCount": 1,
+      "dishCount": 2,
+      "hitCount": 2,
       "firstSeen": "2026-11-05",
-      "lastSeen": "2026-11-05",
+      "lastSeen": "2026-11-26",
       "dishes": [
+        "板栗花生瘦肉汤",
         "板栗焖鸡"
       ],
       "hits": [
@@ -285,6 +360,12 @@
           "dish": "板栗焖鸡",
           "variantId": "板栗焖鸡#e2f98bc2",
           "date": "2026-11-05",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "板栗花生瘦肉汤",
+          "variantId": "板栗花生瘦肉汤#420542e5",
+          "date": "2026-11-26",
           "mealPeriod": "lunch"
         }
       ]
@@ -461,17 +542,38 @@
         }
       ]
     },
+    "赤小豆": {
+      "forms": [
+        "赤小豆"
+      ],
+      "dishCount": 1,
+      "hitCount": 1,
+      "firstSeen": "2026-11-26",
+      "lastSeen": "2026-11-26",
+      "dishes": [
+        "八宝粥"
+      ],
+      "hits": [
+        {
+          "dish": "八宝粥",
+          "variantId": "八宝粥#ca2fce98",
+          "date": "2026-11-26",
+          "mealPeriod": "afternoonTea"
+        }
+      ]
+    },
     "虫草花": {
       "forms": [
         "虫草花"
       ],
-      "dishCount": 3,
-      "hitCount": 3,
+      "dishCount": 4,
+      "hitCount": 4,
       "firstSeen": "2026-10-15",
-      "lastSeen": "2026-11-09",
+      "lastSeen": "2026-11-24",
       "dishes": [
         "虫草花红枣冬菇蒸鸡",
         "虫草花蒸鸡",
+        "大骨菌菇虫草花汤",
         "菌菇虫草花鸡汤"
       ],
       "hits": [
@@ -491,6 +593,12 @@
           "dish": "虫草花红枣冬菇蒸鸡",
           "variantId": "虫草花红枣冬菇蒸鸡#c46d8627",
           "date": "2026-11-09",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "大骨菌菇虫草花汤",
+          "variantId": "大骨菌菇虫草花汤#e426c754",
+          "date": "2026-11-24",
           "mealPeriod": "lunch"
         }
       ]
@@ -512,6 +620,26 @@
           "variantId": "油焖大虾#b2c6cfc7",
           "date": "2026-10-23",
           "mealPeriod": "lunch"
+        }
+      ]
+    },
+    "脆皮肠": {
+      "forms": [
+        "脆皮肠"
+      ],
+      "dishCount": 1,
+      "hitCount": 1,
+      "firstSeen": "2026-11-24",
+      "lastSeen": "2026-11-24",
+      "dishes": [
+        "脆皮肠"
+      ],
+      "hits": [
+        {
+          "dish": "脆皮肠",
+          "variantId": "脆皮肠#4e82e215",
+          "date": "2026-11-24",
+          "mealPeriod": "morningSnack"
         }
       ]
     },
@@ -545,14 +673,16 @@
       "forms": [
         "大骨"
       ],
-      "dishCount": 3,
-      "hitCount": 6,
+      "dishCount": 5,
+      "hitCount": 8,
       "firstSeen": "2026-10-12",
-      "lastSeen": "2026-11-18",
+      "lastSeen": "2026-11-27",
       "dishes": [
         "大骨淮山汤",
+        "大骨菌菇虫草花汤",
         "海带黄豆大骨汤",
-        "山药百合大骨汤"
+        "山药百合大骨汤",
+        "竹蔗马蹄大骨汤"
       ],
       "hits": [
         {
@@ -590,6 +720,18 @@
           "variantId": "大骨淮山汤#3721238f",
           "date": "2026-11-18",
           "mealPeriod": "lunch"
+        },
+        {
+          "dish": "大骨菌菇虫草花汤",
+          "variantId": "大骨菌菇虫草花汤#e426c754",
+          "date": "2026-11-24",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "竹蔗马蹄大骨汤",
+          "variantId": "竹蔗马蹄大骨汤#50866651",
+          "date": "2026-11-27",
+          "mealPeriod": "lunch"
         }
       ]
     },
@@ -597,11 +739,12 @@
       "forms": [
         "大米"
       ],
-      "dishCount": 12,
-      "hitCount": 33,
+      "dishCount": 15,
+      "hitCount": 40,
       "firstSeen": "2026-10-12",
-      "lastSeen": "2026-11-20",
+      "lastSeen": "2026-11-27",
       "dishes": [
+        "八宝粥",
         "煲仔饭",
         "菠菜胡萝卜肉粥",
         "彩蔬肉粥",
@@ -609,10 +752,12 @@
         "老南瓜淮山瘦肉粥",
         "米饭",
         "皮蛋瘦肉粥",
+        "山药老南瓜肉粥",
         "蔬菜胡萝卜小米肉粥",
         "香菇瘦肉虾粥",
         "小米苹果粥",
         "扬州炒饭",
+        "紫菜肉松饭团",
         "紫薯饭"
       ],
       "hits": [
@@ -813,6 +958,48 @@
           "variantId": "煲仔饭#2a630d63",
           "date": "2026-11-20",
           "mealPeriod": "lunch"
+        },
+        {
+          "dish": "米饭",
+          "variantId": "米饭#d22190b1",
+          "date": "2026-11-23",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "米饭",
+          "variantId": "米饭#1ef23f79",
+          "date": "2026-11-24",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "紫菜肉松饭团",
+          "variantId": "紫菜肉松饭团#f68499fc",
+          "date": "2026-11-24",
+          "mealPeriod": "afternoonTea"
+        },
+        {
+          "dish": "米饭",
+          "variantId": "米饭#a8c3e97e",
+          "date": "2026-11-25",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "八宝粥",
+          "variantId": "八宝粥#ca2fce98",
+          "date": "2026-11-26",
+          "mealPeriod": "afternoonTea"
+        },
+        {
+          "dish": "米饭",
+          "variantId": "米饭#1ef23f79",
+          "date": "2026-11-26",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "山药老南瓜肉粥",
+          "variantId": "山药老南瓜肉粥#a9820c23",
+          "date": "2026-11-27",
+          "mealPeriod": "breakfast"
         }
       ]
     },
@@ -820,12 +1007,13 @@
       "forms": [
         "大碗面"
       ],
-      "dishCount": 3,
-      "hitCount": 3,
+      "dishCount": 4,
+      "hitCount": 4,
       "firstSeen": "2026-10-16",
-      "lastSeen": "2026-11-02",
+      "lastSeen": "2026-11-24",
       "dishes": [
         "葱油肉拌面",
+        "青菜瘦肉汤面",
         "瘦肉青菜鸡蛋炒面",
         "五彩瘦肉汤面"
       ],
@@ -847,6 +1035,12 @@
           "variantId": "瘦肉青菜鸡蛋炒面#f5b454b8",
           "date": "2026-11-02",
           "mealPeriod": "afternoonTea"
+        },
+        {
+          "dish": "青菜瘦肉汤面",
+          "variantId": "青菜瘦肉汤面#365bb6a7",
+          "date": "2026-11-24",
+          "mealPeriod": "breakfast"
         }
       ]
     },
@@ -854,13 +1048,14 @@
       "forms": [
         "蛋黄面"
       ],
-      "dishCount": 2,
-      "hitCount": 2,
+      "dishCount": 3,
+      "hitCount": 3,
       "firstSeen": "2026-10-12",
-      "lastSeen": "2026-11-13",
+      "lastSeen": "2026-11-26",
       "dishes": [
         "鸡丝汤面",
-        "紫菜瘦肉云吞面"
+        "紫菜瘦肉云吞面",
+        "紫菜虾皮云吞面"
       ],
       "hits": [
         {
@@ -873,6 +1068,12 @@
           "dish": "鸡丝汤面",
           "variantId": "鸡丝汤面#aa0b718b",
           "date": "2026-11-13",
+          "mealPeriod": "breakfast"
+        },
+        {
+          "dish": "紫菜虾皮云吞面",
+          "variantId": "紫菜虾皮云吞面#de164d52",
+          "date": "2026-11-26",
           "mealPeriod": "breakfast"
         }
       ]
@@ -901,13 +1102,14 @@
       "forms": [
         "冬瓜"
       ],
-      "dishCount": 2,
-      "hitCount": 2,
+      "dishCount": 3,
+      "hitCount": 3,
       "firstSeen": "2026-11-03",
-      "lastSeen": "2026-11-11",
+      "lastSeen": "2026-11-25",
       "dishes": [
         "冬瓜焖鸭",
-        "冬瓜薏米老鸭汤"
+        "冬瓜薏米老鸭汤",
+        "上汤肉沫蒸冬瓜"
       ],
       "hits": [
         {
@@ -921,6 +1123,12 @@
           "variantId": "冬瓜薏米老鸭汤#2961982e",
           "date": "2026-11-11",
           "mealPeriod": "lunch"
+        },
+        {
+          "dish": "上汤肉沫蒸冬瓜",
+          "variantId": "上汤肉沫蒸冬瓜#437e1478",
+          "date": "2026-11-25",
+          "mealPeriod": "lunch"
         }
       ]
     },
@@ -928,13 +1136,14 @@
       "forms": [
         "豆腐"
       ],
-      "dishCount": 3,
-      "hitCount": 3,
+      "dishCount": 4,
+      "hitCount": 4,
       "firstSeen": "2026-10-14",
-      "lastSeen": "2026-11-09",
+      "lastSeen": "2026-11-23",
       "dishes": [
         "豆腐蒸肉卷",
         "红烧肉酱豆腐",
+        "瘦肉焖豆腐",
         "丝瓜豆腐鱼汤"
       ],
       "hits": [
@@ -954,6 +1163,12 @@
           "dish": "红烧肉酱豆腐",
           "variantId": "红烧肉酱豆腐#25ce35bd",
           "date": "2026-11-09",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "瘦肉焖豆腐",
+          "variantId": "瘦肉焖豆腐#55373855",
+          "date": "2026-11-23",
           "mealPeriod": "lunch"
         }
       ]
@@ -1023,9 +1238,9 @@
         "豆奶"
       ],
       "dishCount": 1,
-      "hitCount": 5,
+      "hitCount": 7,
       "firstSeen": "2026-10-15",
-      "lastSeen": "2026-11-19",
+      "lastSeen": "2026-11-27",
       "dishes": [
         "豆奶"
       ],
@@ -1058,6 +1273,18 @@
           "dish": "豆奶",
           "variantId": "豆奶#99602800",
           "date": "2026-11-19",
+          "mealPeriod": "afternoonTea"
+        },
+        {
+          "dish": "豆奶",
+          "variantId": "豆奶#99602800",
+          "date": "2026-11-25",
+          "mealPeriod": "morningSnack"
+        },
+        {
+          "dish": "豆奶",
+          "variantId": "豆奶#99602800",
+          "date": "2026-11-27",
           "mealPeriod": "afternoonTea"
         }
       ]
@@ -1145,11 +1372,12 @@
       "forms": [
         "甘蔗"
       ],
-      "dishCount": 1,
-      "hitCount": 1,
+      "dishCount": 2,
+      "hitCount": 2,
       "firstSeen": "2026-11-10",
-      "lastSeen": "2026-11-10",
+      "lastSeen": "2026-11-27",
       "dishes": [
+        "竹蔗马蹄大骨汤",
         "竹蔗雪梨红枣瘦肉汤"
       ],
       "hits": [
@@ -1157,6 +1385,12 @@
           "dish": "竹蔗雪梨红枣瘦肉汤",
           "variantId": "竹蔗雪梨红枣瘦肉汤#5ec5eb44",
           "date": "2026-11-10",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "竹蔗马蹄大骨汤",
+          "variantId": "竹蔗马蹄大骨汤#50866651",
+          "date": "2026-11-27",
           "mealPeriod": "lunch"
         }
       ]
@@ -1295,14 +1529,34 @@
         }
       ]
     },
+    "桂皮": {
+      "forms": [
+        "桂皮"
+      ],
+      "dishCount": 1,
+      "hitCount": 1,
+      "firstSeen": "2026-11-25",
+      "lastSeen": "2026-11-25",
+      "dishes": [
+        "三杯鸭"
+      ],
+      "hits": [
+        {
+          "dish": "三杯鸭",
+          "variantId": "三杯鸭#fa89d198",
+          "date": "2026-11-25",
+          "mealPeriod": "lunch"
+        }
+      ]
+    },
     "哈密瓜": {
       "forms": [
         "哈密瓜"
       ],
       "dishCount": 1,
-      "hitCount": 8,
+      "hitCount": 10,
       "firstSeen": "2026-10-14",
-      "lastSeen": "2026-11-20",
+      "lastSeen": "2026-11-25",
       "dishes": [
         "哈密瓜"
       ],
@@ -1353,6 +1607,18 @@
           "dish": "哈密瓜",
           "variantId": "哈密瓜#c66fd365",
           "date": "2026-11-20",
+          "mealPeriod": "morningSnack"
+        },
+        {
+          "dish": "哈密瓜",
+          "variantId": "哈密瓜#c66fd365",
+          "date": "2026-11-24",
+          "mealPeriod": "morningSnack"
+        },
+        {
+          "dish": "哈密瓜",
+          "variantId": "哈密瓜#c66fd365",
+          "date": "2026-11-25",
           "mealPeriod": "morningSnack"
         }
       ]
@@ -1447,11 +1713,12 @@
       "forms": [
         "红豆"
       ],
-      "dishCount": 2,
-      "hitCount": 2,
+      "dishCount": 3,
+      "hitCount": 3,
       "firstSeen": "2026-11-03",
-      "lastSeen": "2026-11-12",
+      "lastSeen": "2026-11-26",
       "dishes": [
+        "八宝粥",
         "豆沙卷",
         "红豆莲子西米露"
       ],
@@ -1467,6 +1734,12 @@
           "variantId": "红豆莲子西米露#a13f17d7",
           "date": "2026-11-12",
           "mealPeriod": "afternoonTea"
+        },
+        {
+          "dish": "八宝粥",
+          "variantId": "八宝粥#ca2fce98",
+          "date": "2026-11-26",
+          "mealPeriod": "afternoonTea"
         }
       ]
     },
@@ -1475,9 +1748,9 @@
         "红薯"
       ],
       "dishCount": 1,
-      "hitCount": 3,
+      "hitCount": 4,
       "firstSeen": "2026-11-05",
-      "lastSeen": "2026-11-20",
+      "lastSeen": "2026-11-23",
       "dishes": [
         "蒸红薯"
       ],
@@ -1499,6 +1772,12 @@
           "variantId": "蒸红薯#be825371",
           "date": "2026-11-20",
           "mealPeriod": "breakfast"
+        },
+        {
+          "dish": "蒸红薯",
+          "variantId": "蒸红薯#be825371",
+          "date": "2026-11-23",
+          "mealPeriod": "morningSnack"
         }
       ]
     },
@@ -1552,13 +1831,15 @@
       "forms": [
         "红枣"
       ],
-      "dishCount": 15,
-      "hitCount": 16,
+      "dishCount": 20,
+      "hitCount": 21,
       "firstSeen": "2026-10-13",
-      "lastSeen": "2026-11-12",
+      "lastSeen": "2026-11-27",
       "dishes": [
+        "板栗花生瘦肉汤",
         "虫草花红枣冬菇蒸鸡",
         "虫草花蒸鸡",
+        "大骨菌菇虫草花汤",
         "冬瓜薏米老鸭汤",
         "广式糖水",
         "海底椰苹果肉汤",
@@ -1569,8 +1850,11 @@
         "菌菇虫草花鸡汤",
         "莲藕红枣瘦肉汤",
         "木瓜花生瘦肉汤",
+        "时蔬秋梨肉汤",
+        "太子参淮山瘦肉汤",
         "小米苹果粥",
         "雪梨西米露",
+        "竹蔗马蹄大骨汤",
         "竹蔗雪梨红枣瘦肉汤"
       ],
       "hits": [
@@ -1669,6 +1953,36 @@
           "variantId": "红豆莲子西米露#a13f17d7",
           "date": "2026-11-12",
           "mealPeriod": "afternoonTea"
+        },
+        {
+          "dish": "时蔬秋梨肉汤",
+          "variantId": "时蔬秋梨肉汤#27ff29d5",
+          "date": "2026-11-23",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "大骨菌菇虫草花汤",
+          "variantId": "大骨菌菇虫草花汤#e426c754",
+          "date": "2026-11-24",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "太子参淮山瘦肉汤",
+          "variantId": "太子参淮山瘦肉汤#0c142189",
+          "date": "2026-11-25",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "板栗花生瘦肉汤",
+          "variantId": "板栗花生瘦肉汤#420542e5",
+          "date": "2026-11-26",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "竹蔗马蹄大骨汤",
+          "variantId": "竹蔗马蹄大骨汤#50866651",
+          "date": "2026-11-27",
+          "mealPeriod": "lunch"
         }
       ]
     },
@@ -1677,10 +1991,10 @@
         "红萝卜",
         "胡萝卜"
       ],
-      "dishCount": 31,
-      "hitCount": 37,
+      "dishCount": 38,
+      "hitCount": 44,
       "firstSeen": "2026-10-12",
-      "lastSeen": "2026-11-20",
+      "lastSeen": "2026-11-27",
       "dishes": [
         "板栗焖鸡",
         "煲仔饭",
@@ -1690,27 +2004,34 @@
         "葱油肉拌面",
         "豆腐皮肉卷",
         "豆腐蒸肉卷",
+        "番茄肉酱面",
         "腐竹烧肉",
         "红烧牛肉面",
         "红烧肉酱豆腐",
         "鸡丝汤面",
         "酱香肉沫蒸米粉",
+        "莲藕胡萝卜蒸肉饼",
         "罗宋汤",
         "蘑菇烩牛肉",
         "青菜瘦肉炒面",
+        "青菜瘦肉汤面",
+        "青瓜炒瘦肉",
         "肉焖土豆",
         "肉沫青菜蝴蝶粉",
         "肉沫青菜汤面",
         "三丝炒米粉",
         "三鲜螺纹粉",
         "烧麦",
+        "时蔬秋梨肉汤",
         "手工蒸饺",
+        "瘦肉焖豆腐",
         "蔬菜胡萝卜小米肉粥",
         "汤米粉",
         "五彩肉丁",
         "五彩瘦肉面",
         "五彩瘦肉汤面",
         "西葫芦炒肉",
+        "香菇蒸鸡肉",
         "腰果玉米炒肉丁",
         "自制肉丸"
       ],
@@ -1963,6 +2284,54 @@
           "variantId": "五彩瘦肉面#76683816",
           "date": "2026-11-20",
           "mealPeriod": "breakfast"
+        },
+        {
+          "form": "红萝卜",
+          "dish": "时蔬秋梨肉汤",
+          "variantId": "时蔬秋梨肉汤#27ff29d5",
+          "date": "2026-11-23",
+          "mealPeriod": "lunch"
+        },
+        {
+          "form": "红萝卜",
+          "dish": "瘦肉焖豆腐",
+          "variantId": "瘦肉焖豆腐#55373855",
+          "date": "2026-11-23",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "莲藕胡萝卜蒸肉饼",
+          "variantId": "莲藕胡萝卜蒸肉饼#6155dc96",
+          "date": "2026-11-24",
+          "mealPeriod": "lunch"
+        },
+        {
+          "form": "红萝卜",
+          "dish": "青菜瘦肉汤面",
+          "variantId": "青菜瘦肉汤面#365bb6a7",
+          "date": "2026-11-24",
+          "mealPeriod": "breakfast"
+        },
+        {
+          "form": "红萝卜",
+          "dish": "青瓜炒瘦肉",
+          "variantId": "青瓜炒瘦肉#cfe5f90c",
+          "date": "2026-11-26",
+          "mealPeriod": "lunch"
+        },
+        {
+          "form": "红萝卜",
+          "dish": "香菇蒸鸡肉",
+          "variantId": "香菇蒸鸡肉#96636b2d",
+          "date": "2026-11-26",
+          "mealPeriod": "lunch"
+        },
+        {
+          "form": "红萝卜",
+          "dish": "番茄肉酱面",
+          "variantId": "番茄肉酱面#cafdbb4f",
+          "date": "2026-11-27",
+          "mealPeriod": "lunch"
         }
       ]
     },
@@ -1970,12 +2339,13 @@
       "forms": [
         "蝴蝶粉"
       ],
-      "dishCount": 1,
-      "hitCount": 1,
+      "dishCount": 2,
+      "hitCount": 2,
       "firstSeen": "2026-10-19",
-      "lastSeen": "2026-10-19",
+      "lastSeen": "2026-11-25",
       "dishes": [
-        "肉沫青菜蝴蝶粉"
+        "肉沫青菜蝴蝶粉",
+        "瘦肉青菜蝴蝶粉"
       ],
       "hits": [
         {
@@ -1983,6 +2353,12 @@
           "variantId": "肉沫青菜蝴蝶粉#54f5d612",
           "date": "2026-10-19",
           "mealPeriod": "breakfast"
+        },
+        {
+          "dish": "瘦肉青菜蝴蝶粉",
+          "variantId": "瘦肉青菜蝴蝶粉#9a4a5c94",
+          "date": "2026-11-25",
+          "mealPeriod": "afternoonTea"
         }
       ]
     },
@@ -1990,11 +2366,12 @@
       "forms": [
         "花生"
       ],
-      "dishCount": 3,
-      "hitCount": 6,
+      "dishCount": 4,
+      "hitCount": 7,
       "firstSeen": "2026-10-12",
-      "lastSeen": "2026-11-18",
+      "lastSeen": "2026-11-26",
       "dishes": [
+        "板栗花生瘦肉汤",
         "卤花生",
         "木瓜花生瘦肉汤",
         "五香花生"
@@ -2035,6 +2412,12 @@
           "variantId": "卤花生#8658a974",
           "date": "2026-11-18",
           "mealPeriod": "afternoonTea"
+        },
+        {
+          "dish": "板栗花生瘦肉汤",
+          "variantId": "板栗花生瘦肉汤#420542e5",
+          "date": "2026-11-26",
+          "mealPeriod": "lunch"
         }
       ]
     },
@@ -2069,15 +2452,16 @@
       "forms": [
         "淮山"
       ],
-      "dishCount": 4,
-      "hitCount": 5,
+      "dishCount": 5,
+      "hitCount": 6,
       "firstSeen": "2026-10-14",
-      "lastSeen": "2026-11-18",
+      "lastSeen": "2026-11-25",
       "dishes": [
         "大骨淮山汤",
         "广式糖水",
         "淮山玉米排骨汤",
-        "老南瓜淮山瘦肉粥"
+        "老南瓜淮山瘦肉粥",
+        "太子参淮山瘦肉汤"
       ],
       "hits": [
         {
@@ -2108,6 +2492,12 @@
           "dish": "大骨淮山汤",
           "variantId": "大骨淮山汤#3721238f",
           "date": "2026-11-18",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "太子参淮山瘦肉汤",
+          "variantId": "太子参淮山瘦肉汤#0c142189",
+          "date": "2026-11-25",
           "mealPeriod": "lunch"
         }
       ]
@@ -2176,9 +2566,9 @@
         "火龙果"
       ],
       "dishCount": 1,
-      "hitCount": 1,
+      "hitCount": 2,
       "firstSeen": "2026-10-15",
-      "lastSeen": "2026-10-15",
+      "lastSeen": "2026-11-23",
       "dishes": [
         "火龙果"
       ],
@@ -2188,6 +2578,12 @@
           "variantId": "火龙果#f09e2019",
           "date": "2026-10-15",
           "mealPeriod": "morningSnack"
+        },
+        {
+          "dish": "火龙果",
+          "variantId": "火龙果#f09e2019",
+          "date": "2026-11-23",
+          "mealPeriod": "morningSnack"
         }
       ]
     },
@@ -2195,16 +2591,17 @@
       "forms": [
         "火腿"
       ],
-      "dishCount": 5,
-      "hitCount": 6,
+      "dishCount": 6,
+      "hitCount": 7,
       "firstSeen": "2026-10-23",
-      "lastSeen": "2026-11-20",
+      "lastSeen": "2026-11-24",
       "dishes": [
         "煲仔饭",
         "火腿炒豆角粒",
         "烧麦",
         "五彩肉丁",
-        "扬州炒饭"
+        "扬州炒饭",
+        "紫菜肉松饭团"
       ],
       "hits": [
         {
@@ -2242,6 +2639,12 @@
           "variantId": "煲仔饭#2a630d63",
           "date": "2026-11-20",
           "mealPeriod": "lunch"
+        },
+        {
+          "dish": "紫菜肉松饭团",
+          "variantId": "紫菜肉松饭团#f68499fc",
+          "date": "2026-11-24",
+          "mealPeriod": "afternoonTea"
         }
       ]
     },
@@ -2249,10 +2652,10 @@
       "forms": [
         "鸡蛋"
       ],
-      "dishCount": 12,
-      "hitCount": 16,
+      "dishCount": 13,
+      "hitCount": 18,
       "firstSeen": "2026-10-14",
-      "lastSeen": "2026-11-20",
+      "lastSeen": "2026-11-27",
       "dishes": [
         "煲仔饭",
         "豆腐皮肉卷",
@@ -2262,6 +2665,7 @@
         "肉沫蒸水蛋",
         "三丝炒米粉",
         "三鲜通心粉",
+        "瘦肉青菜蝴蝶粉",
         "瘦肉青菜鸡蛋炒面",
         "水煮蛋",
         "扬州炒饭",
@@ -2363,6 +2767,18 @@
           "variantId": "煲仔饭#2a630d63",
           "date": "2026-11-20",
           "mealPeriod": "lunch"
+        },
+        {
+          "dish": "瘦肉青菜蝴蝶粉",
+          "variantId": "瘦肉青菜蝴蝶粉#9a4a5c94",
+          "date": "2026-11-25",
+          "mealPeriod": "afternoonTea"
+        },
+        {
+          "dish": "水煮蛋",
+          "variantId": "水煮蛋#2f01daba",
+          "date": "2026-11-27",
+          "mealPeriod": "morningSnack"
         }
       ]
     },
@@ -2499,9 +2915,9 @@
         "橘子"
       ],
       "dishCount": 1,
-      "hitCount": 6,
+      "hitCount": 7,
       "firstSeen": "2026-10-19",
-      "lastSeen": "2026-11-20",
+      "lastSeen": "2026-11-27",
       "dishes": [
         "橘子"
       ],
@@ -2541,6 +2957,12 @@
           "variantId": "橘子#a86c33e4",
           "date": "2026-11-20",
           "mealPeriod": "morningSnack"
+        },
+        {
+          "dish": "橘子",
+          "variantId": "橘子#a86c33e4",
+          "date": "2026-11-27",
+          "mealPeriod": "morningSnack"
         }
       ]
     },
@@ -2548,11 +2970,12 @@
       "forms": [
         "菌菇"
       ],
-      "dishCount": 1,
-      "hitCount": 1,
+      "dishCount": 2,
+      "hitCount": 2,
       "firstSeen": "2026-10-15",
-      "lastSeen": "2026-10-15",
+      "lastSeen": "2026-11-24",
       "dishes": [
+        "大骨菌菇虫草花汤",
         "菌菇虫草花鸡汤"
       ],
       "hits": [
@@ -2560,6 +2983,12 @@
           "dish": "菌菇虫草花鸡汤",
           "variantId": "菌菇虫草花鸡汤#68ac0203",
           "date": "2026-10-15",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "大骨菌菇虫草花汤",
+          "variantId": "大骨菌菇虫草花汤#e426c754",
+          "date": "2026-11-24",
           "mealPeriod": "lunch"
         }
       ]
@@ -2608,12 +3037,13 @@
       "forms": [
         "老南瓜"
       ],
-      "dishCount": 2,
-      "hitCount": 2,
+      "dishCount": 3,
+      "hitCount": 3,
       "firstSeen": "2026-10-14",
-      "lastSeen": "2026-11-02",
+      "lastSeen": "2026-11-27",
       "dishes": [
         "老南瓜淮山瘦肉粥",
+        "南瓜饼",
         "排骨蒸南瓜"
       ],
       "hits": [
@@ -2628,6 +3058,12 @@
           "variantId": "排骨蒸南瓜#b4e5f763",
           "date": "2026-11-02",
           "mealPeriod": "lunch"
+        },
+        {
+          "dish": "南瓜饼",
+          "variantId": "南瓜饼#7e7c63d5",
+          "date": "2026-11-27",
+          "mealPeriod": "afternoonTea"
         }
       ]
     },
@@ -2655,12 +3091,13 @@
       "forms": [
         "梨子"
       ],
-      "dishCount": 1,
-      "hitCount": 6,
+      "dishCount": 2,
+      "hitCount": 8,
       "firstSeen": "2026-10-14",
-      "lastSeen": "2026-11-18",
+      "lastSeen": "2026-11-24",
       "dishes": [
-        "梨子"
+        "梨子",
+        "时蔬秋梨肉汤"
       ],
       "hits": [
         {
@@ -2698,6 +3135,18 @@
           "variantId": "梨子#cf47c891",
           "date": "2026-11-18",
           "mealPeriod": "morningSnack"
+        },
+        {
+          "dish": "时蔬秋梨肉汤",
+          "variantId": "时蔬秋梨肉汤#27ff29d5",
+          "date": "2026-11-23",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "梨子",
+          "variantId": "梨子#cf47c891",
+          "date": "2026-11-24",
+          "mealPeriod": "morningSnack"
         }
       ]
     },
@@ -2705,12 +3154,13 @@
       "forms": [
         "莲藕"
       ],
-      "dishCount": 2,
-      "hitCount": 2,
+      "dishCount": 3,
+      "hitCount": 3,
       "firstSeen": "2026-11-04",
-      "lastSeen": "2026-11-12",
+      "lastSeen": "2026-11-24",
       "dishes": [
         "莲藕红枣瘦肉汤",
+        "莲藕胡萝卜蒸肉饼",
         "自制肉丸"
       ],
       "hits": [
@@ -2724,6 +3174,12 @@
           "dish": "自制肉丸",
           "variantId": "自制肉丸#10aa4712",
           "date": "2026-11-12",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "莲藕胡萝卜蒸肉饼",
+          "variantId": "莲藕胡萝卜蒸肉饼#6155dc96",
+          "date": "2026-11-24",
           "mealPeriod": "lunch"
         }
       ]
@@ -2751,6 +3207,26 @@
           "dish": "红豆莲子西米露",
           "variantId": "红豆莲子西米露#a13f17d7",
           "date": "2026-11-12",
+          "mealPeriod": "afternoonTea"
+        }
+      ]
+    },
+    "绿豆": {
+      "forms": [
+        "绿豆"
+      ],
+      "dishCount": 1,
+      "hitCount": 1,
+      "firstSeen": "2026-11-26",
+      "lastSeen": "2026-11-26",
+      "dishes": [
+        "八宝粥"
+      ],
+      "hits": [
+        {
+          "dish": "八宝粥",
+          "variantId": "八宝粥#ca2fce98",
+          "date": "2026-11-26",
           "mealPeriod": "afternoonTea"
         }
       ]
@@ -2795,6 +3271,26 @@
         }
       ]
     },
+    "马蹄": {
+      "forms": [
+        "马蹄"
+      ],
+      "dishCount": 1,
+      "hitCount": 1,
+      "firstSeen": "2026-11-27",
+      "lastSeen": "2026-11-27",
+      "dishes": [
+        "竹蔗马蹄大骨汤"
+      ],
+      "hits": [
+        {
+          "dish": "竹蔗马蹄大骨汤",
+          "variantId": "竹蔗马蹄大骨汤#50866651",
+          "date": "2026-11-27",
+          "mealPeriod": "lunch"
+        }
+      ]
+    },
     "毛豆": {
       "forms": [
         "毛豆"
@@ -2819,13 +3315,14 @@
       "forms": [
         "米粉"
       ],
-      "dishCount": 3,
-      "hitCount": 4,
+      "dishCount": 4,
+      "hitCount": 5,
       "firstSeen": "2026-10-21",
-      "lastSeen": "2026-11-19",
+      "lastSeen": "2026-11-23",
       "dishes": [
         "三丝炒米粉",
         "汤米粉",
+        "西红柿瘦肉汤米粉",
         "蒸米粉"
       ],
       "hits": [
@@ -2852,6 +3349,12 @@
           "variantId": "蒸米粉#386754ae",
           "date": "2026-11-19",
           "mealPeriod": "breakfast"
+        },
+        {
+          "dish": "西红柿瘦肉汤米粉",
+          "variantId": "西红柿瘦肉汤米粉#7413a0bf",
+          "date": "2026-11-23",
+          "mealPeriod": "breakfast"
         }
       ]
     },
@@ -2860,9 +3363,9 @@
         "蜜橘"
       ],
       "dishCount": 1,
-      "hitCount": 1,
+      "hitCount": 2,
       "firstSeen": "2026-11-10",
-      "lastSeen": "2026-11-10",
+      "lastSeen": "2026-11-23",
       "dishes": [
         "蜜橘"
       ],
@@ -2872,6 +3375,12 @@
           "variantId": "蜜橘#a6225b8f",
           "date": "2026-11-10",
           "mealPeriod": "morningSnack"
+        },
+        {
+          "dish": "蜜橘",
+          "variantId": "蜜橘#a6225b8f",
+          "date": "2026-11-23",
+          "mealPeriod": "morningSnack"
         }
       ]
     },
@@ -2879,21 +3388,24 @@
       "forms": [
         "面粉"
       ],
-      "dishCount": 10,
-      "hitCount": 20,
+      "dishCount": 13,
+      "hitCount": 24,
       "firstSeen": "2026-10-12",
-      "lastSeen": "2026-11-20",
+      "lastSeen": "2026-11-27",
       "dishes": [
         "豆沙卷",
         "红糖馒头",
         "红枣糕",
         "奶香馒头",
         "奶香小馒头",
+        "南瓜饼",
         "烧麦",
         "手工蒸饺",
         "瘦肉包",
         "小葱瘦肉卷",
-        "紫菜瘦肉云吞面"
+        "小葱芝麻卷",
+        "紫菜瘦肉云吞面",
+        "紫菜虾皮云吞面"
       ],
       "hits": [
         {
@@ -3015,6 +3527,30 @@
           "variantId": "豆沙卷#ca30d511",
           "date": "2026-11-20",
           "mealPeriod": "afternoonTea"
+        },
+        {
+          "dish": "奶香小馒头",
+          "variantId": "奶香小馒头#34b334b5",
+          "date": "2026-11-23",
+          "mealPeriod": "afternoonTea"
+        },
+        {
+          "dish": "小葱芝麻卷",
+          "variantId": "小葱芝麻卷#9b920129",
+          "date": "2026-11-25",
+          "mealPeriod": "breakfast"
+        },
+        {
+          "dish": "紫菜虾皮云吞面",
+          "variantId": "紫菜虾皮云吞面#de164d52",
+          "date": "2026-11-26",
+          "mealPeriod": "breakfast"
+        },
+        {
+          "dish": "南瓜饼",
+          "variantId": "南瓜饼#7e7c63d5",
+          "date": "2026-11-27",
+          "mealPeriod": "afternoonTea"
         }
       ]
     },
@@ -3068,15 +3604,16 @@
       "forms": [
         "奶粉"
       ],
-      "dishCount": 4,
-      "hitCount": 6,
+      "dishCount": 5,
+      "hitCount": 8,
       "firstSeen": "2026-10-15",
-      "lastSeen": "2026-11-20",
+      "lastSeen": "2026-11-25",
       "dishes": [
         "豆沙卷",
         "红糖馒头",
         "奶香馒头",
-        "奶香小馒头"
+        "奶香小馒头",
+        "小葱芝麻卷"
       ],
       "hits": [
         {
@@ -3114,6 +3651,38 @@
           "variantId": "豆沙卷#ca30d511",
           "date": "2026-11-20",
           "mealPeriod": "afternoonTea"
+        },
+        {
+          "dish": "奶香小馒头",
+          "variantId": "奶香小馒头#34b334b5",
+          "date": "2026-11-23",
+          "mealPeriod": "afternoonTea"
+        },
+        {
+          "dish": "小葱芝麻卷",
+          "variantId": "小葱芝麻卷#9b920129",
+          "date": "2026-11-25",
+          "mealPeriod": "breakfast"
+        }
+      ]
+    },
+    "南瓜": {
+      "forms": [
+        "南瓜"
+      ],
+      "dishCount": 1,
+      "hitCount": 1,
+      "firstSeen": "2026-11-27",
+      "lastSeen": "2026-11-27",
+      "dishes": [
+        "山药老南瓜肉粥"
+      ],
+      "hits": [
+        {
+          "dish": "山药老南瓜肉粥",
+          "variantId": "山药老南瓜肉粥#a9820c23",
+          "date": "2026-11-27",
+          "mealPeriod": "breakfast"
         }
       ]
     },
@@ -3143,9 +3712,9 @@
         "牛奶"
       ],
       "dishCount": 2,
-      "hitCount": 16,
+      "hitCount": 19,
       "firstSeen": "2026-10-12",
-      "lastSeen": "2026-11-20",
+      "lastSeen": "2026-11-26",
       "dishes": [
         "纯牛奶",
         "酸牛奶"
@@ -3249,6 +3818,24 @@
           "variantId": "纯牛奶#e9dd22df",
           "date": "2026-11-20",
           "mealPeriod": "afternoonTea"
+        },
+        {
+          "dish": "纯牛奶",
+          "variantId": "纯牛奶#e9dd22df",
+          "date": "2026-11-23",
+          "mealPeriod": "afternoonTea"
+        },
+        {
+          "dish": "纯牛奶",
+          "variantId": "纯牛奶#e9dd22df",
+          "date": "2026-11-24",
+          "mealPeriod": "afternoonTea"
+        },
+        {
+          "dish": "纯牛奶",
+          "variantId": "纯牛奶#e9dd22df",
+          "date": "2026-11-26",
+          "mealPeriod": "morningSnack"
         }
       ]
     },
@@ -3475,15 +4062,16 @@
       "forms": [
         "青菜"
       ],
-      "dishCount": 9,
-      "hitCount": 9,
+      "dishCount": 10,
+      "hitCount": 10,
       "firstSeen": "2026-10-13",
-      "lastSeen": "2026-11-13",
+      "lastSeen": "2026-11-24",
       "dishes": [
         "彩蔬肉粥",
         "红烧牛肉面",
         "鸡丝汤面",
         "青菜瘦肉炒面",
+        "青菜瘦肉汤面",
         "三鲜通心粉",
         "瘦肉青菜鸡蛋炒面",
         "西红柿口蘑瘦肉汤米粉",
@@ -3544,6 +4132,12 @@
           "variantId": "鸡丝汤面#aa0b718b",
           "date": "2026-11-13",
           "mealPeriod": "breakfast"
+        },
+        {
+          "dish": "青菜瘦肉汤面",
+          "variantId": "青菜瘦肉汤面#365bb6a7",
+          "date": "2026-11-24",
+          "mealPeriod": "breakfast"
         }
       ]
     },
@@ -3551,14 +4145,16 @@
       "forms": [
         "青瓜"
       ],
-      "dishCount": 3,
-      "hitCount": 3,
+      "dishCount": 5,
+      "hitCount": 5,
       "firstSeen": "2026-11-02",
-      "lastSeen": "2026-11-19",
+      "lastSeen": "2026-11-26",
       "dishes": [
         "炒三丁",
         "酱香肉沫蒸米粉",
-        "五彩肉丁"
+        "青瓜炒瘦肉",
+        "五彩肉丁",
+        "紫菜肉松饭团"
       ],
       "hits": [
         {
@@ -3578,6 +4174,38 @@
           "variantId": "炒三丁#428bfe40",
           "date": "2026-11-19",
           "mealPeriod": "lunch"
+        },
+        {
+          "dish": "紫菜肉松饭团",
+          "variantId": "紫菜肉松饭团#f68499fc",
+          "date": "2026-11-24",
+          "mealPeriod": "afternoonTea"
+        },
+        {
+          "dish": "青瓜炒瘦肉",
+          "variantId": "青瓜炒瘦肉#cfe5f90c",
+          "date": "2026-11-26",
+          "mealPeriod": "lunch"
+        }
+      ]
+    },
+    "肉松": {
+      "forms": [
+        "肉松"
+      ],
+      "dishCount": 1,
+      "hitCount": 1,
+      "firstSeen": "2026-11-24",
+      "lastSeen": "2026-11-24",
+      "dishes": [
+        "紫菜肉松饭团"
+      ],
+      "hits": [
+        {
+          "dish": "紫菜肉松饭团",
+          "variantId": "紫菜肉松饭团#f68499fc",
+          "date": "2026-11-24",
+          "mealPeriod": "afternoonTea"
         }
       ]
     },
@@ -3605,13 +4233,14 @@
       "forms": [
         "山药"
       ],
-      "dishCount": 2,
-      "hitCount": 2,
+      "dishCount": 3,
+      "hitCount": 3,
       "firstSeen": "2026-10-12",
-      "lastSeen": "2026-11-03",
+      "lastSeen": "2026-11-27",
       "dishes": [
         "海鲜菇山药瘦肉汤",
-        "山药百合大骨汤"
+        "山药百合大骨汤",
+        "山药老南瓜肉粥"
       ],
       "hits": [
         {
@@ -3625,6 +4254,12 @@
           "variantId": "海鲜菇山药瘦肉汤#76a7cb4b",
           "date": "2026-11-03",
           "mealPeriod": "lunch"
+        },
+        {
+          "dish": "山药老南瓜肉粥",
+          "variantId": "山药老南瓜肉粥#a9820c23",
+          "date": "2026-11-27",
+          "mealPeriod": "breakfast"
         }
       ]
     },
@@ -3635,9 +4270,9 @@
         "山楂条"
       ],
       "dishCount": 1,
-      "hitCount": 3,
+      "hitCount": 4,
       "firstSeen": "2026-10-13",
-      "lastSeen": "2026-11-17",
+      "lastSeen": "2026-11-26",
       "dishes": [
         "山楂"
       ],
@@ -3661,6 +4296,13 @@
           "variantId": "山楂#05d85e7e",
           "date": "2026-11-17",
           "mealPeriod": "morningSnack"
+        },
+        {
+          "form": "山楂片",
+          "dish": "山楂",
+          "variantId": "山楂#007e9df1",
+          "date": "2026-11-26",
+          "mealPeriod": "morningSnack"
         }
       ]
     },
@@ -3668,16 +4310,19 @@
       "forms": [
         "生菜"
       ],
-      "dishCount": 5,
-      "hitCount": 6,
+      "dishCount": 8,
+      "hitCount": 9,
       "firstSeen": "2026-10-16",
-      "lastSeen": "2026-11-19",
+      "lastSeen": "2026-11-26",
       "dishes": [
         "肉沫青菜蝴蝶粉",
         "肉沫青菜汤面",
         "三鲜螺纹粉",
+        "瘦肉青菜蝴蝶粉",
         "五彩瘦肉汤面",
-        "蒸米粉"
+        "西红柿瘦肉汤米粉",
+        "蒸米粉",
+        "紫菜虾皮云吞面"
       ],
       "hits": [
         {
@@ -3715,6 +4360,24 @@
           "variantId": "蒸米粉#386754ae",
           "date": "2026-11-19",
           "mealPeriod": "breakfast"
+        },
+        {
+          "dish": "西红柿瘦肉汤米粉",
+          "variantId": "西红柿瘦肉汤米粉#7413a0bf",
+          "date": "2026-11-23",
+          "mealPeriod": "breakfast"
+        },
+        {
+          "dish": "瘦肉青菜蝴蝶粉",
+          "variantId": "瘦肉青菜蝴蝶粉#9a4a5c94",
+          "date": "2026-11-25",
+          "mealPeriod": "afternoonTea"
+        },
+        {
+          "dish": "紫菜虾皮云吞面",
+          "variantId": "紫菜虾皮云吞面#de164d52",
+          "date": "2026-11-26",
+          "mealPeriod": "breakfast"
         }
       ]
     },
@@ -3722,14 +4385,15 @@
       "forms": [
         "生抽"
       ],
-      "dishCount": 4,
-      "hitCount": 4,
+      "dishCount": 5,
+      "hitCount": 5,
       "firstSeen": "2026-10-14",
-      "lastSeen": "2026-11-16",
+      "lastSeen": "2026-11-23",
       "dishes": [
         "红烧鸡腿",
         "可乐鸡腿",
         "卤鸡腿",
+        "卤肉",
         "卤香干"
       ],
       "hits": [
@@ -3755,6 +4419,32 @@
           "dish": "红烧鸡腿",
           "variantId": "红烧鸡腿#bd93eae7",
           "date": "2026-11-16",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "卤肉",
+          "variantId": "卤肉#c6d3bff5",
+          "date": "2026-11-23",
+          "mealPeriod": "lunch"
+        }
+      ]
+    },
+    "生姜": {
+      "forms": [
+        "生姜"
+      ],
+      "dishCount": 1,
+      "hitCount": 1,
+      "firstSeen": "2026-11-25",
+      "lastSeen": "2026-11-25",
+      "dishes": [
+        "三杯鸭"
+      ],
+      "hits": [
+        {
+          "dish": "三杯鸭",
+          "variantId": "三杯鸭#fa89d198",
+          "date": "2026-11-25",
           "mealPeriod": "lunch"
         }
       ]
@@ -3801,11 +4491,12 @@
       "forms": [
         "时菜"
       ],
-      "dishCount": 3,
-      "hitCount": 11,
+      "dishCount": 4,
+      "hitCount": 15,
       "firstSeen": "2026-10-12",
-      "lastSeen": "2026-11-16",
+      "lastSeen": "2026-11-26",
       "dishes": [
+        "肉炒时菜",
         "肉沫时菜",
         "时菜炒肉",
         "瘦肉炒时菜"
@@ -3875,6 +4566,30 @@
           "dish": "瘦肉炒时菜",
           "variantId": "瘦肉炒时菜#1100c601",
           "date": "2026-11-16",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "肉炒时菜",
+          "variantId": "肉炒时菜#9cee1db9",
+          "date": "2026-11-23",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "瘦肉炒时菜",
+          "variantId": "瘦肉炒时菜#1100c601",
+          "date": "2026-11-24",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "肉炒时菜",
+          "variantId": "肉炒时菜#9cee1db9",
+          "date": "2026-11-25",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "时菜炒肉",
+          "variantId": "时菜炒肉#40e4b380",
+          "date": "2026-11-26",
           "mealPeriod": "lunch"
         }
       ]
@@ -3954,12 +4669,13 @@
       "forms": [
         "瘦肉"
       ],
-      "dishCount": 62,
-      "hitCount": 90,
+      "dishCount": 79,
+      "hitCount": 109,
       "firstSeen": "2026-10-12",
-      "lastSeen": "2026-11-20",
+      "lastSeen": "2026-11-27",
       "dishes": [
         "霸王花瘦肉汤",
+        "板栗花生瘦肉汤",
         "煲仔饭",
         "菠菜胡萝卜肉粥",
         "菠菜猪肝瘦肉汤",
@@ -3968,6 +4684,7 @@
         "葱油肉拌面",
         "豆腐皮肉卷",
         "豆腐蒸肉卷",
+        "番茄肉酱面",
         "番茄肉酱意面",
         "腐竹烧肉",
         "海底椰苹果肉汤",
@@ -3977,9 +4694,14 @@
         "酱香肉沫蒸米粉",
         "老南瓜淮山瘦肉粥",
         "莲藕红枣瘦肉汤",
+        "莲藕胡萝卜蒸肉饼",
+        "卤肉",
         "木瓜花生瘦肉汤",
         "皮蛋瘦肉粥",
         "青菜瘦肉炒面",
+        "青菜瘦肉汤面",
+        "青瓜炒瘦肉",
+        "肉炒时菜",
         "肉炒小瓜丝",
         "肉焖土豆",
         "肉沫焖萝卜",
@@ -3992,24 +4714,33 @@
         "三丝炒米粉",
         "三鲜螺纹粉",
         "三鲜通心粉",
+        "山药老南瓜肉粥",
+        "上汤肉沫蒸冬瓜",
         "烧麦",
+        "时菜炒肉",
         "时蔬炒肉",
+        "时蔬秋梨肉汤",
         "手工蒸饺",
         "瘦肉包",
         "瘦肉炒时菜",
         "瘦肉炒时蔬",
         "瘦肉菌菠菜菇汤",
         "瘦肉菌菇菠菜汤",
+        "瘦肉焖豆腐",
         "瘦肉蒲瓜",
+        "瘦肉青菜蝴蝶粉",
         "瘦肉青菜鸡蛋炒面",
         "瘦肉时蔬",
         "瘦肉莴笋",
+        "瘦肉小南瓜",
         "蔬菜胡萝卜小米肉粥",
+        "太子参淮山瘦肉汤",
         "汤米粉",
         "五彩瘦肉面",
         "五彩瘦肉汤面",
         "西红柿口蘑瘦肉汤米粉",
         "西红柿瘦肉汤",
+        "西红柿瘦肉汤米粉",
         "西葫芦炒肉",
         "西兰花炒肉",
         "鲜肉鸟巢蒸蛋",
@@ -4020,6 +4751,7 @@
         "蒸米粉",
         "竹蔗雪梨红枣瘦肉汤",
         "紫菜瘦肉云吞面",
+        "紫菜虾皮云吞面",
         "自制肉丸"
       ],
       "hits": [
@@ -4562,6 +5294,120 @@
           "variantId": "五彩瘦肉面#76683816",
           "date": "2026-11-20",
           "mealPeriod": "breakfast"
+        },
+        {
+          "dish": "卤肉",
+          "variantId": "卤肉#c6d3bff5",
+          "date": "2026-11-23",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "肉炒时菜",
+          "variantId": "肉炒时菜#9cee1db9",
+          "date": "2026-11-23",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "时蔬秋梨肉汤",
+          "variantId": "时蔬秋梨肉汤#27ff29d5",
+          "date": "2026-11-23",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "瘦肉焖豆腐",
+          "variantId": "瘦肉焖豆腐#55373855",
+          "date": "2026-11-23",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "西红柿瘦肉汤米粉",
+          "variantId": "西红柿瘦肉汤米粉#7413a0bf",
+          "date": "2026-11-23",
+          "mealPeriod": "breakfast"
+        },
+        {
+          "dish": "莲藕胡萝卜蒸肉饼",
+          "variantId": "莲藕胡萝卜蒸肉饼#6155dc96",
+          "date": "2026-11-24",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "青菜瘦肉汤面",
+          "variantId": "青菜瘦肉汤面#365bb6a7",
+          "date": "2026-11-24",
+          "mealPeriod": "breakfast"
+        },
+        {
+          "dish": "瘦肉炒时菜",
+          "variantId": "瘦肉炒时菜#1100c601",
+          "date": "2026-11-24",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "瘦肉小南瓜",
+          "variantId": "瘦肉小南瓜#ef0afd72",
+          "date": "2026-11-24",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "肉炒时菜",
+          "variantId": "肉炒时菜#9cee1db9",
+          "date": "2026-11-25",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "上汤肉沫蒸冬瓜",
+          "variantId": "上汤肉沫蒸冬瓜#437e1478",
+          "date": "2026-11-25",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "瘦肉青菜蝴蝶粉",
+          "variantId": "瘦肉青菜蝴蝶粉#9a4a5c94",
+          "date": "2026-11-25",
+          "mealPeriod": "afternoonTea"
+        },
+        {
+          "dish": "太子参淮山瘦肉汤",
+          "variantId": "太子参淮山瘦肉汤#0c142189",
+          "date": "2026-11-25",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "板栗花生瘦肉汤",
+          "variantId": "板栗花生瘦肉汤#420542e5",
+          "date": "2026-11-26",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "青瓜炒瘦肉",
+          "variantId": "青瓜炒瘦肉#cfe5f90c",
+          "date": "2026-11-26",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "时菜炒肉",
+          "variantId": "时菜炒肉#40e4b380",
+          "date": "2026-11-26",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "紫菜虾皮云吞面",
+          "variantId": "紫菜虾皮云吞面#de164d52",
+          "date": "2026-11-26",
+          "mealPeriod": "breakfast"
+        },
+        {
+          "dish": "番茄肉酱面",
+          "variantId": "番茄肉酱面#cafdbb4f",
+          "date": "2026-11-27",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "山药老南瓜肉粥",
+          "variantId": "山药老南瓜肉粥#a9820c23",
+          "date": "2026-11-27",
+          "mealPeriod": "breakfast"
         }
       ]
     },
@@ -4640,6 +5486,26 @@
           "variantId": "酸牛奶#791d0ae0",
           "date": "2026-11-17",
           "mealPeriod": "morningSnack"
+        }
+      ]
+    },
+    "太子参": {
+      "forms": [
+        "太子参"
+      ],
+      "dishCount": 1,
+      "hitCount": 1,
+      "firstSeen": "2026-11-25",
+      "lastSeen": "2026-11-25",
+      "dishes": [
+        "太子参淮山瘦肉汤"
+      ],
+      "hits": [
+        {
+          "dish": "太子参淮山瘦肉汤",
+          "variantId": "太子参淮山瘦肉汤#0c142189",
+          "date": "2026-11-25",
+          "mealPeriod": "lunch"
         }
       ]
     },
@@ -4735,11 +5601,12 @@
       "forms": [
         "五花肉"
       ],
-      "dishCount": 2,
-      "hitCount": 2,
+      "dishCount": 3,
+      "hitCount": 3,
       "firstSeen": "2026-11-04",
-      "lastSeen": "2026-11-11",
+      "lastSeen": "2026-11-27",
       "dishes": [
+        "番茄肉酱面",
         "红烧肉炖土豆",
         "时菜炒肉"
       ],
@@ -4755,6 +5622,12 @@
           "variantId": "红烧肉炖土豆#72eef317",
           "date": "2026-11-11",
           "mealPeriod": "lunch"
+        },
+        {
+          "dish": "番茄肉酱面",
+          "variantId": "番茄肉酱面#cafdbb4f",
+          "date": "2026-11-27",
+          "mealPeriod": "lunch"
         }
       ]
     },
@@ -4762,17 +5635,20 @@
       "forms": [
         "西红柿"
       ],
-      "dishCount": 6,
-      "hitCount": 7,
+      "dishCount": 9,
+      "hitCount": 10,
       "firstSeen": "2026-10-13",
-      "lastSeen": "2026-11-19",
+      "lastSeen": "2026-11-27",
       "dishes": [
         "葱油肉拌面",
+        "番茄肉酱面",
         "番茄肉酱意面",
         "茄汁牛肉意面",
+        "青菜瘦肉汤面",
         "汤米粉",
         "西红柿口蘑瘦肉汤米粉",
-        "西红柿瘦肉汤"
+        "西红柿瘦肉汤",
+        "西红柿瘦肉汤米粉"
       ],
       "hits": [
         {
@@ -4816,6 +5692,24 @@
           "variantId": "西红柿瘦肉汤#0551e0d3",
           "date": "2026-11-19",
           "mealPeriod": "breakfast"
+        },
+        {
+          "dish": "西红柿瘦肉汤米粉",
+          "variantId": "西红柿瘦肉汤米粉#7413a0bf",
+          "date": "2026-11-23",
+          "mealPeriod": "breakfast"
+        },
+        {
+          "dish": "青菜瘦肉汤面",
+          "variantId": "青菜瘦肉汤面#365bb6a7",
+          "date": "2026-11-24",
+          "mealPeriod": "breakfast"
+        },
+        {
+          "dish": "番茄肉酱面",
+          "variantId": "番茄肉酱面#cafdbb4f",
+          "date": "2026-11-27",
+          "mealPeriod": "lunch"
         }
       ]
     },
@@ -4843,11 +5737,12 @@
       "forms": [
         "西兰花"
       ],
-      "dishCount": 2,
-      "hitCount": 2,
+      "dishCount": 3,
+      "hitCount": 3,
       "firstSeen": "2026-10-16",
-      "lastSeen": "2026-11-13",
+      "lastSeen": "2026-11-27",
       "dishes": [
+        "双花炒鱼丸",
         "西兰花炒肉",
         "鲜虾西兰花"
       ],
@@ -4862,6 +5757,12 @@
           "dish": "西兰花炒肉",
           "variantId": "西兰花炒肉#12f1d222",
           "date": "2026-11-13",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "双花炒鱼丸",
+          "variantId": "双花炒鱼丸#15a7b053",
+          "date": "2026-11-27",
           "mealPeriod": "lunch"
         }
       ]
@@ -4886,19 +5787,40 @@
         }
       ]
     },
+    "虾皮": {
+      "forms": [
+        "虾皮"
+      ],
+      "dishCount": 1,
+      "hitCount": 1,
+      "firstSeen": "2026-11-26",
+      "lastSeen": "2026-11-26",
+      "dishes": [
+        "紫菜虾皮云吞面"
+      ],
+      "hits": [
+        {
+          "dish": "紫菜虾皮云吞面",
+          "variantId": "紫菜虾皮云吞面#de164d52",
+          "date": "2026-11-26",
+          "mealPeriod": "breakfast"
+        }
+      ]
+    },
     "鲜鸡": {
       "forms": [
         "鲜鸡"
       ],
-      "dishCount": 4,
-      "hitCount": 4,
+      "dishCount": 5,
+      "hitCount": 5,
       "firstSeen": "2026-10-15",
-      "lastSeen": "2026-11-09",
+      "lastSeen": "2026-11-26",
       "dishes": [
         "板栗焖鸡",
         "虫草花红枣冬菇蒸鸡",
         "虫草花蒸鸡",
-        "菌菇虫草花鸡汤"
+        "菌菇虫草花鸡汤",
+        "香菇蒸鸡肉"
       ],
       "hits": [
         {
@@ -4923,6 +5845,12 @@
           "dish": "虫草花红枣冬菇蒸鸡",
           "variantId": "虫草花红枣冬菇蒸鸡#c46d8627",
           "date": "2026-11-09",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "香菇蒸鸡肉",
+          "variantId": "香菇蒸鸡肉#96636b2d",
+          "date": "2026-11-26",
           "mealPeriod": "lunch"
         }
       ]
@@ -4971,18 +5899,25 @@
       "forms": [
         "鲜鸭"
       ],
-      "dishCount": 1,
-      "hitCount": 1,
+      "dishCount": 2,
+      "hitCount": 2,
       "firstSeen": "2026-11-03",
-      "lastSeen": "2026-11-03",
+      "lastSeen": "2026-11-25",
       "dishes": [
-        "冬瓜焖鸭"
+        "冬瓜焖鸭",
+        "三杯鸭"
       ],
       "hits": [
         {
           "dish": "冬瓜焖鸭",
           "variantId": "冬瓜焖鸭#87a46c75",
           "date": "2026-11-03",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "三杯鸭",
+          "variantId": "三杯鸭#fa89d198",
+          "date": "2026-11-25",
           "mealPeriod": "lunch"
         }
       ]
@@ -5011,13 +5946,14 @@
       "forms": [
         "香菇"
       ],
-      "dishCount": 3,
-      "hitCount": 5,
+      "dishCount": 4,
+      "hitCount": 6,
       "firstSeen": "2026-10-21",
-      "lastSeen": "2026-11-19",
+      "lastSeen": "2026-11-26",
       "dishes": [
         "香菇腐竹焖鸭肉",
         "香菇瘦肉虾粥",
+        "香菇蒸鸡肉",
         "蒸米粉"
       ],
       "hits": [
@@ -5050,6 +5986,12 @@
           "variantId": "蒸米粉#386754ae",
           "date": "2026-11-19",
           "mealPeriod": "breakfast"
+        },
+        {
+          "dish": "香菇蒸鸡肉",
+          "variantId": "香菇蒸鸡肉#96636b2d",
+          "date": "2026-11-26",
+          "mealPeriod": "lunch"
         }
       ]
     },
@@ -5058,9 +6000,9 @@
         "香蕉"
       ],
       "dishCount": 1,
-      "hitCount": 9,
+      "hitCount": 11,
       "firstSeen": "2026-10-12",
-      "lastSeen": "2026-11-19",
+      "lastSeen": "2026-11-27",
       "dishes": [
         "香蕉"
       ],
@@ -5117,6 +6059,18 @@
           "dish": "香蕉",
           "variantId": "香蕉#aa1ce0b5",
           "date": "2026-11-19",
+          "mealPeriod": "morningSnack"
+        },
+        {
+          "dish": "香蕉",
+          "variantId": "香蕉#aa1ce0b5",
+          "date": "2026-11-25",
+          "mealPeriod": "morningSnack"
+        },
+        {
+          "dish": "香蕉",
+          "variantId": "香蕉#aa1ce0b5",
+          "date": "2026-11-27",
           "mealPeriod": "morningSnack"
         }
       ]
@@ -5190,23 +6144,27 @@
       "forms": [
         "小葱"
       ],
-      "dishCount": 15,
-      "hitCount": 20,
+      "dishCount": 19,
+      "hitCount": 24,
       "firstSeen": "2026-10-13",
-      "lastSeen": "2026-11-18",
+      "lastSeen": "2026-11-26",
       "dishes": [
         "冬瓜焖鸭",
         "红烧肉酱豆腐",
         "黄豆焖排骨",
         "茄汁牛肉意面",
         "酱香肉沫蒸米粉",
+        "卤肉",
         "排骨蒸南瓜",
         "皮蛋瘦肉粥",
         "肉沫焖萝卜",
         "肉沫蒸滑蛋",
         "肉沫蒸水蛋",
+        "上汤肉沫蒸冬瓜",
         "鲜肉鸟巢蒸蛋",
+        "香菇蒸鸡肉",
         "小葱瘦肉卷",
+        "小葱芝麻卷",
         "鱼头萝卜丝汤",
         "紫菜鸡蛋汤",
         "自制肉丸"
@@ -5331,6 +6289,30 @@
           "variantId": "肉沫蒸水蛋#0a3dc46e",
           "date": "2026-11-18",
           "mealPeriod": "lunch"
+        },
+        {
+          "dish": "卤肉",
+          "variantId": "卤肉#c6d3bff5",
+          "date": "2026-11-23",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "上汤肉沫蒸冬瓜",
+          "variantId": "上汤肉沫蒸冬瓜#437e1478",
+          "date": "2026-11-25",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "小葱芝麻卷",
+          "variantId": "小葱芝麻卷#9b920129",
+          "date": "2026-11-25",
+          "mealPeriod": "breakfast"
+        },
+        {
+          "dish": "香菇蒸鸡肉",
+          "variantId": "香菇蒸鸡肉#96636b2d",
+          "date": "2026-11-26",
+          "mealPeriod": "lunch"
         }
       ]
     },
@@ -5378,9 +6360,9 @@
         "小米"
       ],
       "dishCount": 4,
-      "hitCount": 6,
+      "hitCount": 7,
       "firstSeen": "2026-10-13",
-      "lastSeen": "2026-11-18",
+      "lastSeen": "2026-11-23",
       "dishes": [
         "红枣小米粥",
         "米饭",
@@ -5423,6 +6405,32 @@
           "variantId": "蔬菜胡萝卜小米肉粥#1e025855",
           "date": "2026-11-18",
           "mealPeriod": "afternoonTea"
+        },
+        {
+          "dish": "米饭",
+          "variantId": "米饭#d22190b1",
+          "date": "2026-11-23",
+          "mealPeriod": "lunch"
+        }
+      ]
+    },
+    "小南瓜": {
+      "forms": [
+        "小南瓜"
+      ],
+      "dishCount": 1,
+      "hitCount": 1,
+      "firstSeen": "2026-11-24",
+      "lastSeen": "2026-11-24",
+      "dishes": [
+        "瘦肉小南瓜"
+      ],
+      "hits": [
+        {
+          "dish": "瘦肉小南瓜",
+          "variantId": "瘦肉小南瓜#ef0afd72",
+          "date": "2026-11-24",
+          "mealPeriod": "lunch"
         }
       ]
     },
@@ -5570,11 +6578,12 @@
       "forms": [
         "意大利面"
       ],
-      "dishCount": 2,
-      "hitCount": 2,
+      "dishCount": 3,
+      "hitCount": 3,
       "firstSeen": "2026-10-16",
-      "lastSeen": "2026-11-13",
+      "lastSeen": "2026-11-27",
       "dishes": [
+        "番茄肉酱面",
         "番茄肉酱意面",
         "茄汁牛肉意面"
       ],
@@ -5589,6 +6598,12 @@
           "dish": "茄汁牛肉意面",
           "variantId": "茄汁牛肉意面#1b3fac80",
           "date": "2026-11-13",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "番茄肉酱面",
+          "variantId": "番茄肉酱面#cafdbb4f",
+          "date": "2026-11-27",
           "mealPeriod": "lunch"
         }
       ]
@@ -5660,14 +6675,34 @@
         }
       ]
     },
+    "鱼丸": {
+      "forms": [
+        "鱼丸"
+      ],
+      "dishCount": 1,
+      "hitCount": 1,
+      "firstSeen": "2026-11-27",
+      "lastSeen": "2026-11-27",
+      "dishes": [
+        "双花炒鱼丸"
+      ],
+      "hits": [
+        {
+          "dish": "双花炒鱼丸",
+          "variantId": "双花炒鱼丸#15a7b053",
+          "date": "2026-11-27",
+          "mealPeriod": "lunch"
+        }
+      ]
+    },
     "玉米棒": {
       "forms": [
         "玉米棒"
       ],
       "dishCount": 2,
-      "hitCount": 5,
+      "hitCount": 6,
       "firstSeen": "2026-10-13",
-      "lastSeen": "2026-11-17",
+      "lastSeen": "2026-11-26",
       "dishes": [
         "淮山玉米排骨汤",
         "玉米棒"
@@ -5702,6 +6737,12 @@
           "variantId": "玉米棒#4da3ef37",
           "date": "2026-11-17",
           "mealPeriod": "breakfast"
+        },
+        {
+          "dish": "玉米棒",
+          "variantId": "玉米棒#4da3ef37",
+          "date": "2026-11-26",
+          "mealPeriod": "morningSnack"
         }
       ]
     },
@@ -5709,12 +6750,14 @@
       "forms": [
         "玉米粒"
       ],
-      "dishCount": 6,
-      "hitCount": 8,
+      "dishCount": 8,
+      "hitCount": 10,
       "firstSeen": "2026-10-12",
-      "lastSeen": "2026-11-20",
+      "lastSeen": "2026-11-27",
       "dishes": [
         "煲仔饭",
+        "番茄肉酱面",
+        "米饭",
         "烧麦",
         "瘦肉包",
         "五彩肉丁",
@@ -5769,6 +6812,38 @@
           "variantId": "煲仔饭#2a630d63",
           "date": "2026-11-20",
           "mealPeriod": "lunch"
+        },
+        {
+          "dish": "米饭",
+          "variantId": "米饭#a8c3e97e",
+          "date": "2026-11-25",
+          "mealPeriod": "lunch"
+        },
+        {
+          "dish": "番茄肉酱面",
+          "variantId": "番茄肉酱面#cafdbb4f",
+          "date": "2026-11-27",
+          "mealPeriod": "lunch"
+        }
+      ]
+    },
+    "芝麻": {
+      "forms": [
+        "芝麻"
+      ],
+      "dishCount": 1,
+      "hitCount": 1,
+      "firstSeen": "2026-11-25",
+      "lastSeen": "2026-11-25",
+      "dishes": [
+        "小葱芝麻卷"
+      ],
+      "hits": [
+        {
+          "dish": "小葱芝麻卷",
+          "variantId": "小葱芝麻卷#9b920129",
+          "date": "2026-11-25",
+          "mealPeriod": "breakfast"
         }
       ]
     },
@@ -5803,13 +6878,15 @@
       "forms": [
         "紫菜"
       ],
-      "dishCount": 2,
-      "hitCount": 4,
+      "dishCount": 4,
+      "hitCount": 6,
       "firstSeen": "2026-10-12",
-      "lastSeen": "2026-11-17",
+      "lastSeen": "2026-11-26",
       "dishes": [
         "紫菜鸡蛋汤",
-        "紫菜瘦肉云吞面"
+        "紫菜肉松饭团",
+        "紫菜瘦肉云吞面",
+        "紫菜虾皮云吞面"
       ],
       "hits": [
         {
@@ -5835,6 +6912,18 @@
           "variantId": "紫菜鸡蛋汤#d66de9ea",
           "date": "2026-11-17",
           "mealPeriod": "lunch"
+        },
+        {
+          "dish": "紫菜肉松饭团",
+          "variantId": "紫菜肉松饭团#f68499fc",
+          "date": "2026-11-24",
+          "mealPeriod": "afternoonTea"
+        },
+        {
+          "dish": "紫菜虾皮云吞面",
+          "variantId": "紫菜虾皮云吞面#de164d52",
+          "date": "2026-11-26",
+          "mealPeriod": "breakfast"
         }
       ]
     },
