@@ -2,7 +2,7 @@
   "week": "2026-W48",
   "startDate": "2026-11-23",
   "endDate": "2026-11-29",
-  "updatedAt": "2026-11-20T12:09:31+08:00",
+  "updatedAt": "2026-11-24T12:52:00+08:00",
   "recipes": [
     {
       "date": "2026-11-23",
@@ -21,6 +21,15 @@
           "riskAllergens": [],
           "substitute": null,
           "variantId": "西红柿瘦肉汤米粉#7413a0bf"
+        },
+        {
+          "name": "红薯",
+          "ingredients": [
+            "红薯"
+          ],
+          "riskAllergens": [],
+          "substitute": null,
+          "variantId": "蒸红薯#be825371"
         }
       ]
     },
@@ -30,15 +39,6 @@
       "mealPeriod": "morningSnack",
       "mealLabel": "早点",
       "dishes": [
-        {
-          "name": "红薯",
-          "ingredients": [
-            "红薯"
-          ],
-          "riskAllergens": [],
-          "substitute": null,
-          "variantId": "蒸红薯#be825371"
-        },
         {
           "name": "火龙果",
           "ingredients": [
@@ -162,7 +162,7 @@
       "mealLabel": "早餐",
       "dishes": [
         {
-          "name": "青菜瘦肉汤面",
+          "name": "西红柿蔬菜瘦肉汤面",
           "ingredients": [
             "青菜",
             "瘦肉",
@@ -172,7 +172,16 @@
           ],
           "riskAllergens": [],
           "substitute": null,
-          "variantId": "青菜瘦肉汤面#365bb6a7"
+          "variantId": "西红柿蔬菜瘦肉汤面#4c007028"
+        },
+        {
+          "name": "脆皮肠",
+          "ingredients": [
+            "脆皮肠"
+          ],
+          "riskAllergens": [],
+          "substitute": null,
+          "variantId": "脆皮肠#4e82e215"
         }
       ]
     },
@@ -182,15 +191,6 @@
       "mealPeriod": "morningSnack",
       "mealLabel": "早点",
       "dishes": [
-        {
-          "name": "脆皮肠",
-          "ingredients": [
-            "脆皮肠"
-          ],
-          "riskAllergens": [],
-          "substitute": null,
-          "variantId": "脆皮肠#4e82e215"
-        },
         {
           "name": "哈密瓜",
           "ingredients": [
@@ -323,6 +323,15 @@
           ],
           "substitute": null,
           "variantId": "小葱芝麻卷#9b920129"
+        },
+        {
+          "name": "豆奶",
+          "ingredients": [
+            "豆奶"
+          ],
+          "riskAllergens": [],
+          "substitute": null,
+          "variantId": "豆奶#99602800"
         }
       ]
     },
@@ -332,15 +341,6 @@
       "mealPeriod": "morningSnack",
       "mealLabel": "早点",
       "dishes": [
-        {
-          "name": "豆奶",
-          "ingredients": [
-            "豆奶"
-          ],
-          "riskAllergens": [],
-          "substitute": null,
-          "variantId": "豆奶#99602800"
-        },
         {
           "name": "香蕉",
           "ingredients": [
@@ -468,6 +468,15 @@
           ],
           "substitute": null,
           "variantId": "紫菜虾皮云吞面#de164d52"
+        },
+        {
+          "name": "玉米棒",
+          "ingredients": [
+            "玉米棒"
+          ],
+          "riskAllergens": [],
+          "substitute": null,
+          "variantId": "玉米棒#4da3ef37"
         }
       ]
     },
@@ -477,15 +486,6 @@
       "mealPeriod": "morningSnack",
       "mealLabel": "早点",
       "dishes": [
-        {
-          "name": "玉米棒",
-          "ingredients": [
-            "玉米棒"
-          ],
-          "riskAllergens": [],
-          "substitute": null,
-          "variantId": "玉米棒#4da3ef37"
-        },
         {
           "name": "纯牛奶",
           "ingredients": [
@@ -609,15 +609,7 @@
           "riskAllergens": [],
           "substitute": null,
           "variantId": "山药老南瓜肉粥#a9820c23"
-        }
-      ]
-    },
-    {
-      "date": "2026-11-27",
-      "week": "2026-W48",
-      "mealPeriod": "morningSnack",
-      "mealLabel": "早点",
-      "dishes": [
+        },
         {
           "name": "水煮鸡蛋",
           "ingredients": [
@@ -628,7 +620,15 @@
           ],
           "substitute": null,
           "variantId": "水煮蛋#2f01daba"
-        },
+        }
+      ]
+    },
+    {
+      "date": "2026-11-27",
+      "week": "2026-W48",
+      "mealPeriod": "morningSnack",
+      "mealLabel": "早点",
+      "dishes": [
         {
           "name": "橘子",
           "ingredients": [

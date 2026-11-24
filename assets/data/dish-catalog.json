@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-20T12:09:31+08:00",
+  "updatedAt": "2026-11-24T12:52:00+08:00",
   "dishes": {
     "鹌鹑蛋": {
       "name": "鹌鹑蛋",
@@ -742,7 +742,7 @@
       "occurrences": [
         {
           "date": "2026-11-24",
-          "mealPeriod": "morningSnack",
+          "mealPeriod": "breakfast",
           "variantId": "脆皮肠#4e82e215"
         }
       ],
@@ -1101,7 +1101,7 @@
         },
         {
           "date": "2026-11-25",
-          "mealPeriod": "morningSnack",
+          "mealPeriod": "breakfast",
           "variantId": "豆奶#99602800"
         },
         {
@@ -3606,47 +3606,6 @@
       "primaryVariantId": "青菜瘦肉炒面#6808ffa6",
       "primaryBasis": "latest"
     },
-    "青菜瘦肉汤面": {
-      "name": "青菜瘦肉汤面",
-      "aliases": [],
-      "ingredients": [
-        "大碗面",
-        "红萝卜",
-        "青菜",
-        "瘦肉",
-        "西红柿"
-      ],
-      "riskAllergens": [],
-      "substitute": null,
-      "firstSeen": "2026-11-24",
-      "lastSeen": "2026-11-24",
-      "occurrences": [
-        {
-          "date": "2026-11-24",
-          "mealPeriod": "breakfast",
-          "variantId": "青菜瘦肉汤面#365bb6a7"
-        }
-      ],
-      "sourceImages": [],
-      "variants": [
-        {
-          "variantId": "青菜瘦肉汤面#365bb6a7",
-          "ingredients": [
-            "大碗面",
-            "红萝卜",
-            "青菜",
-            "瘦肉",
-            "西红柿"
-          ],
-          "riskAllergens": [],
-          "count": 1,
-          "firstSeen": "2026-11-24",
-          "lastSeen": "2026-11-24"
-        }
-      ],
-      "primaryVariantId": "青菜瘦肉汤面#365bb6a7",
-      "primaryBasis": "latest"
-    },
     "青瓜炒瘦肉": {
       "name": "青瓜炒瘦肉",
       "aliases": [],
@@ -5415,7 +5374,7 @@
         },
         {
           "date": "2026-11-27",
-          "mealPeriod": "morningSnack",
+          "mealPeriod": "breakfast",
           "variantId": "水煮蛋#2f01daba"
         }
       ],
@@ -5904,6 +5863,47 @@
         }
       ],
       "primaryVariantId": "西红柿瘦肉汤米粉#7413a0bf",
+      "primaryBasis": "latest"
+    },
+    "西红柿蔬菜瘦肉汤面": {
+      "name": "西红柿蔬菜瘦肉汤面",
+      "aliases": [],
+      "ingredients": [
+        "大碗面",
+        "红萝卜",
+        "青菜",
+        "瘦肉",
+        "西红柿"
+      ],
+      "riskAllergens": [],
+      "substitute": null,
+      "firstSeen": "2026-11-24",
+      "lastSeen": "2026-11-24",
+      "occurrences": [
+        {
+          "date": "2026-11-24",
+          "mealPeriod": "breakfast",
+          "variantId": "西红柿蔬菜瘦肉汤面#4c007028"
+        }
+      ],
+      "sourceImages": [],
+      "variants": [
+        {
+          "variantId": "西红柿蔬菜瘦肉汤面#4c007028",
+          "ingredients": [
+            "大碗面",
+            "红萝卜",
+            "青菜",
+            "瘦肉",
+            "西红柿"
+          ],
+          "riskAllergens": [],
+          "count": 1,
+          "firstSeen": "2026-11-24",
+          "lastSeen": "2026-11-24"
+        }
+      ],
+      "primaryVariantId": "西红柿蔬菜瘦肉汤面#4c007028",
       "primaryBasis": "latest"
     },
     "西葫芦炒肉": {
@@ -6780,7 +6780,7 @@
         },
         {
           "date": "2026-11-26",
-          "mealPeriod": "morningSnack",
+          "mealPeriod": "breakfast",
           "variantId": "玉米棒#4da3ef37"
         }
       ],
@@ -6868,7 +6868,7 @@
         },
         {
           "date": "2026-11-23",
-          "mealPeriod": "morningSnack",
+          "mealPeriod": "breakfast",
           "variantId": "蒸红薯#be825371"
         }
       ],
