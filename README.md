@@ -461,7 +461,7 @@ Schema：[dish-meta.schema.json](agent/schemas/dish-meta.schema.json)。
 }
 ```
 
-选择规则：先匹配过敏原是否被完全覆盖，再优先 `usedFor` 精确命中菜名，然后看 `verified` 和 `priority`；同一餐内不重复使用同一个替餐。午点（`afternoonTea`）的替餐只给水果或小食，不替补成主食；当天早点已给水果时，午点不再给水果，只留小食。页面展示候选和营养标签，DOCX/打印只显示已确认的菜品专属替餐。Schema：[substitute-library.schema.json](agent/schemas/substitute-library.schema.json)。
+选择规则：先匹配过敏原是否被完全覆盖，再优先 `usedFor` 精确命中菜名，然后看 `verified` 和 `priority`；同一餐内不重复使用同一个替餐。午点（`afternoonTea`）的替餐只给水果或小食（`categories` 含 `点心` 的发糕等算小食），不替补成正餐主食；当天早点已给水果时，午点不再给水果，只留小食。页面展示候选和营养标签，DOCX/打印只显示已确认的菜品专属替餐。Schema：[substitute-library.schema.json](agent/schemas/substitute-library.schema.json)。
 
 ### allergens.json / substitutes.json
 

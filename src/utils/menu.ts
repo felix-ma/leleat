@@ -158,8 +158,10 @@ export function inferDishCategory(
   return '菜'
 }
 
-/** 这道替餐本身是不是主食（按品类和菜名双保险判断）。 */
+/** 这道替餐本身是不是正餐主食（按品类和菜名双保险判断）。
+ *  库里显式标为「点心」的算小食（如发糕、蒸饺），午点可以用；只标「主食」的才按正餐主食排除。 */
 function isStapleRecipe(recipe: SubstituteRecipe): boolean {
+  if (recipe.categories?.includes('点心')) return false
   if (recipe.categories?.includes('主食')) return true
   return inferDishCategory({ name: recipe.name, ingredients: recipe.ingredients }, 'afternoonTea') === '主食'
 }
@@ -320,15 +322,18 @@ function getRecommendation(
   method?: string
 } {
   const custom = typeof dish.substitute === 'string' ? dish.substitute.trim() : ''
-  // 午点不许替成主食：历史数据里写死的「炒面/馒头」类替餐在点心餐一律不走，改由替餐库给水果小食。
+  // 先按名字在库里找同名条目，拿到它的品类/标签（「发糕」这类要按库里的「点心」判断）。
+  const known = custom ? library.find((recipe) => recipe.name === custom) : undefined
+  // 午点不许替成正餐主食（炒饭/炒面/红薯/玉米），但发糕这类点心算小食，可以给。
   const customIsStapleAtSnack =
     context.mealPeriod === 'afternoonTea' &&
     Boolean(custom) &&
-    isStapleRecipe({ id: '', name: custom, replaces: [], ingredients: [], tags: [] })
+    isStapleRecipe(
+      known ?? { id: '', name: custom, replaces: [], ingredients: [], tags: [] },
+    )
   if (custom && !customIsStapleAtSnack) {
     context.recentByPeriod.set(context.mealPeriod, { date: context.date, name: custom })
     // 菜品专属替餐也能复用替餐库里的做法与标签（例如「米奶」）。
-    const known = library.find((recipe) => recipe.name === custom)
     return {
       recommendation: [custom],
       source: 'dish',
@@ -364,15 +369,22 @@ function getRecommendation(
   const inPeriod = (recipe: SubstituteRecipe) => inMealPeriod(recipe, context.mealPeriod)
   const inCat = (recipe: SubstituteRecipe) => inCategory(recipe, context.category)
 
-  const tiers = [
-    eligibleAllergen.filter((recipe) => inPeriod(recipe) && inCat(recipe) && nutritionOk(recipe)),
-    eligibleAllergen.filter((recipe) => inPeriod(recipe) && nutritionOk(recipe)),
-    eligibleAllergen.filter((recipe) => inCat(recipe) && nutritionOk(recipe)),
-    eligibleAllergen.filter((recipe) => inPeriod(recipe) && inCat(recipe)),
-    eligibleAllergen.filter((recipe) => inPeriod(recipe)),
-    eligibleAllergen.filter((recipe) => inCat(recipe)),
-    eligibleAllergen,
-  ]
+  // 点心餐不做正餐营养审核：只在「本餐可用的小食」里按分数挑，避免硬套主食营养组把候选逼回发糕。
+  const isSnackMeal = context.mealPeriod === 'morningSnack' || context.mealPeriod === 'afternoonTea'
+  const tiers = isSnackMeal
+    ? [
+        eligibleAllergen.filter((recipe) => inPeriod(recipe)),
+        eligibleAllergen,
+      ]
+    : [
+        eligibleAllergen.filter((recipe) => inPeriod(recipe) && inCat(recipe) && nutritionOk(recipe)),
+        eligibleAllergen.filter((recipe) => inPeriod(recipe) && nutritionOk(recipe)),
+        eligibleAllergen.filter((recipe) => inCat(recipe) && nutritionOk(recipe)),
+        eligibleAllergen.filter((recipe) => inPeriod(recipe) && inCat(recipe)),
+        eligibleAllergen.filter((recipe) => inPeriod(recipe)),
+        eligibleAllergen.filter((recipe) => inCat(recipe)),
+        eligibleAllergen,
+      ]
 
   const candidates = (tiers.find((tier) => tier.length > 0) ?? [])
     .map((recipe) => ({ recipe, score: scoreCandidate(recipe, dish.name, context) }))
