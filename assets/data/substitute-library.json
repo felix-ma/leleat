@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-06T23:32:00+08:00",
+  "updatedAt": "2026-11-26T18:26:00+08:00",
   "recipes": [
     {
       "id": "sub-egg-steamed-tofu-pork",
@@ -868,6 +868,179 @@
         "dinner"
       ],
       "method": "西兰花焯水 1 分钟，虾仁滑炒后合炒，少盐；复热后颜色口感都还好。"
+    },
+    {
+      "id": "sub-snack-steamed-pumpkin",
+      "name": "蒸南瓜",
+      "replaces": [
+        "egg",
+        "milk"
+      ],
+      "ingredients": [
+        "老南瓜"
+      ],
+      "usedFor": [],
+      "tags": [
+        "蔬菜",
+        "膳食纤维",
+        "软食"
+      ],
+      "verified": false,
+      "priority": 70,
+      "categories": [
+        "点心"
+      ],
+      "mealPeriods": [
+        "afternoonTea"
+      ],
+      "method": "老南瓜去皮切大块，上锅蒸 15 分钟至能用勺子压开，晾到温热装盒，不额外加糖。"
+    },
+    {
+      "id": "sub-snack-hawthorn-flakes",
+      "name": "山楂片",
+      "replaces": [
+        "milk"
+      ],
+      "ingredients": [
+        "山楂",
+        "白糖"
+      ],
+      "usedFor": [],
+      "tags": [
+        "点心"
+      ],
+      "verified": false,
+      "priority": 62,
+      "categories": [
+        "点心"
+      ],
+      "mealPeriods": [
+        "afternoonTea"
+      ],
+      "method": "选配料只有山楂和糖的山楂片，按小包分装，一次一小包，配温水。"
+    },
+    {
+      "id": "sub-snack-raisin",
+      "name": "葡萄干",
+      "replaces": [
+        "milk"
+      ],
+      "ingredients": [
+        "葡萄干"
+      ],
+      "usedFor": [],
+      "tags": [
+        "点心"
+      ],
+      "verified": false,
+      "priority": 58,
+      "categories": [
+        "点心"
+      ],
+      "mealPeriods": [
+        "afternoonTea"
+      ],
+      "method": "无添加葡萄干用温水冲一遍沥干，小盒分装约一小把，配温水吃。"
+    },
+    {
+      "id": "sub-snack-apple",
+      "name": "苹果块",
+      "replaces": [
+        "egg",
+        "milk"
+      ],
+      "ingredients": [
+        "苹果"
+      ],
+      "usedFor": [],
+      "tags": [
+        "水果",
+        "膳食纤维"
+      ],
+      "verified": false,
+      "priority": 74,
+      "categories": [
+        "水果"
+      ],
+      "mealPeriods": [
+        "afternoonTea"
+      ],
+      "method": "苹果去皮去核切小块，泡一分钟淡盐水防氧化，沥干装盒即食。"
+    },
+    {
+      "id": "sub-snack-banana",
+      "name": "香蕉段",
+      "replaces": [
+        "egg",
+        "milk"
+      ],
+      "ingredients": [
+        "香蕉"
+      ],
+      "usedFor": [],
+      "tags": [
+        "水果"
+      ],
+      "verified": false,
+      "priority": 72,
+      "categories": [
+        "水果"
+      ],
+      "mealPeriods": [
+        "afternoonTea"
+      ],
+      "method": "香蕉去皮切段，现切现吃，装盒时滴几滴柠檬汁防发黑。"
+    },
+    {
+      "id": "sub-snack-pear",
+      "name": "梨块",
+      "replaces": [
+        "egg",
+        "milk"
+      ],
+      "ingredients": [
+        "梨"
+      ],
+      "usedFor": [],
+      "tags": [
+        "水果",
+        "膳食纤维"
+      ],
+      "verified": false,
+      "priority": 70,
+      "categories": [
+        "水果"
+      ],
+      "mealPeriods": [
+        "afternoonTea"
+      ],
+      "method": "梨去皮去核切小块，泡淡盐水防氧化，沥干装盒；天冷可换成蒸梨块。"
+    },
+    {
+      "id": "sub-snack-steamed-carrot",
+      "name": "蒸胡萝卜条",
+      "replaces": [
+        "egg",
+        "milk"
+      ],
+      "ingredients": [
+        "胡萝卜"
+      ],
+      "usedFor": [],
+      "tags": [
+        "蔬菜",
+        "膳食纤维",
+        "软食"
+      ],
+      "verified": false,
+      "priority": 66,
+      "categories": [
+        "点心"
+      ],
+      "mealPeriods": [
+        "afternoonTea"
+      ],
+      "method": "胡萝卜去皮切粗条，上锅蒸 12 分钟至用勺子能压断，晾温装盒；本身带甜味，不用加糖。"
     }
   ]
 }
