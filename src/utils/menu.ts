@@ -158,6 +158,47 @@ export function inferDishCategory(
   return '菜'
 }
 
+/** 这道替餐本身是不是主食（按品类和菜名双保险判断）。 */
+function isStapleRecipe(recipe: SubstituteRecipe): boolean {
+  if (recipe.categories?.includes('主食')) return true
+  return inferDishCategory({ name: recipe.name, ingredients: recipe.ingredients }, 'afternoonTea') === '主食'
+}
+
+/** 水果类替餐：用于「早点吃过水果，午点不再给水果」的判断。 */
+function isFruitRecipe(recipe: SubstituteRecipe): boolean {
+  if (recipe.categories?.includes('水果')) return true
+  if ((recipe.tags ?? []).includes('水果')) return true
+  return inferDishCategory({ name: recipe.name, ingredients: recipe.ingredients }, 'afternoonTea') === '水果'
+}
+
+/** 小食类（点心/水果），午点替餐优先这两类。 */
+function isSnackRecipe(recipe: SubstituteRecipe): boolean {
+  if (isFruitRecipe(recipe)) return true
+  if (recipe.categories?.includes('点心')) return true
+  return inferDishCategory({ name: recipe.name, ingredients: recipe.ingredients }, 'afternoonTea') === '点心'
+}
+
+/** 早点的水果菜名：用来判断当天午点还能不能给水果。 */
+function hasFruitDish(dishes: { name: string; substitute?: string | null }[]): boolean {
+  return dishes.some((dish) => {
+    const text = `${dish.name} ${dish.substitute ?? ''}`
+    return (
+      FRUIT_HINTS.some((hint) => text.includes(hint)) ||
+      ['果盘', '水果', '拼盘'].some((hint) => text.includes(hint))
+    )
+  })
+}
+
+/** 预先算出「这一天早点已经吃过水果」，午点替餐据此排除水果。 */
+function collectFruitSnackDays(entries: RecipeEntry[]): Set<string> {
+  const days = new Set<string>()
+  for (const entry of entries) {
+    if (entry.mealPeriod !== 'morningSnack') continue
+    if (hasFruitDish(entry.dishes)) days.add(entry.date)
+  }
+  return days
+}
+
 interface RecommendationContext {
   /** 整周共用的用量计数：同一个替餐这一周用过几次。 */
   usedCounts: Map<string, number>
@@ -165,6 +206,8 @@ interface RecommendationContext {
   mealDishNames: Set<string>
   mealPeriod: MealPeriod
   category: DishCategory
+  /** 当天早点是否已经给过水果：是的话午点替餐不再给水果。 */
+  dayHasFruitSnack: boolean
   /** 本餐其它菜（不含当前这道）的搭配画像，用来避免「两个都是稀的」。 */
   profile: MealProfile
   /** 每个餐次上一次用的替餐，用来避免连两天上同一道。 */
@@ -277,7 +320,12 @@ function getRecommendation(
   method?: string
 } {
   const custom = typeof dish.substitute === 'string' ? dish.substitute.trim() : ''
-  if (custom) {
+  // 午点不许替成主食：历史数据里写死的「炒面/馒头」类替餐在点心餐一律不走，改由替餐库给水果小食。
+  const customIsStapleAtSnack =
+    context.mealPeriod === 'afternoonTea' &&
+    Boolean(custom) &&
+    isStapleRecipe({ id: '', name: custom, replaces: [], ingredients: [], tags: [] })
+  if (custom && !customIsStapleAtSnack) {
     context.recentByPeriod.set(context.mealPeriod, { date: context.date, name: custom })
     // 菜品专属替餐也能复用替餐库里的做法与标签（例如「米奶」）。
     const known = library.find((recipe) => recipe.name === custom)
@@ -297,6 +345,19 @@ function getRecommendation(
     dish.riskAllergens.every((id) => recipe.replaces.includes(id)),
   )
 
+  // 午点只上水果或小食：替餐不许再替补成主食（发糕、炒饭、红薯这类）。
+  // 当天早点已经吃过水果时，午点连水果也不再上，只留小食。
+  let eligibleAllergen = allSatisfied
+  if (context.mealPeriod === 'afternoonTea') {
+    const nonStaple = allSatisfied.filter((recipe) => !isStapleRecipe(recipe))
+    const snacks = nonStaple.filter((recipe) => isSnackRecipe(recipe))
+    const fruitAllowed = snacks.filter((recipe) => !(
+      context.dayHasFruitSnack && isFruitRecipe(recipe)
+    ))
+    // 优先小食；库里还没有小食条目时退一步只保证不替主食。
+    eligibleAllergen = fruitAllowed.length > 0 ? fruitAllowed : snacks.length > 0 ? snacks : nonStaple
+  }
+
   // 从严格到宽松依次尝试：先保证营养结构、品类、餐次都对得上，实在没有才逐级放宽。
   const needs = inferNutritionNeeds(dish)
   const nutritionOk = (recipe: SubstituteRecipe) => coversNutrition(recipe, needs)
@@ -304,13 +365,13 @@ function getRecommendation(
   const inCat = (recipe: SubstituteRecipe) => inCategory(recipe, context.category)
 
   const tiers = [
-    allSatisfied.filter((recipe) => inPeriod(recipe) && inCat(recipe) && nutritionOk(recipe)),
-    allSatisfied.filter((recipe) => inPeriod(recipe) && nutritionOk(recipe)),
-    allSatisfied.filter((recipe) => inCat(recipe) && nutritionOk(recipe)),
-    allSatisfied.filter((recipe) => inPeriod(recipe) && inCat(recipe)),
-    allSatisfied.filter((recipe) => inPeriod(recipe)),
-    allSatisfied.filter((recipe) => inCat(recipe)),
-    allSatisfied,
+    eligibleAllergen.filter((recipe) => inPeriod(recipe) && inCat(recipe) && nutritionOk(recipe)),
+    eligibleAllergen.filter((recipe) => inPeriod(recipe) && nutritionOk(recipe)),
+    eligibleAllergen.filter((recipe) => inCat(recipe) && nutritionOk(recipe)),
+    eligibleAllergen.filter((recipe) => inPeriod(recipe) && inCat(recipe)),
+    eligibleAllergen.filter((recipe) => inPeriod(recipe)),
+    eligibleAllergen.filter((recipe) => inCat(recipe)),
+    eligibleAllergen,
   ]
 
   const candidates = (tiers.find((tier) => tier.length > 0) ?? [])
@@ -455,6 +516,8 @@ export function buildMenuDays(
   const usedCounts = new Map<string, number>()
   // 每个餐次上一次用的替餐，避免连两天同一道。
   const recentByPeriod = new Map<string, { date: string; name: string }>()
+  // 当天早点已给水果的日子，午点替餐不再给水果。
+  const fruitSnackDays = collectFruitSnackDays(entries)
 
   for (const entry of entries) {
     const key = `${entry.date}__${entry.mealPeriod}`
@@ -483,6 +546,7 @@ export function buildMenuDays(
           mealDishNames,
           mealPeriod: entry.mealPeriod,
           category: inferDishCategory(dish, entry.mealPeriod),
+          dayHasFruitSnack: fruitSnackDays.has(entry.date),
           profile: buildMealProfile(
             bucketDishes.filter((item) => item.name !== dish.name),
             entry.mealPeriod,
@@ -558,6 +622,8 @@ export function buildExportRows(
   const recentByPeriod = new Map<string, { date: string; name: string }>()
   const mealDishNames = new Map<string, Set<string>>()
   const mealDishes = new Map<string, RecipeEntry['dishes']>()
+  // 当天早点已给水果的日子，午点替餐不再给水果。
+  const fruitSnackDays = collectFruitSnackDays(entries)
 
   for (const entry of entries) {
     const mealKey = `${entry.date}__${entry.mealPeriod}`
@@ -584,6 +650,7 @@ export function buildExportRows(
               mealDishNames: mealDishNames.get(mealKey) ?? new Set<string>(),
               mealPeriod: entry.mealPeriod,
               category: inferDishCategory(dish, entry.mealPeriod),
+              dayHasFruitSnack: fruitSnackDays.has(entry.date),
               profile: buildMealProfile(
                 (mealDishes.get(mealKey) ?? []).filter((item) => item.name !== dish.name),
                 entry.mealPeriod,

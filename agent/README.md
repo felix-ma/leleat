@@ -30,7 +30,7 @@
 
 ## 版本与边界
 
-- **版本**：1.8
+- **版本**：1.9
 - **适用输入**：幼儿园「一周带量食谱及营养分析表」图片（周一至周五、早餐/早点/中餐/午点、每格含食谱/食物/重量）
 - **适用仓库**：`leleat`
 - **运行位置**：仓库外的本地 Agent / 本地脚本
@@ -51,4 +51,5 @@
 | 1.5 | 2026-11-06 | 改完即发布：取消「默认只写工作区」，任务结束必须 commit + push，涉图/数据再 deploy |
 | 1.6 | 2026-11-13 | 存储改为周分片：`recipes.json` → `index.json` + `weeks/YYYY-Www.json`；菜品库改为变体口径（`variantId`/`variants[]`/`needsReview`），食材取并集改为多配方并存；新增 `ingredient-index.json`、`ingredient-aliases.json`、`dish-meta.json` 三份人工/派生数据与对应 Schema |
 | 1.7 | 2026-11-13 | 主配方口径改为「最近一次出现为准」：`dish-catalog.json` 顶层 `ingredients`/`riskAllergens` 由 `primaryVariantId` 指向，选择策略放进 `dish-meta.json` 的 `reviewPolicy.mode`（`latest` 默认 / `frequency` 旧口径），单条可用 `primaryVariant` 钉住；`needsReview` 收窄为「口径未定」，历史配方仍全量保留在 `variants[]`；溯源弹窗补「库内主配方」说明 |
+| 1.9 | 2026-11-26 | 午点替餐规则：午点不替主食（排除发糕/红薯/炒饭类），只给水果小食；当天早点已给水果时午点不再给水果；午点写死的 `dish.substitute` 主食替餐不再生效，改走替餐库；替餐库补 7 条午点水果小食（蒸南瓜、蒸胡萝卜条、山楂片、葡萄干、苹果块、香蕉段、梨块） |
 | 1.8 | 2026-11-13 | 菜名别名归并：`dish-meta.json` 的 `aliases` 让同一道菜的多种写法（米饭/香米饭/水晶米饭…、山楂三条、鹌鹑蛋/水煮鹌鹑蛋、炒三丁/肉炒三丁、牛奶/纯牛奶）在 catalog 与食材索引里合成一条，`weeks/` 原表写法不变；新增 `npm run sync-variants` 重算周文件里派生的 `variantId`；清理替餐库 3 条指向不存在菜名的 `usedFor`；溯源弹窗可点食材查看全库命中次数与命中日期 |

@@ -618,6 +618,9 @@ function parseSubstituteLibrary(value: unknown): SubstituteLibrary {
       ...(typeof raw.priority === 'number' && Number.isFinite(raw.priority)
         ? { priority: raw.priority }
         : {}),
+      ...(typeof raw.method === 'string' && raw.method.trim()
+        ? { method: raw.method.trim() }
+        : {}),
     })
   }
 
